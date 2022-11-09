@@ -16,3 +16,12 @@ class Operations:
         else:
             print("It is not possible make the multiplication")
             return matrix
+
+    def createTwoRowArrays(oneRowMatrix):
+        if len(oneRowMatrix) % 2 == 0:
+            firstRowMatrix = []
+            secondRowMatrix = []
+            for index in range(0, len(oneRowMatrix), 2):
+                firstRowMatrix.append(oneRowMatrix[index])
+                secondRowMatrix.append(oneRowMatrix[index + 1])
+            return [firstRowMatrix, secondRowMatrix]
