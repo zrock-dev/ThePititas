@@ -1,5 +1,6 @@
 # This class contains all the linear algebra operations needed to encrypt and decrypt
 class Operations:
+
     # This method does the multiplication of the matrix by a vector
     # The multiplication can be done if the number of rows in the matrix
     # is equal to the number of columns in the vector.
