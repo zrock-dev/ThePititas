@@ -18,14 +18,19 @@ class CipherDecipherScreen:
         self.frame = tk.Frame(window,
                               height=WINDOW_HEIGHT,
                               width=WINDOW_WIDTH,
-                              background=BG_COLOR)
+                              background=BG_COLOR,
+                              pady=50)
         self.frame.grid_propagate(False)
         self.frame.grid(column=0, row=0)
+        self.frame.rowconfigure(1, pad=50)
+
+        self.method_switch_frame = tk.Frame(self.frame, background=BUTTON_BG_COLOR)
+        self.method_switch_frame.grid(row=0, column=0)
+        self.method_switch_frame.columnconfigure(0, pad=80)
 
         self.images_frame = tk.Frame(self.frame, background=BUTTON_BG_COLOR)
         self.images_frame.grid(row=1, column=0)
-        self.method_switch_frame = tk.Frame(self.frame, background=BUTTON_BG_COLOR)
-        self.method_switch_frame.grid(row=0, column=0)
+        self.images_frame.columnconfigure(0, pad=120)
 
         self.left_frame = tk.Frame(self.images_frame, background=BUTTON_BG_COLOR)
         self.right_frame = tk.Frame(self.images_frame, background=BUTTON_BG_COLOR)
@@ -38,10 +43,10 @@ class CipherDecipherScreen:
 
     def set_up_method_switch_frame(self):
         tk.Label(self.method_switch_frame, text=f"Using {self.method_name} method").grid(row=0, column=0)
-        tk.Button(self.method_switch_frame, text="Switch", command=lambda: self.switch_encryption_method())\
+        tk.Button(self.method_switch_frame, text="Switch", command=lambda: self.switch_method_button())\
             .grid(row=0, column=1)
 
-    def switch_encryption_method(self):
+    def switch_method_button(self):
         self.is_hill = not self.is_hill
         self.method_name = "Hill" if self.is_hill else "Pixel"
         tk.Label(self.method_switch_frame, text=f"Using {self.method_name} method").grid(row=0, column=0)
@@ -52,7 +57,10 @@ class CipherDecipherScreen:
         scene_switch_button = tk.Button(self.left_frame,
                                         text="Switch photo",
                                         command=lambda: self.switch_scene_button())
+        
         scene_switch_button.grid(row=2, column=0)
+        self.left_frame.rowconfigure(0, pad=50)
+        self.left_frame.rowconfigure(2, pad=50)
 
     def switch_scene_button(self):
         self.display.switch_to_image_selection_screen()
@@ -63,6 +71,7 @@ class CipherDecipherScreen:
                                width=self.right_frame.winfo_height() / 2,
                                background=BUTTON_BG_COLOR)
         image_frame.grid(column=0, row=0)
+        image_frame.rowconfigure(1, pad=80)
 
         tk.Label(image_frame, text="Processed").grid(column=0, row=0)
         self.output_label = tk.Label(image_frame, image=self.image)

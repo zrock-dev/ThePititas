@@ -14,8 +14,16 @@ class ImageSelectionScreen:
     def __init__(self, window, display):
         self.display = display
         # Frame setup
-        self.frame = tk.Frame(window, background=BG_COLOR)
+        self.frame = tk.Frame(window,
+                              height=WINDOW_HEIGHT,
+                              width=WINDOW_WIDTH,
+                              background=BG_COLOR,
+                              padx=55,
+                              pady=55)
         self.frame.grid(row=0, column=0)
+        self.frame.grid_propagate(False)
+        self.frame.columnconfigure(0, pad=50)
+        self.frame.rowconfigure(2, pad=50)
 
         # tk.Label(self.frame, text="Select an image please").grid(row=0, column=0)
         self.load_images()
