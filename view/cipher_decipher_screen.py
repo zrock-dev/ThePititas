@@ -5,36 +5,45 @@ from controller import hill, switched_pixels
 
 class CipherDecipherScreen:
     hill_method = hill.Hill()
-    pixels_method = switched_pixels.PixelSwitch()
+    pixel_method = switched_pixels.PixelSwitch()
     is_hill = True
-
-    scene_switch_button = None
+    method_name = "Hill"
 
     def __init__(self, window, display, image):
         self.display = display
         self.image = image
         self.output_label = image
+
+        # Frame setup
         self.frame = tk.Frame(window,
                               height=WINDOW_HEIGHT,
                               width=WINDOW_WIDTH,
                               background=BUTTON_BG_COLOR)
         self.frame.grid(column=0, row=0)
 
-        # Frame setup
-        self.left_frame = tk.Frame(self.frame,
-                                   height=WINDOW_HEIGHT / 2,
-                                   width=WINDOW_WIDTH / 2,
-                                   background=BUTTON_BG_COLOR)
-        self.right_frame = tk.Frame(self.frame,
-                                    height=WINDOW_HEIGHT / 2,
-                                    width=WINDOW_WIDTH / 2,
-                                    background=BUTTON_BG_COLOR)
+        self.images_frame = tk.Frame(self.frame, background=BUTTON_BG_COLOR)
+        self.images_frame.grid(row=1, column=0)
+        self.method_switch_frame = tk.Frame(self.frame, background=BUTTON_BG_COLOR)
+        self.method_switch_frame.grid(row=0, column=0)
 
+        self.left_frame = tk.Frame(self.images_frame, background=BUTTON_BG_COLOR)
+        self.right_frame = tk.Frame(self.images_frame, background=BUTTON_BG_COLOR)
         self.left_frame.grid(row=0, column=0)
         self.right_frame.grid(row=0, column=1)
 
         self.setup_left_frame()
         self.setup_right_frame()
+        self.set_up_method_switch_frame()
+
+    def set_up_method_switch_frame(self):
+        tk.Label(self.method_switch_frame, text=f"Using {self.method_name} method").grid(row=0, column=0)
+        tk.Button(self.method_switch_frame, text="Switch", command=lambda: self.switch_encryption_method())\
+            .grid(row=0, column=1)
+
+    def switch_encryption_method(self):
+        self.is_hill = not self.is_hill
+        self.method_name = "Hill" if self.is_hill else "Pixel"
+        tk.Label(self.method_switch_frame, text=f"Using {self.method_name} method").grid(row=0, column=0)
 
     def setup_left_frame(self):
         tk.Label(self.left_frame, text="Original").grid(column=0, row=0)
@@ -73,7 +82,7 @@ class CipherDecipherScreen:
         # if self.is_hill:
         #     image = tk.PhotoImage(self.hill_method.encrypt())
         # else:
-        #     image = tk.PhotoImage(self.hill_method.encrypt())
+        #     image = tk.PhotoImage(self.pixel_method.encrypt())
         #
         # self.output_label.configure(image=image)
 
@@ -82,6 +91,6 @@ class CipherDecipherScreen:
         # if self.is_hill:
         #     image = tk.PhotoImage(self.hill_method.decrypt())
         # else:
-        #     image = tk.PhotoImage(self.hill_method.decrypt())
+        #     image = tk.PhotoImage(self.pixel_method.decrypt())
         #
         # self.output_label.configure(image=image)

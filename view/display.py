@@ -20,6 +20,7 @@ class Display:
         window.geometry(f'{WINDOW_WIDTH}x{WINDOW_HEIGHT}')
         # window.resizable(False, False)
         window.configure(bg=BG_COLOR)
+        window.resizable(None, None)
 
     def switch_to_image_selection_screen(self):
         self.image_selection_frame.frame.tkraise()
