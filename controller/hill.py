@@ -13,12 +13,20 @@ class Hill:
         arr = numpy.array(self.new_array_color, dtype=numpy.int8)
         encrypted_image_path = f'{SYS_PATH}/model/encrypted_image.png'
         cv2.imwrite(encrypted_image_path, arr)
+
+        cv2.imshow("Image", arr)
+        cv2.waitKey()
+        cv2.destroyAllWindows()
         return encrypted_image_path
 
 
     def decrypt(self):
         decrypt_array = hill_method.decrypt(hill_method.key, self.new_array_color)
-        arr2 = numpy.array(decrypt_array, dtype=numpy.int8)
+        arr = numpy.array(decrypt_array, dtype=numpy.int8)
         decrypted_image_path = f'{SYS_PATH}/model/decrypted_image.png'
-        cv2.imwrite(decrypted_image_path, arr2)
+        cv2.imwrite(decrypted_image_path, arr)
+
+        cv2.imshow("Image", arr)
+        cv2.waitKey()
+        cv2.destroyAllWindows()
         return decrypted_image_path

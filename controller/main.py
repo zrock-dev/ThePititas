@@ -133,7 +133,7 @@ def decryptByPixel(key, matrixImage):
     for rowIndex in range(len(matrixImage)):
         for columnIndex in range(len(matrixImage[0])):
             (b, g, r) = matrixImage[columnIndex, rowIndex]
-            print((b, g, r))
+            # print((b, g, r))
             newPosition = multiplication_matrixByPixel(key, [rowIndex, columnIndex])
             newPosition = module_matrixByPixel(newPosition, 256)
             newMatrix[newPosition[1]][newPosition[0]] = (b, g, r)
@@ -142,16 +142,3 @@ def decryptByPixel(key, matrixImage):
 
 module = 10 ** 10
 key = [[21, 35], [18, 79]]
-
-
-# # Pixels
-# img2 = cv2.imread('image2.png')
-# # encrypt moving pixels
-# encryptByPixel = encryptByPixel(key, img2)
-# arrByPixel = numpy.array(encryptByPixel, dtype=numpy.int8)
-#
-# # cv2.imwrite('encriptada.jpg', arrByPixel)
-# imageEncrypt = cv2.imread('encriptada.jpg')
-# encryptByPixel = decryptByPixel(key, imageEncrypt)
-# arrByPixel2 = numpy.array(encryptByPixel, dtype=numpy.int8)
-
