@@ -1,6 +1,7 @@
 import tkinter as tk
 from view.utils.constants import (WINDOW_HEIGHT, WINDOW_WIDTH, BG_COLOR, BUTTON_BG_COLOR)
 from model.utils.constants import SYS_PATH
+from model.utils.constants import images as images_list
 
 
 class ImageSelectionScreen:
@@ -32,10 +33,8 @@ class ImageSelectionScreen:
         self.grid_buttons()
 
     def load_images(self):
-        self.prepare_image(f"{SYS_PATH}/model/image_1.png")
-        self.prepare_image(f"{SYS_PATH}/model/image_2.png")
-        self.prepare_image(f"{SYS_PATH}/model/image_3.png")
-        self.prepare_image(f"{SYS_PATH}/model/image_4.png")
+        for images in images_list:
+            self.prepare_image(images)
 
     def prepare_image(self, image_path):
         image = tk.PhotoImage(file=image_path).subsample(self.IMAGE_WIDTH, self.IMAGE_HEIGHT)
