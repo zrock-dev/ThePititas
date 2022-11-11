@@ -1,5 +1,6 @@
 import tkinter as tk
 from view.utils.constants import (WINDOW_HEIGHT, WINDOW_WIDTH, BG_COLOR, BUTTON_BG_COLOR)
+from model.utils.constants import SYS_PATH
 
 
 class ImageSelectionScreen:
@@ -31,10 +32,10 @@ class ImageSelectionScreen:
         self.grid_buttons()
 
     def load_images(self):
-        self.prepare_image("/home/fundacion/PycharmProjects/ThePititas/model/img_1.jpeg")
-        self.prepare_image("/home/fundacion/PycharmProjects/ThePititas/model/img_2.jpeg")
-        self.prepare_image("/home/fundacion/PycharmProjects/ThePititas/model/img_3.jpeg")
-        self.prepare_image("/home/fundacion/PycharmProjects/ThePititas/model/img_4.jpeg")
+        self.prepare_image(f"{SYS_PATH}/model/image_1.png")
+        self.prepare_image(f"{SYS_PATH}/model/image_2.png")
+        self.prepare_image(f"{SYS_PATH}/model/image_3.png")
+        self.prepare_image(f"{SYS_PATH}/model/image_4.png")
 
     def prepare_image(self, image_path):
         image = tk.PhotoImage(file=image_path).subsample(self.IMAGE_WIDTH, self.IMAGE_HEIGHT)
