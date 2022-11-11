@@ -110,6 +110,7 @@ class CipherDecipherScreen:
         else:
             image = tk.PhotoImage(file=self.pixel_method.decrypt())
 
+        image.subsample(1, 1)
         self.output_label.configure(image=image)
         self.output_label.image = image
 
