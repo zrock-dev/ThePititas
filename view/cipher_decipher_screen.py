@@ -9,9 +9,10 @@ class CipherDecipherScreen:
     is_hill = True
     method_name = "Hill"
 
-    def __init__(self, window, display, image):
+    def __init__(self, window, display, image, image_path):
         self.display = display
         self.image = image
+        self.image_path = image_path
         self.output_label = image
 
         # Frame setup
@@ -57,7 +58,7 @@ class CipherDecipherScreen:
         scene_switch_button = tk.Button(self.left_frame,
                                         text="Switch photo",
                                         command=lambda: self.switch_scene_button())
-        
+
         scene_switch_button.grid(row=2, column=0)
         self.left_frame.rowconfigure(0, pad=50)
         self.left_frame.rowconfigure(2, pad=50)
@@ -89,18 +90,26 @@ class CipherDecipherScreen:
 
     def cipher_button(self):
         print("crypt me")
-        # if self.is_hill:
-        #     image = tk.PhotoImage(self.hill_method.encrypt())
-        # else:
-        #     image = tk.PhotoImage(self.pixel_method.encrypt())
-        #
-        # self.output_label.configure(image=image)
+        print(f"This it the path {self.image_path}")
+        if self.is_hill:
+            crypto_image_path = self.hill_method.encrypt(self.image_path)
+            print(crypto_image_path)
+            image = tk.PhotoImage(file=crypto_image_path)
+        else:
+            image = tk.PhotoImage(self.pixel_method.encrypt())
+
+        self.output_label.configure(image=image)
+        self.output_label.image = image
 
     def decipher_button(self):
-        print("decrypt me")
-        # if self.is_hill:
-        #     image = tk.PhotoImage(self.hill_method.decrypt())
-        # else:
-        #     image = tk.PhotoImage(self.pixel_method.decrypt())
-        #
-        # self.output_label.configure(image=image)
+        print("Decrypt image")
+        if self.is_hill:
+            image_path = self.hill_method.decrypt()
+            print(image_path)
+            image = tk.PhotoImage(file=image_path)
+        else:
+            image = tk.PhotoImage(self.pixel_method.decrypt())
+
+        self.output_label.configure(image=image)
+        self.output_label.image = image
+

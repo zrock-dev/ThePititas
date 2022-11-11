@@ -39,7 +39,7 @@ class ImageSelectionScreen:
     def prepare_image(self, image_path):
         image = tk.PhotoImage(file=image_path).subsample(self.IMAGE_WIDTH, self.IMAGE_HEIGHT)
         self.images.append(image)
-        self.buttons.append(tk.Button(self.frame, text="Select", command=lambda: self.set_working_image(image)))
+        self.buttons.append(tk.Button(self.frame, text="Select", command=lambda: self.set_working_image(image, image_path)))
 
     def grid_images(self):
         _row = 0
@@ -65,5 +65,5 @@ class ImageSelectionScreen:
             else:
                 _row += 2
 
-    def set_working_image(self, image):
-        self.display.swittch_to_cipher_decipher_screen(image)
+    def set_working_image(self, image, image_path):
+        self.display.swittch_to_cipher_decipher_screen(image, image_path)
