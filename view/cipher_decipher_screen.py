@@ -18,7 +18,8 @@ class CipherDecipherScreen:
         self.frame = tk.Frame(window,
                               height=WINDOW_HEIGHT,
                               width=WINDOW_WIDTH,
-                              background=BUTTON_BG_COLOR)
+                              background=BG_COLOR)
+        self.frame.grid_propagate(False)
         self.frame.grid(column=0, row=0)
 
         self.images_frame = tk.Frame(self.frame, background=BUTTON_BG_COLOR)

@@ -14,12 +14,9 @@ class ImageSelectionScreen:
     def __init__(self, window, display):
         self.display = display
         # Frame setup
-        self.frame = tk.Frame(window,
-                              height=WINDOW_HEIGHT,
-                              width=WINDOW_WIDTH,
-                              background=BUTTON_BG_COLOR)
-
+        self.frame = tk.Frame(window, background=BG_COLOR)
         self.frame.grid(row=0, column=0)
+
         # tk.Label(self.frame, text="Select an image please").grid(row=0, column=0)
         self.load_images()
         self.grid_images()
@@ -40,7 +37,6 @@ class ImageSelectionScreen:
         _row = 0
         _column = 0
         for photo in self.images:
-            print(f"{_column}x{_row}")
             tk.Label(self.frame, image=photo).grid(row=_row, column=_column, padx=5, pady=5)
 
             if _row == 2:
@@ -52,7 +48,6 @@ class ImageSelectionScreen:
     def grid_buttons(self):
         _row = 1
         _column = 0
-
         for button in self.buttons:
             button.grid(row=_row, column=_column)
 
