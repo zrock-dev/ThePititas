@@ -1,10 +1,29 @@
 import cv2
 import numpy
+
 def multiplication_vectors(first_vector, second_vector):
     result = 0
     for index in range(len(first_vector)):
         result += first_vector[index] * second_vector[index]
     return result
+
+def createTwoRowArrays(oneRowMatrix):
+    if len(oneRowMatrix) % 2 == 0:
+        firstRowMatrix = []
+        secondRowMatrix = []
+        for index in range(0, len(oneRowMatrix), 2):
+            firstRowMatrix.append(oneRowMatrix[index])
+            secondRowMatrix.append(oneRowMatrix[index + 1])
+        return [firstRowMatrix, secondRowMatrix]
+
+def inverseTwoRowArrays(matrixTwoRows):
+    array_simplify = []
+    for index_array in zip(matrixTwoRows[0], matrixTwoRows[1]):
+        array_simplify.append(index_array[0])
+        array_simplify.append(index_array[1])
+    return array_simplify
+
+
 
 def multiplication_matrix(matrix_one, matrix_two):
     matrix_result = []
@@ -17,81 +36,119 @@ def multiplication_matrix(matrix_one, matrix_two):
             matrix_result.append(column_result)
     return matrix_result
 
-def inversaLlave(matriz):
-    determinante = (matriz[0][0] * matriz[1][1] - matriz[1][0] * matriz[0][1])
-    nuevaMatriz = [[matriz[1][1],- matriz[0][1]],[ - matriz[1][0],matriz[0][0]]]
-    indiceFila = 0
-    while indiceFila < len(nuevaMatriz):
-        indiceColumna = 0
-        while indiceColumna < len(nuevaMatriz[indiceFila]):
-            nuevaMatriz[-indiceFila][-indiceColumna] = 1/determinante * nuevaMatriz[indiceFila][indiceColumna]
-            indiceColumna = indiceColumna + 1
-        indiceFila = indiceFila + 1
-    return nuevaMatriz
+def reverseKey(matriz):
+    determinant = (matriz[0][0] * matriz[1][1] - matriz[1][0] * matriz[0][1])
+    newMatrix = [[matriz[1][1], - matriz[0][1]], [- matriz[1][0], matriz[0][0]]]
+    indexRow = 0
+    while indexRow < len(newMatrix):
+        indexColumn = 0
+        while indexColumn < len(newMatrix[indexRow]):
+            newMatrix[-indexRow][-indexColumn] = 1 / determinant * newMatrix[indexRow][indexColumn]
+            indexColumn = indexColumn + 1
+        indexRow = indexRow + 1
+    return newMatrix
 
-def module_matrix(vector, module):
+def module_matrix(vector, numberModule):
     for row in range(len(vector)):
         for column in range(len(vector[row])):
-            vector[row][column] %= module
+            result = vector[row][column] % numberModule
+            vector[row][column] = result
     return vector
-
-def method_hill(matrix_key, img_matrix):
-    new_array_color = []
-    for rows in range(0, 256):
-        rows_new_array_color = []
-        for columns in range(0, 256, 2):
-            matrix1 = img_matrix[rows, columns]
-            lenMatrix1 = len(matrix1)
-            matrix2 = img_matrix[rows, columns + 1]
-            lenMatrix2 = len(matrix2)
-            vector = multiplication_matrix(matrix_key, [matrix1, matrix2])
-            vector = module_matrix(vector, 256)
-            rows_new_array_color.append(vector[0])
-            rows_new_array_color.append(vector[1])
-
-        new_array_color.append(rows_new_array_color)  # matrix = multiplication_matrix([[1, 2, 3], [1, 2, 3]], [[2, 2], [4, 4]])
-    return new_array_color
-
+def encrypt(key, img_matrix):
+    newArrayImage = []
+    for row in img_matrix:
+        twoRowArray = createTwoRowArrays(row)
+        newArray = multiplication_matrix(key, twoRowArray)
+        newArray = module_matrix(newArray, module)
+        newArrayImage.append(inverseTwoRowArrays(newArray))
+    return newArrayImage
 
 def decrypt(matrix_key, encrypter_matrix):
-    # matrix_key = inversaLlave(matrix_key)
-    matrix_key = module_matrix(matrix_key, 256)
-    new_array_color = []
-    for rows in range(0, 256):
-        rows_new_array_color = []
-        for columns in range(0, 256, 2):
-            vector = multiplication_matrix(matrix_key, [encrypter_matrix[rows, columns], encrypter_matrix[rows, columns + 1]])
-            vector = module_matrix(vector, 256)
-            rows_new_array_color.append(vector[0])
-            rows_new_array_color.append(vector[1])
+    matrix_key = reverseKey(matrix_key)
+    matrix_key = module_matrix(matrix_key, module)
+    newArrayImage = []
+    for row in encrypter_matrix:
+        twoRowArray = createTwoRowArrays(row)
+        newArray = multiplication_matrix(matrix_key, twoRowArray)
+        newArray = module_matrix(newArray, module)
+        newArrayImage.append(inverseTwoRowArrays(newArray))
+    return newArrayImage
 
-        new_array_color.append(rows_new_array_color)  # matrix = multiplication_matrix([[1, 2, 3], [1, 2, 3]], [[2, 2], [4, 4]])
-    return new_array_color
+def multiplication_matrixByPixel(matrix_one, matrix_two):
+    matrix_result = []
+    if len(matrix_one[0]) == len(matrix_two):
+        for row in matrix_one:
+            matrix_result.append(multiplication_vectors(row, matrix_two))
+    return matrix_result
 
-# def encrypt(key, img_matrix):
-#     matrix_encrypt = multiplication_matrix(key, img_matrix)
-#     matrix_encrypt = module_matrix(matrix_encrypt, 27)
-#     return matrix_encrypt
-#
-# def decrypt(matrix_key, encrypter_matrix):
-#     matrix_key = module_matrix(matrix_key, 27)
-#     return module_matrix(multiplication_matrix(matrix_key, encrypter_matrix), 27)
-#
-# parent_matrix = []
-# key = [[6, 5], [5, 5]]
-# inverted_key = [[1, -1], [-1, 6/5]]
-# parent_matrix = [[12, 4, 20, 20, 18], [0, 26, 18, 11, 26], [19, 12, 2, 14, 26]]
-# key = [[35, 53, 12], [12, 21, 5], [2, 4, 1]]
-# inverted_key = [[1, -5, 13], [-2, 11, -31], [6, -34, 99]]
+def module_matrixByPixel(vector, module):
+    newVector = []
+    if module != 0:
+        for element in vector:
+            newVector.append(element % module)
+        return newVector
+    return vector
 
-img = cv2.imread('../image.jpg')
-key = [[6, 5], [5, 5]]
-new_array_color = method_hill(key, img)
+def encryptByPixel(key, matrixImage):
+    newMatrix = matrixImage.copy()
+    for rowIndex in range(len(matrixImage)):
+        for columnIndex in range(len(matrixImage[0])):
+            (b, g, r) = matrixImage[columnIndex, rowIndex]
+            newPosition = multiplication_matrixByPixel(key, [rowIndex, columnIndex])
+            newPosition = module_matrixByPixel(newPosition, 256)
+            newMatrix[newPosition[1]][newPosition[0]] = (b, g, r)
+    return newMatrix
+
+def decryptByPixel(key, matrixImage):
+    newMatrix = matrixImage.copy()
+    # key = reverseKey(key)
+    key = module_matrix(key, 256)
+    for rowIndex in range(len(matrixImage)):
+        for columnIndex in range(len(matrixImage[0])):
+            (b, g, r) = matrixImage[columnIndex, rowIndex]
+            print((b, g, r))
+            newPosition = multiplication_matrixByPixel(key, [rowIndex, columnIndex])
+            newPosition = module_matrixByPixel(newPosition, 256)
+            newMatrix[newPosition[1]][newPosition[0]] = (b, g, r)
+    return newMatrix
+
+module = 10**10
+key = [[21, 35], [18, 79]]
+
+
+img = cv2.imread('image.jpg', 0)
+# encrypt
+new_array_color = encrypt(key, img)
 arr = numpy.array(new_array_color, dtype=numpy.int8)
+# decrypt
+decrypt_array = decrypt(key, new_array_color)
+arr2 = numpy.array(decrypt_array, dtype=numpy.int8)
 
-# invertido = [[1, -1], [-1, 6/5]]
-# decrypt_array = decrypt(new_array_color, invertido)
-# arr2 = numpy.array(decrypt_array, dtype=numpy.int8)
-cv2.imshow('WOLF', img)
+
+img2 = cv2.imread('image2.png')
+# encrypt moving pixels
+encryptByPixel = encryptByPixel(key, img2)
+arrByPixel = numpy.array(encryptByPixel, dtype=numpy.int8)
+
+# cv2.imwrite('encriptada.jpg', arrByPixel)
+imageEncrypt = cv2.imread('encriptada.jpg')
+encryptByPixel = decryptByPixel(key, imageEncrypt)
+arrByPixel2 = numpy.array(encryptByPixel, dtype=numpy.int8)
+
+cv2.imshow('WOLF', arr)
+cv2.waitKey()
+cv2.imshow('WOLF', arr2)
+cv2.waitKey()
+cv2.imshow('WOLF', img2)
+cv2.waitKey()
+cv2.imshow('WOLF', arrByPixel)
+cv2.waitKey()
+cv2.imshow('WOLF', imageEncrypt)
+cv2.waitKey()
+cv2.imshow('WOLF', arrByPixel2)
 cv2.waitKey()
 cv2.destroyAllWindows()
+
+# cv2.imshow('WOLF', arr2)
+# cv2.waitKey()
+# cv2.destroyAllWindows()
