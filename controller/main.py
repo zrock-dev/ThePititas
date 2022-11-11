@@ -1,9 +1,3 @@
-import cv2
-import numpy
-
-from model.utils.constants import SYS_PATH
-
-
 def multiplication_vectors(first_vector, second_vector):
     result = 0
     for index in range(len(first_vector)):
@@ -149,20 +143,7 @@ def decryptByPixel(key, matrixImage):
 module = 10 ** 10
 key = [[21, 35], [18, 79]]
 
-# # Metodo hill
-# img = cv2.imread('image.jpg', 0)
-# # encrypt
-# new_array_color = encrypt(key, img)
-# arr = numpy.array(new_array_color, dtype=numpy.int8)
-# # encrypted_image = cv2.imwrite(f'{SYS_PATH}/model/encrypted_image.png', arr)
-#
-#
-# # decrypt
-# decrypt_array = decrypt(key, new_array_color)
-# arr2 = numpy.array(decrypt_array, dtype=numpy.int8)
-# decrypted_image = cv2.imwrite(f'{SYS_PATH}/model/decrypted_image.png', arr2)
-#
-#
+
 # # Pixels
 # img2 = cv2.imread('image2.png')
 # # encrypt moving pixels

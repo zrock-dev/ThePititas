@@ -21,5 +21,4 @@ class Hill:
         arr2 = numpy.array(decrypt_array, dtype=numpy.int8)
         decrypted_image_path = f'{SYS_PATH}/model/decrypted_image.png'
         cv2.imwrite(decrypted_image_path, arr2)
-
         return decrypted_image_path

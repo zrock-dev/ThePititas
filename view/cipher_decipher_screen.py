@@ -96,7 +96,7 @@ class CipherDecipherScreen:
             print(crypto_image_path)
             image = tk.PhotoImage(file=crypto_image_path)
         else:
-            image = tk.PhotoImage(self.pixel_method.encrypt())
+            image = tk.PhotoImage(file=self.pixel_method.encrypt(self.image_path))
 
         self.output_label.configure(image=image)
         self.output_label.image = image
@@ -108,7 +108,7 @@ class CipherDecipherScreen:
             print(image_path)
             image = tk.PhotoImage(file=image_path)
         else:
-            image = tk.PhotoImage(self.pixel_method.decrypt())
+            image = tk.PhotoImage(file=self.pixel_method.decrypt())
 
         self.output_label.configure(image=image)
         self.output_label.image = image
