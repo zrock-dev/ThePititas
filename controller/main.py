@@ -18,7 +18,6 @@ def inverseTwoRowArrays(matrixTwoRows):
 
 def decrypt(matrix_key, encrypter_matrix):
     matrix_key = inversal_key(matrix_key)
-    # matrix_key = module_matrix(matrix_key, module)
     newArrayImage = encrypter_matrix.copy()
     for row in range(len(encrypter_matrix)):
         twoRowArray = createTwoRowArrays(encrypter_matrix[row])
@@ -48,6 +47,16 @@ def multiplication_matrix(matrix_one, matrix_two):
 
 
 def inversal_key(matriz):
+    inversal_module = 205
+    newMatrix = [[matriz[1][1], - matriz[0][1]], [- matriz[1][0], matriz[0][0]]]
+    indexRow = 0
+    while indexRow < len(newMatrix):
+        indexColumn = 0
+        while indexColumn < len(newMatrix[indexRow]):
+            newMatrix[-indexRow][-indexColumn] = inversal_module * newMatrix[indexRow][indexColumn]
+            indexColumn = indexColumn + 1
+        indexRow = indexRow + 1
+    return newMatrix
     return [[67, 249], [150, 209]]
 
 
