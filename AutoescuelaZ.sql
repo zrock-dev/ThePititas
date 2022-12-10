@@ -1,6 +1,6 @@
 -- Created by Vertabelo (http://vertabelo.com)
 -- Last modification date: 2022-12-10 13:30:03.894
-
+create schema Driving_School;
 -- tables
 -- Table: Building
 CREATE TABLE Building (
