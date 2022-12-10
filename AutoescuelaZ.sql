@@ -1,6 +1,7 @@
 -- Created by Vertabelo (http://vertabelo.com)
 -- Last modification date: 2022-12-10 13:30:03.894
 create schema Driving_School;
+use Driving_School;
 -- tables
 -- Table: Building
 CREATE TABLE Building (
@@ -87,8 +88,15 @@ CREATE TABLE Student_Building (
     id int NOT NULL,
     Student_id int NOT NULL,
     Building_id int NOT NULL,
-    score int NOT NULL,
     CONSTRAINT Student_Building_pk PRIMARY KEY (id)
+);
+
+
+-- Table: Student_Note
+CREATE TABLE Student_Note (
+	score int NOT NULL,
+    Building_id int NOT NULL,
+    FOREIGN KEY (Building_id) REFERENCES Student_Building (id)
 );
 
 -- Table: Student_Important
@@ -107,6 +115,7 @@ CREATE TABLE Subject (
     id int NOT NULL,
     name varchar(80) NOT NULL,
     price int NOT NULL,
+    type VARCHAR (50) NOT NULL,
     CONSTRAINT Subject_pk PRIMARY KEY (id)
 );
 
@@ -198,6 +207,17 @@ ALTER TABLE Vehicle_Building ADD CONSTRAINT Vehicle_Building FOREIGN KEY Vehicle
 -- Reference: Vehicle_association_1 (table: Vehicle_Building)
 ALTER TABLE Vehicle_Building ADD CONSTRAINT Vehicle_association_1 FOREIGN KEY Vehicle_association_1 (Vehicle_plate)
     REFERENCES Vehicle (plate);
+
+CREATE TABLE Note_History (
+	score int NOT NULL,
+    name_subject varchar (80) NOT NULL,
+    type_subject varchar (45) NOT NULL,
+    name_trainer varchar (255) NOT NULL,
+    last_name_trainer varchar (255) NOT NULL,
+    date_time datetime NOT NULL,
+	Building_id int NOT NULL,
+    FOREIGN KEY (Building_id) REFERENCES Building (id)
+);
 
 -- End of file.
 
