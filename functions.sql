@@ -1,17 +1,22 @@
 ## Realizar una función que me devuelva el número de clientes inscrito en una materia dada.
-# Status: Untested
+# Status: Tested.
+DROP FUNCTION amount_students_subject;
 DELIMITER //
 CREATE FUNCTION amount_students_subject(subject_name VARCHAR(255))
     RETURNS INT
     DETERMINISTIC
 BEGIN
-    # validate subject name
-    DECLARE building_id INT;
-    SET building_id = (SELECT id FROM Building WHERE Subject_id = (SELECT id FROM Subject WHERE name = subject_name));
-    RETURN (SELECT COUNT(Student_id) FROM Student_Building WHERE Student_Building.Building_id = building_id);
+    RETURN (SELECT COUNT(Student_id)
+            FROM Student_Building
+            WHERE Student_Building.Building_id
+                      IN (SELECT id
+                          FROM Building
+                          WHERE Subject_id = (SELECT id FROM Subject WHERE name = subject_name))
+            );
 END;
 
 ## Realizar una función que me devuelva el número de clientes reprobadas o aprobadas dado por un instructor en específico.
+# Status: Tested.
 DELIMITER //
 CREATE FUNCTION amount_students_status(trainer_last_name VARCHAR(255), _filter ENUM('Approved', 'Reproved'))
     RETURNS INT
