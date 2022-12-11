@@ -21,13 +21,6 @@ CREATE TABLE Building_Schedule (
     CONSTRAINT Building_Schedule_pk PRIMARY KEY (id)
 );
 
--- Table: Car_Usage
-CREATE TABLE Car_Usage (
-    id int NOT NULL AUTO_INCREMENT,
-    type_use varchar(45) NOT NULL,
-    CONSTRAINT Car_Usage_pk PRIMARY KEY (id)
-);
-
 -- Table: Category
 CREATE TABLE Category (
     id int NOT NULL AUTO_INCREMENT,
@@ -69,15 +62,14 @@ CREATE TABLE Data_Maintenance (
 
 -- Table: Note_History
 CREATE TABLE Note_History (
-    date_time timestamp NOT NULL,
+    name_student VARCHAR(255) NOT NULL,
+    last_name_student VARCHAR(255) NOT NULL,
     score int NOT NULL,
     name_subject varchar(80) NOT NULL,
     type_subject varchar(45) NOT NULL,
     name_trainer varchar(255) NOT NULL,
     last_name_trainer varchar(255) NOT NULL,
-    name_student VARCHAR(255) NOT NULL,
-    last_name_student VARCHAR(255) NOT NULL,
-    Building_id int NOT NULL
+    date_time timestamp NOT NULL
 );
 
 -- Table: Schedule
@@ -176,10 +168,6 @@ ALTER TABLE Student_Building ADD CONSTRAINT Building_association_1 FOREIGN KEY B
 ALTER TABLE Building_Schedule ADD CONSTRAINT Building_association_2 FOREIGN KEY Building_association_2 (Building_id)
     REFERENCES Building (id);
 
--- Reference: Category_Car_Usage (table: Category)
-ALTER TABLE Category ADD CONSTRAINT Category_Car_Usage FOREIGN KEY Category_Car_Usage (Car_Usage_id)
-    REFERENCES Car_Usage (id);
-
 -- Reference: Certificate_Category (table: Certificate)
 ALTER TABLE Certificate ADD CONSTRAINT Certificate_Category FOREIGN KEY Certificate_Category (Category_id)
     REFERENCES Category (id);
@@ -192,10 +180,6 @@ ALTER TABLE Certificate ADD CONSTRAINT Certificate_Company FOREIGN KEY Certifica
 ALTER TABLE Data_Maintenance ADD CONSTRAINT Data_Maintenance_Vehicle FOREIGN KEY Data_Maintenance_Vehicle (Vehicle_id)
     REFERENCES Vehicle (id);
 
--- Reference: Note_History_Building (table: Note_History)
-ALTER TABLE Note_History ADD CONSTRAINT Note_History_Building FOREIGN KEY Note_History_Building (Building_id)
-    REFERENCES Building (id);
-
 -- Reference: Schedule_association_2 (table: Building_Schedule)
 ALTER TABLE Building_Schedule ADD CONSTRAINT Schedule_association_2 FOREIGN KEY Schedule_association_2 (Schedule_id)
     REFERENCES Schedule (id);
@@ -204,13 +188,9 @@ ALTER TABLE Building_Schedule ADD CONSTRAINT Schedule_association_2 FOREIGN KEY 
 ALTER TABLE Student_Note ADD CONSTRAINT Student_Note_Student_Building FOREIGN KEY Student_Note_Student_Building (Student_Building_id)
     REFERENCES Student_Building (id);
 
--- Reference: Student_Student_Important (table: Student)
-ALTER TABLE Student ADD CONSTRAINT Student_Student_Important FOREIGN KEY Student_Student_Important (Student_Important_id)
-    REFERENCES Student_Important (id);
-
 -- Reference: Student_association_1 (table: Student_Building)
 ALTER TABLE Student_Building ADD CONSTRAINT Student_association_1 FOREIGN KEY Student_association_1 (Student_id)
-    REFERENCES Student_Important (id);
+    REFERENCES Student(id);
 
 -- Reference: Vehicle_Building (table: Vehicle_Building)
 ALTER TABLE Vehicle_Building ADD CONSTRAINT Vehicle_Building FOREIGN KEY Vehicle_Building (Building_id)
