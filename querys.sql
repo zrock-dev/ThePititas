@@ -48,3 +48,17 @@ INNER JOIN Student_Building SB ON B.id = SB.Building_id
 WHERE SB.inscription_date IN ('2020-05-01', '2020-05-30')
 AND B.Category_id IN (SELECT id FROM Category AS C WHERE C.type = 'A')
 GROUP BY B.Trainer_id;
+
+-- Recuperar materias dictadas por instructores de sexo 'M' y edades entre '20' y '30' años. (Daniel)
+SELECT s.name
+FROM Subject as s
+WHERE s.id = (SELECT b.Subject_id
+              FROM Building as b
+              WHERE b.Trainer_id = (SELECT t.id
+                                    FROM Trainer as t
+                                    WHERE t.gender = 'M' AND T.age BETWEEN 20 AND 30));
+
+-- Realizar una consulta calculando el promedio de edad inscritos en la categoría M
+SELECT AVG(s.age) FROM  Student as s
+                  WHERE s.id = (SELECT sb.Student_id FROM Student_Building as sb
+                                                     WHERE sb.Building_id = (SELECT b.id FROM Building as b WHERE b.Category_id = (SELECT c.id FROM Category as c WHERE c.type = 'M')))
