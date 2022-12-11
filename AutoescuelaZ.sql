@@ -87,15 +87,6 @@ CREATE TABLE Schedule (
     CONSTRAINT Schedule_pk PRIMARY KEY (id)
 );
 
--- Table: Student
-CREATE TABLE Student (
-    id int NOT NULL AUTO_INCREMENT,
-    Student_Important_id int NOT NULL,
-    phone int NOT NULL,
-    gender enum('f','m') NOT NULL,
-    CONSTRAINT Student_pk PRIMARY KEY (id)
-);
-
 -- Table: Student_Building
 CREATE TABLE Student_Building (
     id int NOT NULL AUTO_INCREMENT,
@@ -105,12 +96,14 @@ CREATE TABLE Student_Building (
     CONSTRAINT Student_Building_pk PRIMARY KEY (id)
 );
 
--- Table: Student_Important
-CREATE TABLE Student_Important (
+-- Table: Student
+CREATE TABLE Student (
     id int NOT NULL AUTO_INCREMENT,
     first_name varchar(255) NOT NULL,
     last_name varchar(255) NOT NULL,
     age int NOT NULL,
+    phone int NOT NULL,
+    gender enum('F','M') NOT NULL,
     CONSTRAINT Student_pk PRIMARY KEY (id)
 );
 
