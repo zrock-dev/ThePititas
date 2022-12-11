@@ -1,6 +1,8 @@
 -- Created by Vertabelo (http://vertabelo.com)
 -- Last modification date: 2022-12-11 15:38:44.679
-
+DROP SCHEMA DriverCollege;
+CREATE SCHEMA DriverCollege;
+USE DriverCollege;
 -- tables
 -- Table: Building
 CREATE TABLE Building (
@@ -30,9 +32,9 @@ CREATE TABLE Car_Usage (
 CREATE TABLE Category (
     id int NOT NULL AUTO_INCREMENT,
     Car_Usage_id int NOT NULL,
-    type char(1) NOT NULL,
-    capacity varchar(45) NOT NULL,
-    type_car varchar(45) NOT NULL,
+    type ENUM('A', 'P', 'M') NOT NULL,
+    capacity ENUM('Low', 'Medium', 'Full') NOT NULL,
+    type_car ENUM('Private', 'Public', 'Both') NOT NULL,
     CONSTRAINT Category_pk PRIMARY KEY (id)
 );
 
@@ -50,7 +52,7 @@ CREATE INDEX Certificate_idx_1 USING BTREE ON Certificate (id);
 
 -- Table: Company
 CREATE TABLE Company (
-    id int NOT NULL,
+    id int NOT NULL AUTO_INCREMENT,
     name varchar(255) NOT NULL,
     phone_number int NOT NULL,
     address varchar(255) NOT NULL,
@@ -59,9 +61,9 @@ CREATE TABLE Company (
 
 -- Table: Data_Maintenance
 CREATE TABLE Data_Maintenance (
-    id int NOT NULL,
+    id int NOT NULL AUTO_INCREMENT,
     date date NOT NULL,
-    Vehicle_plate int NOT NULL,
+    Vehicle_id int NOT NULL,
     CONSTRAINT Data_Maintenance_pk PRIMARY KEY (id)
 );
 
@@ -73,19 +75,21 @@ CREATE TABLE Note_History (
     type_subject varchar(45) NOT NULL,
     name_trainer varchar(255) NOT NULL,
     last_name_trainer varchar(255) NOT NULL,
+    name_student VARCHAR(255) NOT NULL,
+    last_name_student VARCHAR(255) NOT NULL,
     Building_id int NOT NULL
 );
 
 -- Table: Schedule
 CREATE TABLE Schedule (
-    id int NOT NULL,
+    id int NOT NULL AUTO_INCREMENT,
     time time NOT NULL,
     CONSTRAINT Schedule_pk PRIMARY KEY (id)
 );
 
 -- Table: Student
 CREATE TABLE Student (
-    id int NOT NULL,
+    id int NOT NULL AUTO_INCREMENT,
     Student_Important_id int NOT NULL,
     phone int NOT NULL,
     gender enum('f','m') NOT NULL,
@@ -94,7 +98,7 @@ CREATE TABLE Student (
 
 -- Table: Student_Building
 CREATE TABLE Student_Building (
-    id int NOT NULL,
+    id int NOT NULL AUTO_INCREMENT,
     Student_id int NOT NULL,
     Building_id int NOT NULL,
     inscription_date timestamp NOT NULL,
@@ -103,7 +107,7 @@ CREATE TABLE Student_Building (
 
 -- Table: Student_Important
 CREATE TABLE Student_Important (
-    id int NOT NULL,
+    id int NOT NULL AUTO_INCREMENT,
     first_name varchar(255) NOT NULL,
     last_name varchar(255) NOT NULL,
     age int NOT NULL,
@@ -120,16 +124,16 @@ CREATE TABLE Student_Note (
 
 -- Table: Subject
 CREATE TABLE Subject (
-    id int NOT NULL,
+    id int NOT NULL AUTO_INCREMENT,
     name varchar(80) NOT NULL,
     price int NOT NULL,
-    type varchar(50) NOT NULL,
+    category ENUM('Practice', 'Theory') NOT NULL,
     CONSTRAINT Subject_pk PRIMARY KEY (id)
 );
 
 -- Table: Trainer
 CREATE TABLE Trainer (
-    id int NOT NULL,
+    id int NOT NULL AUTO_INCREMENT,
     first_name varchar(255) NOT NULL,
     last_name varchar(255) NOT NULL,
     age int NOT NULL,
@@ -143,7 +147,7 @@ CREATE INDEX Trainer_idx_1 USING BTREE ON Trainer (id);
 
 -- Table: Vehicle
 CREATE TABLE Vehicle (
-    id int NOT NULL,
+    id int NOT NULL AUTO_INCREMENT,
     model varchar(255) NOT NULL,
     type varchar(255) NOT NULL,
     available boolean NOT NULL,
@@ -152,11 +156,76 @@ CREATE TABLE Vehicle (
 
 -- Table: Vehicle_Building
 CREATE TABLE Vehicle_Building (
-    id int NOT NULL,
+    id int NOT NULL AUTO_INCREMENT,
     Vehicle_plate int NOT NULL,
     Building_id int NOT NULL,
     CONSTRAINT Vehicle_Building_pk PRIMARY KEY (id)
 );
+
+-- foreign keys
+-- Reference: Building_Category (table: Building)
+ALTER TABLE Building ADD CONSTRAINT Building_Category FOREIGN KEY Building_Category (Category_id)
+    REFERENCES Category (id);
+
+-- Reference: Building_Subject (table: Building)
+ALTER TABLE Building ADD CONSTRAINT Building_Subject FOREIGN KEY Building_Subject (Subject_id)
+    REFERENCES Subject (id);
+
+-- Reference: Building_Trainer (table: Building)
+ALTER TABLE Building ADD CONSTRAINT Building_Trainer FOREIGN KEY Building_Trainer (Trainer_id)
+    REFERENCES Trainer (id);
+
+-- Reference: Building_association_1 (table: Student_Building)
+ALTER TABLE Student_Building ADD CONSTRAINT Building_association_1 FOREIGN KEY Building_association_1 (Building_id)
+    REFERENCES Building (id);
+
+-- Reference: Building_association_2 (table: Building_Schedule)
+ALTER TABLE Building_Schedule ADD CONSTRAINT Building_association_2 FOREIGN KEY Building_association_2 (Building_id)
+    REFERENCES Building (id);
+
+-- Reference: Category_Car_Usage (table: Category)
+ALTER TABLE Category ADD CONSTRAINT Category_Car_Usage FOREIGN KEY Category_Car_Usage (Car_Usage_id)
+    REFERENCES Car_Usage (id);
+
+-- Reference: Certificate_Category (table: Certificate)
+ALTER TABLE Certificate ADD CONSTRAINT Certificate_Category FOREIGN KEY Certificate_Category (Category_id)
+    REFERENCES Category (id);
+
+-- Reference: Certificate_Company (table: Certificate)
+ALTER TABLE Certificate ADD CONSTRAINT Certificate_Company FOREIGN KEY Certificate_Company (Company_id)
+    REFERENCES Company (id);
+
+-- Reference: Data_Maintenance_Vehicle (table: Data_Maintenance)
+ALTER TABLE Data_Maintenance ADD CONSTRAINT Data_Maintenance_Vehicle FOREIGN KEY Data_Maintenance_Vehicle (Vehicle_id)
+    REFERENCES Vehicle (id);
+
+-- Reference: Note_History_Building (table: Note_History)
+ALTER TABLE Note_History ADD CONSTRAINT Note_History_Building FOREIGN KEY Note_History_Building (Building_id)
+    REFERENCES Building (id);
+
+-- Reference: Schedule_association_2 (table: Building_Schedule)
+ALTER TABLE Building_Schedule ADD CONSTRAINT Schedule_association_2 FOREIGN KEY Schedule_association_2 (Schedule_id)
+    REFERENCES Schedule (id);
+
+-- Reference: Student_Note_Student_Building (table: Student_Note)
+ALTER TABLE Student_Note ADD CONSTRAINT Student_Note_Student_Building FOREIGN KEY Student_Note_Student_Building (Student_Building_id)
+    REFERENCES Student_Building (id);
+
+-- Reference: Student_Student_Important (table: Student)
+ALTER TABLE Student ADD CONSTRAINT Student_Student_Important FOREIGN KEY Student_Student_Important (Student_Important_id)
+    REFERENCES Student_Important (id);
+
+-- Reference: Student_association_1 (table: Student_Building)
+ALTER TABLE Student_Building ADD CONSTRAINT Student_association_1 FOREIGN KEY Student_association_1 (Student_id)
+    REFERENCES Student_Important (id);
+
+-- Reference: Vehicle_Building (table: Vehicle_Building)
+ALTER TABLE Vehicle_Building ADD CONSTRAINT Vehicle_Building FOREIGN KEY Vehicle_Building (Building_id)
+    REFERENCES Building (id);
+
+-- Reference: Vehicle_association_1 (table: Vehicle_Building)
+ALTER TABLE Vehicle_Building ADD CONSTRAINT Vehicle_association_1 FOREIGN KEY Vehicle_association_1 (Vehicle_plate)
+    REFERENCES Vehicle (id);
 
 -- End of file.
 
