@@ -1,9 +1,9 @@
 -- Created by Vertabelo (http://vertabelo.com)
 -- Last modification date: 2022-12-11 15:38:44.679
-DROP SCHEMA IF EXISTS DriverCollege;
-CREATE SCHEMA IF NOT EXISTS DriverCollege;
-USE DriverCollege;
 -- tables
+DROP SCHEMA DriverCollege;
+CREATE SCHEMA DriverCollege;
+USE DriverCollege;
 -- Table: Building
 CREATE TABLE Building (
     id int NOT NULL AUTO_INCREMENT,
@@ -24,7 +24,6 @@ CREATE TABLE Building_Schedule (
 -- Table: Category
 CREATE TABLE Category (
     id int NOT NULL AUTO_INCREMENT,
-    Car_Usage_id int NOT NULL,
     type ENUM('A', 'P', 'M') NOT NULL,
     capacity ENUM('Low', 'Medium', 'Full') NOT NULL,
     type_car ENUM('Private', 'Public', 'Both') NOT NULL,
@@ -36,6 +35,7 @@ CREATE TABLE Certificate (
     id int NOT NULL AUTO_INCREMENT,
     Category_id int NOT NULL,
     Company_id int NOT NULL,
+    Student_Building_id int NOT NULL,
     country varchar(255) NOT NULL,
     date date NOT NULL,
     CONSTRAINT Certificate_pk PRIMARY KEY (id)
@@ -123,7 +123,7 @@ CREATE TABLE Trainer (
     last_name varchar(255) NOT NULL,
     age int NOT NULL,
     phone int NOT NULL,
-    gender varchar(1) NULL,
+    gender ENUM('F', 'M') NULL,
     salary int NULL,
     CONSTRAINT Trainer_pk PRIMARY KEY (id)
 );
@@ -199,6 +199,10 @@ ALTER TABLE Vehicle_Building ADD CONSTRAINT Vehicle_Building FOREIGN KEY Vehicle
 -- Reference: Vehicle_association_1 (table: Vehicle_Building)
 ALTER TABLE Vehicle_Building ADD CONSTRAINT Vehicle_association_1 FOREIGN KEY Vehicle_association_1 (Vehicle_plate)
     REFERENCES Vehicle (id);
+
+-- Reference: Certificate_association_1 (table: Certificate)
+ALTER TABLE Certificate ADD CONSTRAINT Certificate_association_1 FOREIGN KEY Certificate_association_1 (Student_Building_id)
+REFERENCES Student_Building(id);
 
 -- End of file.
 
