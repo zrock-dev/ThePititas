@@ -1,7 +1,7 @@
 -- Created by Vertabelo (http://vertabelo.com)
 -- Last modification date: 2022-12-11 15:38:44.679
-DROP SCHEMA DriverCollege;
-CREATE SCHEMA DriverCollege;
+DROP SCHEMA IF EXISTS DriverCollege;
+CREATE SCHEMA IF NOT EXISTS DriverCollege;
 USE DriverCollege;
 -- tables
 -- Table: Building
@@ -107,7 +107,7 @@ CREATE TABLE Student (
     CONSTRAINT Student_pk PRIMARY KEY (id)
 );
 
-CREATE INDEX Student_Important_idx_1 USING BTREE ON Student_Important (id);
+CREATE INDEX Student USING BTREE ON Student (id);
 
 -- Table: Student_Note
 CREATE TABLE Student_Note (
