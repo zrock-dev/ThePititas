@@ -101,6 +101,19 @@ CREATE TABLE Student (
 
 CREATE INDEX Student USING BTREE ON Student (id);
 
+
+-- Table Student
+CREATE TABLE Client_Not_Registered (
+    id int NOT NULL AUTO_INCREMENT,
+    first_name varchar(255) NOT NULL,
+    last_name varchar(255) NOT NULL,
+    age int NOT NULL,
+    phone int NOT NULL,
+    gender enum('F','M') NOT NULL,
+    CONSTRAINT Student_pk PRIMARY KEY (id)
+);
+
+
 -- Table: Student_Note
 CREATE TABLE Student_Note (
     Student_Building_id int NOT NULL,
