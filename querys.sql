@@ -3,11 +3,11 @@ SELECT * FROM Student;
 
 -- Recuperar todos los clientes inscritos con el instructor Ariel Blanco
 SELECT
-    Student.first_name,
-    Student.last_name,
-    Trainer.first_name,
-    Trainer.last_name,
-    Subject.name
+    Student.first_name AS Name_Student,
+    Student.last_name AS Last_Name_Student,
+    Trainer.first_name AS Name_Trainer,
+    Trainer.last_name AS Last_Name_Trainer,
+    Subject.name AS Name_Subject
 FROM Student_Building
 inner join Student on Student.id = Student_Building.Student_id
 inner join Building on Building.id = Student_Building.Building_id
@@ -16,7 +16,11 @@ inner join Trainer on Trainer.id = Building.Trainer_id
 where Trainer.first_name = "Ariel" and Trainer.last_name = "Blanco";
 
 -- Recuperar todos los clientes inscritos en la categoría A y P
-SELECT Student.first_name, Student.last_name, Subject.name, Category.type
+SELECT
+    Student.first_name AS Name_Student,
+    Student.last_name AS Last_Name_Student,
+    Subject.name AS Name_Subject,
+    Category.type AS Type_Category
 FROM Student_Building
 inner join Student on Student.id = Student_Building.Student_id
 inner join Building on Building.id = Student_Building.Building_id
