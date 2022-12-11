@@ -1,221 +1,323 @@
--- tables
--- Table: Building
-CREATE TABLE Building (
-    id int NOT NULL,
-    Subject_id int NOT NULL,
-    Trainer_id int NOT NULL,
-    Category_id int NOT NULL,
-    CONSTRAINT Building_pk PRIMARY KEY (id)
-);
+-- MySQL Workbench Forward Engineering
 
--- Table: Building_Schedule
-CREATE TABLE Building_Schedule (
-    id int NOT NULL,
-    Building_id int NOT NULL,
-    Schedule_id int NOT NULL,
-    CONSTRAINT Building_Schedule_pk PRIMARY KEY (id)
-);
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
--- Table: Car_Usage
-CREATE TABLE Car_Usage (
-    id int NOT NULL,
-    type_use Varchar(45) NOT NULL,
-    CONSTRAINT Car_Usage_pk PRIMARY KEY (id)
-);
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema Driving_School
+-- -----------------------------------------------------
 
--- Table: Category
-CREATE TABLE Category (
-    id int NOT NULL,
-    type char(1) NOT NULL,
-    capacity Varchar(45) NOT NULL,
-    type_car Varchar(45) NOT NULL,
-    Car_Usage_id int NOT NULL,
-    CONSTRAINT Category_pk PRIMARY KEY (id)
-);
+-- -----------------------------------------------------
+-- Schema Driving_School
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `Driving_School` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `Driving_School` ;
 
--- Table: Certificate
-CREATE TABLE Certificate (
-    id int NOT NULL,
-    country varchar(255) NOT NULL,
-    date date NOT NULL,
-    Category_id int NOT NULL,
-    Company_id int NOT NULL,
-    CONSTRAINT Certificate_pk PRIMARY KEY (id)
-);
-
-CREATE INDEX Certificate_idx_1 USING BTREE ON Certificate (id);
-
--- Table: Company
-CREATE TABLE Company (
-    id int NOT NULL,
-    name varchar(255) NOT NULL,
-    phone_number int NOT NULL,
-    address varchar(255) NOT NULL,
-    CONSTRAINT Company_pk PRIMARY KEY (id)
-);
-
--- Table: Data_Maintenance
-CREATE TABLE Data_Maintenance (
-    id int NOT NULL,
-    plate varchar(45) NOT NULL,
-    date date NOT NULL,
-    Vehicle_plate int NOT NULL,
-    CONSTRAINT Data_Maintenance_pk PRIMARY KEY (id)
-);
-
--- Table: Schedule
-CREATE TABLE Schedule (
-    id int NOT NULL,
-    time time NOT NULL,
-    CONSTRAINT Schedule_pk PRIMARY KEY (id)
-);
-
--- Table: Student
-CREATE TABLE Student (
-    id int NOT NULL,
-    Student_Important_id int NOT NULL,
-    phone int NOT NULL,
-    gender ENUM('F', 'M') NOT NULL ,
-    CONSTRAINT Student_pk PRIMARY KEY (id)
-);
-
--- Table: Student_Building
-CREATE TABLE Student_Building (
-    id int NOT NULL,
-    Student_id int NOT NULL,
-    Building_id int NOT NULL,
-    CONSTRAINT Student_Building_pk PRIMARY KEY (id)
-);
+-- -----------------------------------------------------
+-- Table `Driving_School`.`Car_Usage`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Driving_School`.`Car_Usage` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type_use` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
--- Table: Student_Note
-CREATE TABLE Student_Note (
-	score int NOT NULL,
-    Student_Building_id int NOT NULL,
-    FOREIGN KEY (Student_Building_id) REFERENCES Student_Building (id)
-);
-
--- Table: Student_Important
-CREATE TABLE Student_Important (
-    id int NOT NULL,
-    first_name varchar(255) NOT NULL,
-    last_name varchar(255) NOT NULL,
-    age int NOT NULL,
-    CONSTRAINT Student_pk PRIMARY KEY (id)
-);
-
-CREATE INDEX Student_Important_idx_1 USING BTREE ON Student_Important (id);
-
--- Table: Subject
-CREATE TABLE Subject (
-    id int NOT NULL,
-    name varchar(80) NOT NULL,
-    price int NOT NULL,
-    type VARCHAR (50) NOT NULL,
-    CONSTRAINT Subject_pk PRIMARY KEY (id)
-);
-
--- Table: Trainer
-CREATE TABLE Trainer (
-    id int NOT NULL,
-    first_name varchar(255) NOT NULL,
-    last_name varchar(255) NOT NULL,
-    age int NOT NULL,
-    phone int NOT NULL,
-    gender varchar(1) NULL,
-    salary int NULL,
-    CONSTRAINT Trainer_pk PRIMARY KEY (id)
-);
-
-CREATE INDEX Trainer_idx_1 USING BTREE ON Trainer (id);
-
--- Table: Vehicle
-CREATE TABLE Vehicle (
-    plate int NOT NULL,
-    model varchar(255) NOT NULL,
-    type varchar(255) NOT NULL,
-    date_maintenance date NOT NULL,
-    available boolean NOT NULL,
-    CONSTRAINT Vehicle_pk PRIMARY KEY (plate)
-);
-
--- Table: Vehicle_Building
-CREATE TABLE Vehicle_Building (
-    id int NOT NULL,
-    Vehicle_plate int NOT NULL,
-    Building_id int NOT NULL,
-    CONSTRAINT Vehicle_Building_pk PRIMARY KEY (id)
-);
-
--- foreign keys
--- Reference: Building_Category (table: Building)
-ALTER TABLE Building ADD CONSTRAINT Building_Category FOREIGN KEY Building_Category (Category_id)
-    REFERENCES Category (id);
-
--- Reference: Building_Subject (table: Building)
-ALTER TABLE Building ADD CONSTRAINT Building_Subject FOREIGN KEY Building_Subject (Subject_id)
-    REFERENCES Subject (id);
-
--- Reference: Building_Trainer (table: Building)
-ALTER TABLE Building ADD CONSTRAINT Building_Trainer FOREIGN KEY Building_Trainer (Trainer_id)
-    REFERENCES Trainer (id);
-
--- Reference: Building_association_1 (table: Student_Building)
-ALTER TABLE Student_Building ADD CONSTRAINT Building_association_1 FOREIGN KEY Building_association_1 (Building_id)
-    REFERENCES Building (id);
-
--- Reference: Building_association_2 (table: Building_Schedule)
-ALTER TABLE Building_Schedule ADD CONSTRAINT Building_association_2 FOREIGN KEY Building_association_2 (Building_id)
-    REFERENCES Building (id);
-
--- Reference: Category_Car_Usage (table: Category)
-ALTER TABLE Category ADD CONSTRAINT Category_Car_Usage FOREIGN KEY Category_Car_Usage (Car_Usage_id)
-    REFERENCES Car_Usage (id);
-
--- Reference: Certificate_Category (table: Certificate)
-ALTER TABLE Certificate ADD CONSTRAINT Certificate_Category FOREIGN KEY Certificate_Category (Category_id)
-    REFERENCES Category (id);
-
--- Reference: Certificate_Company (table: Certificate)
-ALTER TABLE Certificate ADD CONSTRAINT Certificate_Company FOREIGN KEY Certificate_Company (Company_id)
-    REFERENCES Company (id);
-
--- Reference: Data_Maintenance_Vehicle (table: Data_Maintenance)
-ALTER TABLE Data_Maintenance ADD CONSTRAINT Data_Maintenance_Vehicle FOREIGN KEY Data_Maintenance_Vehicle (Vehicle_plate)
-    REFERENCES Vehicle (plate);
-
--- Reference: Schedule_association_2 (table: Building_Schedule)
-ALTER TABLE Building_Schedule ADD CONSTRAINT Schedule_association_2 FOREIGN KEY Schedule_association_2 (Schedule_id)
-    REFERENCES Schedule (id);
-
--- Reference: Student_Student_Important (table: Student)
-ALTER TABLE Student ADD CONSTRAINT Student_Student_Important FOREIGN KEY Student_Student_Important (Student_Important_id)
-    REFERENCES Student_Important (id);
-
--- Reference: Student_association_1 (table: Student_Building)
-ALTER TABLE Student_Building ADD CONSTRAINT Student_association_1 FOREIGN KEY Student_association_1 (Student_id)
-    REFERENCES Student_Important (id);
-
--- Reference: Vehicle_Building (table: Vehicle_Building)
-ALTER TABLE Vehicle_Building ADD CONSTRAINT Vehicle_Building FOREIGN KEY Vehicle_Building (Building_id)
-    REFERENCES Building (id);
-
--- Reference: Vehicle_association_1 (table: Vehicle_Building)
-ALTER TABLE Vehicle_Building ADD CONSTRAINT Vehicle_association_1 FOREIGN KEY Vehicle_association_1 (Vehicle_plate)
-    REFERENCES Vehicle (plate);
-
-CREATE TABLE Note_History (
-	score int NOT NULL,
-    name_subject varchar (80) NOT NULL,
-    type_subject varchar (45) NOT NULL,
-    name_trainer varchar (255) NOT NULL,
-    last_name_trainer varchar (255) NOT NULL,
-    date_time datetime NOT NULL,
-	Building_id int NOT NULL,
-    FOREIGN KEY (Building_id) REFERENCES Building (id)
-);
+-- -----------------------------------------------------
+-- Table `Driving_School`.`Category`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Driving_School`.`Category` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type` CHAR(1) NOT NULL,
+  `capacity` VARCHAR(45) NOT NULL,
+  `type_car` VARCHAR(45) NOT NULL,
+  `Car_Usage_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `Category_Car_Usage` (`Car_Usage_id` ASC) VISIBLE,
+  CONSTRAINT `Category_Car_Usage`
+    FOREIGN KEY (`Car_Usage_id`)
+    REFERENCES `Driving_School`.`Car_Usage` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
-DESCRIBE Building;
--- End of file.
+-- -----------------------------------------------------
+-- Table `Driving_School`.`Subject`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Driving_School`.`Subject` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(80) NOT NULL,
+  `price` INT NOT NULL,
+  `type` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
+
+-- -----------------------------------------------------
+-- Table `Driving_School`.`Trainer`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Driving_School`.`Trainer` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `first_name` VARCHAR(255) NOT NULL,
+  `last_name` VARCHAR(255) NOT NULL,
+  `age` INT NOT NULL,
+  `phone` INT NOT NULL,
+  `gender` VARCHAR(1) NULL DEFAULT NULL,
+  `salary` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `Trainer_idx_1` USING BTREE (`id`) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `Driving_School`.`Building`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Driving_School`.`Building` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `Subject_id` INT NOT NULL,
+  `Trainer_id` INT NOT NULL,
+  `Category_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `Building_Category` (`Category_id` ASC) VISIBLE,
+  INDEX `Building_Subject` (`Subject_id` ASC) VISIBLE,
+  INDEX `Building_Trainer` (`Trainer_id` ASC) VISIBLE,
+  CONSTRAINT `Building_Category`
+    FOREIGN KEY (`Category_id`)
+    REFERENCES `Driving_School`.`Category` (`id`),
+  CONSTRAINT `Building_Subject`
+    FOREIGN KEY (`Subject_id`)
+    REFERENCES `Driving_School`.`Subject` (`id`),
+  CONSTRAINT `Building_Trainer`
+    FOREIGN KEY (`Trainer_id`)
+    REFERENCES `Driving_School`.`Trainer` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `Driving_School`.`Schedule`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Driving_School`.`Schedule` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `time` TIME NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `Driving_School`.`Building_Schedule`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Driving_School`.`Building_Schedule` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `Building_id` INT NOT NULL,
+  `Schedule_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `Building_association_2` (`Building_id` ASC) VISIBLE,
+  INDEX `Schedule_association_2` (`Schedule_id` ASC) VISIBLE,
+  CONSTRAINT `Building_association_2`
+    FOREIGN KEY (`Building_id`)
+    REFERENCES `Driving_School`.`Building` (`id`),
+  CONSTRAINT `Schedule_association_2`
+    FOREIGN KEY (`Schedule_id`)
+    REFERENCES `Driving_School`.`Schedule` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `Driving_School`.`Company`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Driving_School`.`Company` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `phone_number` INT NOT NULL,
+  `address` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `Driving_School`.`Certificate`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Driving_School`.`Certificate` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `country` VARCHAR(255) NOT NULL,
+  `date` DATE NOT NULL,
+  `Category_id` INT NOT NULL,
+  `Company_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `Certificate_idx_1` USING BTREE (`id`) VISIBLE,
+  INDEX `Certificate_Category` (`Category_id` ASC) VISIBLE,
+  INDEX `Certificate_Company` (`Company_id` ASC) VISIBLE,
+  CONSTRAINT `Certificate_Category`
+    FOREIGN KEY (`Category_id`)
+    REFERENCES `Driving_School`.`Category` (`id`),
+  CONSTRAINT `Certificate_Company`
+    FOREIGN KEY (`Company_id`)
+    REFERENCES `Driving_School`.`Company` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `Driving_School`.`Vehicle`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Driving_School`.`Vehicle` (
+  `plate` INT NOT NULL AUTO_INCREMENT,
+  `model` VARCHAR(255) NOT NULL,
+  `type` VARCHAR(255) NOT NULL,
+  `date_maintenance` DATE NOT NULL,
+  `available` TINYINT(1) NOT NULL,
+  PRIMARY KEY (`plate`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `Driving_School`.`Data_Maintenance`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Driving_School`.`Data_Maintenance` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `plate` VARCHAR(45) NOT NULL,
+  `date` DATE NOT NULL,
+  `Vehicle_plate` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `Data_Maintenance_Vehicle` (`Vehicle_plate` ASC) VISIBLE,
+  CONSTRAINT `Data_Maintenance_Vehicle`
+    FOREIGN KEY (`Vehicle_plate`)
+    REFERENCES `Driving_School`.`Vehicle` (`plate`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `Driving_School`.`Note_History`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Driving_School`.`Note_History` (
+  `score` INT NOT NULL AUTO_INCREMENT,
+  `name_subject` VARCHAR(80) NOT NULL,
+  `type_subject` VARCHAR(45) NOT NULL,
+  `name_trainer` VARCHAR(255) NOT NULL,
+  `last_name_trainer` VARCHAR(255) NOT NULL,
+  `date_time` DATETIME NOT NULL,
+  `Building_id` INT NOT NULL,
+  INDEX `Building_id` (`Building_id` ASC) VISIBLE,
+  CONSTRAINT `Note_History_ibfk_1`
+    FOREIGN KEY (`Building_id`)
+    REFERENCES `Driving_School`.`Building` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `Driving_School`.`Student_Important`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Driving_School`.`Student_Important` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `first_name` VARCHAR(255) NOT NULL,
+  `last_name` VARCHAR(255) NOT NULL,
+  `age` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `Student_Important_idx_1` USING BTREE (`id`) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `Driving_School`.`Student`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Driving_School`.`Student` (
+  `Student_Important_id` INT NOT NULL,
+  `phone` INT NOT NULL,
+  `gender` ENUM('F', 'M') NOT NULL,
+  INDEX `Student_Student_Important` (`Student_Important_id` ASC) VISIBLE,
+  CONSTRAINT `Student_Student_Important`
+    FOREIGN KEY (`Student_Important_id`)
+    REFERENCES `Driving_School`.`Student_Important` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `Driving_School`.`Student_Building`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Driving_School`.`Student_Building` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `Student_id` INT NOT NULL,
+  `Building_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `Building_association_1` (`Building_id` ASC) VISIBLE,
+  INDEX `Student_association_1` (`Student_id` ASC) VISIBLE,
+  CONSTRAINT `Building_association_1`
+    FOREIGN KEY (`Building_id`)
+    REFERENCES `Driving_School`.`Building` (`id`),
+  CONSTRAINT `Student_association_1`
+    FOREIGN KEY (`Student_id`)
+    REFERENCES `Driving_School`.`Student_Important` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `Driving_School`.`Student_Note`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Driving_School`.`Student_Note` (
+  `score` INT NOT NULL AUTO_INCREMENT,
+  `Building_id` INT NOT NULL,
+  INDEX `Building_id` (`Building_id` ASC) VISIBLE,
+  CONSTRAINT `Student_Note_ibfk_1`
+    FOREIGN KEY (`Building_id`)
+    REFERENCES `Driving_School`.`Student_Building` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `Driving_School`.`Vehicle_Building`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Driving_School`.`Vehicle_Building` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `Vehicle_plate` INT NOT NULL,
+  `Building_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `Vehicle_Building` (`Building_id` ASC) VISIBLE,
+  INDEX `Vehicle_association_1` (`Vehicle_plate` ASC) VISIBLE,
+  CONSTRAINT `Vehicle_association_1`
+    FOREIGN KEY (`Vehicle_plate`)
+    REFERENCES `Driving_School`.`Vehicle` (`plate`),
+  CONSTRAINT `Vehicle_Building`
+    FOREIGN KEY (`Building_id`)
+    REFERENCES `Driving_School`.`Building` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
