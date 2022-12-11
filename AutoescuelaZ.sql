@@ -1,7 +1,3 @@
--- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2022-12-10 13:30:03.894
-create schema Driving_School;
-use Driving_School;
 -- tables
 -- Table: Building
 CREATE TABLE Building (
@@ -95,8 +91,8 @@ CREATE TABLE Student_Building (
 -- Table: Student_Note
 CREATE TABLE Student_Note (
 	score int NOT NULL,
-    Building_id int NOT NULL,
-    FOREIGN KEY (Building_id) REFERENCES Student_Building (id)
+    Student_Building_id int NOT NULL,
+    FOREIGN KEY (Student_Building_id) REFERENCES Student_Building (id)
 );
 
 -- Table: Student_Important
@@ -219,5 +215,7 @@ CREATE TABLE Note_History (
     FOREIGN KEY (Building_id) REFERENCES Building (id)
 );
 
+
+DESCRIBE Building;
 -- End of file.
 
