@@ -23,13 +23,13 @@ BEGIN
 
     IF _filter = 'Approved' THEN
         RETURN (SELECT COUNT(Student_id)
-                FROM Student_Building
+                FROM Student_Building AS SB
                 WHERE Building_id IN (SELECT B.id FROM Building AS B WHERE B.Trainer_id = trainer_identifier)
-                  AND Student_Building.score >= 51);
+                  AND (SELECT AVG(score) FROM Student_Note AS S WHERE S.Student_Building_id = SB.Student_id) >= 51);
     ELSE
         RETURN (SELECT COUNT(Student_id)
-                FROM Student_Building
+                FROM Student_Building AS SB
                 WHERE Building_id IN (SELECT B.id FROM Building AS B WHERE B.Trainer_id = trainer_identifier)
-                  AND Student_Building.score < 51);
+                  AND (SELECT AVG(score) FROM Student_Note AS S WHERE S.Student_Building_id = SB.Student_id) < 51);
     END IF;
 END //
