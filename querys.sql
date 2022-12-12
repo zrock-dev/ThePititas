@@ -52,9 +52,9 @@ GROUP BY B.Trainer_id;
 -- Recuperar materias dictadas por instructores de sexo 'M' y edades entre '20' y '30' años. (Daniel)
 SELECT s.name
 FROM Subject as s
-WHERE s.id = (SELECT b.Subject_id
+WHERE s.id in (SELECT b.Subject_id
               FROM Building as b
-              WHERE b.Trainer_id = (SELECT t.id
+              WHERE b.Trainer_id in (SELECT t.id
                                     FROM Trainer as t
                                     WHERE t.gender = 'M' AND t.age BETWEEN 20 AND 30));
 
