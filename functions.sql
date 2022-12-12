@@ -38,3 +38,11 @@ BEGIN
                   AND (SELECT AVG(score) FROM Student_Note AS S WHERE S.Student_Building_id = SB.Student_id) < 51);
     END IF;
 END //
+
+
+# Executed functions
+-- first function
+SELECT amount_students_subject("driving");
+
+-- second function
+SELECT amount_students_status("Casper", 'Approved');

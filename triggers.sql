@@ -21,3 +21,5 @@ BEGIN
 	VALUES (nameStudent, lastNameStudent, NEW.score, nameSubject, typeSubject, nameTrainer, lastNameTrainer, now());
 END //
 DELIMITER ;
+
+SELECT * FROM Note_History;
