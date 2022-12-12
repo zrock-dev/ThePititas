@@ -57,8 +57,8 @@ SELECT * FROM Student_Building WHERE inscription_date BETWEEN '2020-03-07' AND '
 # Quiero conocer a todos los clientes aprobados con el instructor de teoría llamado ‘Burley Friesen’
 SET @trainer_id = (SELECT id
                    FROM Trainer
-                   WHERE first_name = 'Cara'
-                     AND last_name = 'Medhurst');
+                   WHERE first_name = 'Juan'
+                     AND last_name = 'Perez');
 
 (SELECT SI.first_name, SI.last_name, SI.gender, SI.phone
  FROM Student_Building AS SB

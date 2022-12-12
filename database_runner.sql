@@ -66,7 +66,7 @@ INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`
 INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (7, 'Frederik', 'Balistreri', 47, 0, 'F', 1023);
 INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (8, 'Roberto', 'Watsica', 25, 978, 'F', 1629);
 INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (9, 'Lorenz', 'Beer', 29, 2147483647, 'F', 1432);
-INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (10, 'Jordyn', 'Ankunding', 28, 1, 'F', 1184);
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (10, 'Juan', 'Perez', 28, 1, 'F', 1184);
 
 #
 # TABLE STRUCTURE FOR: Subject
