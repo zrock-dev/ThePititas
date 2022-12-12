@@ -102,7 +102,7 @@ CREATE TABLE Student (
 CREATE INDEX Student USING BTREE ON Student (id);
 
 
--- Table Student
+-- Table Client_Not_Registered
 CREATE TABLE Client_Not_Registered (
     id int NOT NULL AUTO_INCREMENT,
     first_name varchar(255) NOT NULL,
