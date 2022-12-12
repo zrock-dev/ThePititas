@@ -1,1573 +1,1035 @@
--- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2022-12-11 15:38:44.679
--- tables
-DROP SCHEMA DriverCollege;
-CREATE SCHEMA DriverCollege;
-USE DriverCollege;
--- Table: Building
-CREATE TABLE Building (
-    id int NOT NULL AUTO_INCREMENT,
-    Subject_id int NOT NULL,
-    Trainer_id int NOT NULL,
-    Category_id int NOT NULL,
-    CONSTRAINT Building_pk PRIMARY KEY (id)
-);
+#
+# TABLE STRUCTURE FOR: Building
+#
 
--- Table: Building_Schedule
-CREATE TABLE Building_Schedule (
-    id int NOT NULL AUTO_INCREMENT,
-    Building_id int NOT NULL,
-    Schedule_id int NOT NULL,
-    CONSTRAINT Building_Schedule_pk PRIMARY KEY (id)
-);
+DROP TABLE IF EXISTS `Building`;
 
--- Table: Category
-CREATE TABLE Category (
-    id int NOT NULL AUTO_INCREMENT,
-    type ENUM('A', 'P', 'M') NOT NULL,
-    capacity ENUM('Low', 'Medium', 'Full') NOT NULL,
-    type_car ENUM('Private', 'Public', 'Both') NOT NULL,
-    CONSTRAINT Category_pk PRIMARY KEY (id)
-);
+CREATE TABLE `Building` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Subject_id` int(11) NOT NULL,
+  `Trainer_id` int(11) NOT NULL,
+  `Category_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Building_Category` (`Category_id`),
+  KEY `Building_Subject` (`Subject_id`),
+  KEY `Building_Trainer` (`Trainer_id`),
+  CONSTRAINT `Building_Category` FOREIGN KEY (`Category_id`) REFERENCES `Category` (`id`),
+  CONSTRAINT `Building_Subject` FOREIGN KEY (`Subject_id`) REFERENCES `Subject` (`id`),
+  CONSTRAINT `Building_Trainer` FOREIGN KEY (`Trainer_id`) REFERENCES `Trainer` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Table: Certificate
-CREATE TABLE Certificate (
-    id int NOT NULL AUTO_INCREMENT,
-    Category_id int NOT NULL,
-    Company_id int NOT NULL,
-    Student_Building_id int NOT NULL,
-    country varchar(255) NOT NULL,
-    date date NOT NULL,
-    CONSTRAINT Certificate_pk PRIMARY KEY (id)
-);
-
-CREATE INDEX Certificate_idx_1 USING BTREE ON Certificate (id);
-
--- Table: Company
-CREATE TABLE Company (
-    id int NOT NULL AUTO_INCREMENT,
-    name varchar(255) NOT NULL,
-    phone_number int NOT NULL,
-    address varchar(255) NOT NULL,
-    CONSTRAINT Company_pk PRIMARY KEY (id)
-);
-
--- Table: Data_Maintenance
-CREATE TABLE Data_Maintenance (
-    id int NOT NULL AUTO_INCREMENT,
-    date date NOT NULL,
-    Vehicle_id int NOT NULL,
-    CONSTRAINT Data_Maintenance_pk PRIMARY KEY (id)
-);
-
--- Table: Note_History
-CREATE TABLE Note_History (
-    name_student VARCHAR(255) NOT NULL,
-    last_name_student VARCHAR(255) NOT NULL,
-    score int NOT NULL,
-    name_subject varchar(80) NOT NULL,
-    type_subject varchar(45) NOT NULL,
-    name_trainer varchar(255) NOT NULL,
-    last_name_trainer varchar(255) NOT NULL,
-    date_time timestamp NOT NULL
-);
-
--- Table: Schedule
-CREATE TABLE Schedule (
-    id int NOT NULL AUTO_INCREMENT,
-    time time NOT NULL,
-    CONSTRAINT Schedule_pk PRIMARY KEY (id)
-);
-
--- Table: Student_Building
-CREATE TABLE Student_Building (
-    id int NOT NULL AUTO_INCREMENT,
-    Student_id int NOT NULL,
-    Building_id int NOT NULL,
-    inscription_date timestamp NOT NULL,
-    CONSTRAINT Student_Building_pk PRIMARY KEY (id)
-);
-
--- Table: Student
-CREATE TABLE Student (
-    id int NOT NULL AUTO_INCREMENT,
-    first_name varchar(255) NOT NULL,
-    last_name varchar(255) NOT NULL,
-    age int NOT NULL,
-    phone int NOT NULL,
-    gender enum('F','M') NOT NULL,
-    CONSTRAINT Student_pk PRIMARY KEY (id)
-);
-
-CREATE INDEX Student USING BTREE ON Student (id);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (1, 1, 1, 1);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (2, 2, 2, 2);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (3, 3, 3, 3);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (4, 1, 4, 1);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (5, 2, 5, 2);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (6, 3, 6, 3);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (7, 1, 7, 1);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (8, 2, 8, 2);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (9, 3, 9, 3);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (10, 1, 10, 1);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (11, 2, 1, 2);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (12, 3, 2, 3);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (13, 1, 3, 1);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (14, 2, 4, 2);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (15, 3, 5, 3);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (16, 1, 6, 1);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (17, 2, 7, 2);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (18, 3, 8, 3);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (19, 1, 9, 1);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (20, 2, 10, 2);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (21, 3, 1, 3);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (22, 1, 2, 1);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (23, 2, 3, 2);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (24, 3, 4, 3);
+INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (25, 1, 5, 1);
 
 
--- Table Student
-CREATE TABLE Client_Not_Registered (
-    id int NOT NULL AUTO_INCREMENT,
-    first_name varchar(255) NOT NULL,
-    last_name varchar(255) NOT NULL,
-    age int NOT NULL,
-    phone int NOT NULL,
-    gender enum('F','M') NOT NULL,
-    CONSTRAINT Student_pk PRIMARY KEY (id)
-);
+#
+# TABLE STRUCTURE FOR: Building_Schedule
+#
+
+DROP TABLE IF EXISTS `Building_Schedule`;
+
+CREATE TABLE `Building_Schedule` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Building_id` int(11) NOT NULL,
+  `Schedule_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Building_association_2` (`Building_id`),
+  KEY `Schedule_association_2` (`Schedule_id`),
+  CONSTRAINT `Building_association_2` FOREIGN KEY (`Building_id`) REFERENCES `Building` (`id`),
+  CONSTRAINT `Schedule_association_2` FOREIGN KEY (`Schedule_id`) REFERENCES `Schedule` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `Building_Schedule` (`id`, `Building_id`, `Schedule_id`) VALUES (1, 1, 1);
+INSERT INTO `Building_Schedule` (`id`, `Building_id`, `Schedule_id`) VALUES (2, 2, 2);
+INSERT INTO `Building_Schedule` (`id`, `Building_id`, `Schedule_id`) VALUES (3, 3, 3);
+INSERT INTO `Building_Schedule` (`id`, `Building_id`, `Schedule_id`) VALUES (4, 4, 4);
+INSERT INTO `Building_Schedule` (`id`, `Building_id`, `Schedule_id`) VALUES (5, 5, 5);
+INSERT INTO `Building_Schedule` (`id`, `Building_id`, `Schedule_id`) VALUES (6, 6, 6);
+INSERT INTO `Building_Schedule` (`id`, `Building_id`, `Schedule_id`) VALUES (7, 7, 7);
+INSERT INTO `Building_Schedule` (`id`, `Building_id`, `Schedule_id`) VALUES (8, 8, 8);
+INSERT INTO `Building_Schedule` (`id`, `Building_id`, `Schedule_id`) VALUES (9, 9, 9);
+INSERT INTO `Building_Schedule` (`id`, `Building_id`, `Schedule_id`) VALUES (10, 10, 10);
 
 
--- Table: Student_Note
-CREATE TABLE Student_Note (
-    Student_Building_id int NOT NULL,
-    score int NOT NULL
-);
+#
+# TABLE STRUCTURE FOR: Category
+#
 
--- Table: Subject
-CREATE TABLE Subject (
-    id int NOT NULL AUTO_INCREMENT,
-    name varchar(80) NOT NULL,
-    price int NOT NULL,
-    category ENUM('Practice', 'Theory') NOT NULL,
-    CONSTRAINT Subject_pk PRIMARY KEY (id)
-);
+DROP TABLE IF EXISTS `Category`;
 
--- Table: Trainer
-CREATE TABLE Trainer (
-    id int NOT NULL AUTO_INCREMENT,
-    first_name varchar(255) NOT NULL,
-    last_name varchar(255) NOT NULL,
-    age int NOT NULL,
-    phone int NOT NULL,
-    gender ENUM('F', 'M') NULL,
-    salary int NULL,
-    CONSTRAINT Trainer_pk PRIMARY KEY (id)
-);
+CREATE TABLE `Category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` enum('A','P','M') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `capacity` enum('Low','Medium','Full') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type_car` enum('Private','Public','Both') COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE INDEX Trainer_idx_1 USING BTREE ON Trainer (id);
+INSERT INTO `Category` (`id`, `type`, `capacity`, `type_car`) VALUES (1, 'M', 'Medium', 'Private');
+INSERT INTO `Category` (`id`, `type`, `capacity`, `type_car`) VALUES (2, 'A', 'Low', 'Both');
+INSERT INTO `Category` (`id`, `type`, `capacity`, `type_car`) VALUES (3, 'P', 'Full', 'Private');
 
--- Table: Vehicle
-CREATE TABLE Vehicle (
-    id int NOT NULL AUTO_INCREMENT,
-    model varchar(255) NOT NULL,
-    type varchar(255) NOT NULL,
-    available boolean NOT NULL,
-    CONSTRAINT Vehicle_pk PRIMARY KEY (id)
-);
 
--- Table: Vehicle_Building
-CREATE TABLE Vehicle_Building (
-    id int NOT NULL AUTO_INCREMENT,
-    Vehicle_plate int NOT NULL,
-    Building_id int NOT NULL,
-    CONSTRAINT Vehicle_Building_pk PRIMARY KEY (id)
-);
+#
+# TABLE STRUCTURE FOR: Certificate
+#
 
--- foreign keys
--- Reference: Building_Category (table: Building)
-ALTER TABLE Building ADD CONSTRAINT Building_Category FOREIGN KEY Building_Category (Category_id)
-    REFERENCES Category (id);
+DROP TABLE IF EXISTS `Certificate`;
 
--- Reference: Building_Subject (table: Building)
-ALTER TABLE Building ADD CONSTRAINT Building_Subject FOREIGN KEY Building_Subject (Subject_id)
-    REFERENCES Subject (id);
+CREATE TABLE `Certificate` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Category_id` int(11) NOT NULL,
+  `Company_id` int(11) NOT NULL,
+  `Student_Building_id` int(11) NOT NULL,
+  `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date` date NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Certificate_idx_1` (`id`) USING BTREE,
+  KEY `Certificate_Category` (`Category_id`),
+  KEY `Certificate_Company` (`Company_id`),
+  KEY `Certificate_association_1` (`Student_Building_id`),
+  CONSTRAINT `Certificate_Category` FOREIGN KEY (`Category_id`) REFERENCES `Category` (`id`),
+  CONSTRAINT `Certificate_Company` FOREIGN KEY (`Company_id`) REFERENCES `Company` (`id`),
+  CONSTRAINT `Certificate_association_1` FOREIGN KEY (`Student_Building_id`) REFERENCES `Student_Building` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Reference: Building_Trainer (table: Building)
-ALTER TABLE Building ADD CONSTRAINT Building_Trainer FOREIGN KEY Building_Trainer (Trainer_id)
-    REFERENCES Trainer (id);
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (1, 1, 1, 1, 'Netherlands', '1988-11-24');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (2, 2, 1, 2, 'Netherlands', '1991-05-05');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (3, 3, 1, 3, 'France', '1991-03-16');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (4, 1, 1, 4, 'Netherlands', '1975-07-11');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (5, 2, 1, 5, 'France', '2000-11-28');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (6, 3, 1, 6, 'France', '2003-06-11');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (7, 1, 1, 7, 'France', '2019-02-22');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (8, 2, 1, 8, 'France', '2017-12-23');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (9, 3, 1, 9, 'France', '1996-10-28');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (10, 1, 1, 10, 'France', '1991-03-03');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (11, 2, 1, 11, 'France', '1970-10-13');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (12, 3, 1, 12, 'France', '1991-05-08');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (13, 1, 1, 13, 'Netherlands', '1972-05-25');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (14, 2, 1, 14, 'Netherlands', '2015-10-24');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (15, 3, 1, 15, 'France', '1998-11-10');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (16, 1, 1, 16, 'France', '1995-03-31');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (17, 2, 1, 17, 'France', '1993-12-15');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (18, 3, 1, 18, 'Netherlands', '1970-09-30');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (19, 1, 1, 19, 'France', '2006-08-22');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (20, 2, 1, 20, 'Netherlands', '2000-10-24');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (21, 3, 1, 21, 'France', '2017-05-20');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (22, 1, 1, 22, 'Netherlands', '2003-02-20');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (23, 2, 1, 23, 'France', '1978-08-17');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (24, 3, 1, 24, 'Netherlands', '1986-09-27');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (25, 1, 1, 25, 'France', '2013-10-02');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (26, 2, 1, 26, 'France', '2012-06-02');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (27, 3, 1, 27, 'Netherlands', '2017-08-23');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (28, 1, 1, 28, 'France', '1989-05-19');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (29, 2, 1, 29, 'Netherlands', '1970-05-28');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (30, 3, 1, 30, 'France', '2004-12-07');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (31, 1, 1, 31, 'France', '2021-09-17');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (32, 2, 1, 32, 'France', '1996-12-06');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (33, 3, 1, 33, 'France', '2003-10-31');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (34, 1, 1, 34, 'France', '2013-10-31');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (35, 2, 1, 35, 'France', '2002-07-15');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (36, 3, 1, 36, 'Netherlands', '1977-07-23');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (37, 1, 1, 37, 'Netherlands', '1974-04-16');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (38, 2, 1, 38, 'France', '1988-03-20');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (39, 3, 1, 39, 'France', '2021-08-24');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (40, 1, 1, 40, 'France', '2017-05-07');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (41, 2, 1, 41, 'France', '2019-06-18');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (42, 3, 1, 42, 'Netherlands', '2015-01-28');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (43, 1, 1, 43, 'France', '1992-12-13');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (44, 2, 1, 44, 'France', '2000-05-30');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (45, 3, 1, 45, 'Netherlands', '2001-04-08');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (46, 1, 1, 46, 'France', '2002-01-10');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (47, 2, 1, 47, 'Netherlands', '1972-05-06');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (48, 3, 1, 48, 'Netherlands', '2010-03-27');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (49, 1, 1, 49, 'Netherlands', '1997-02-02');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (50, 2, 1, 50, 'France', '1985-12-04');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (51, 3, 1, 51, 'Netherlands', '2022-01-01');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (52, 1, 1, 52, 'France', '1999-12-25');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (53, 2, 1, 53, 'Netherlands', '1981-04-19');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (54, 3, 1, 54, 'Netherlands', '2019-07-30');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (55, 1, 1, 55, 'Netherlands', '2008-10-05');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (56, 2, 1, 56, 'Netherlands', '2004-04-26');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (57, 3, 1, 57, 'Netherlands', '1985-06-22');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (58, 1, 1, 58, 'Netherlands', '1998-06-13');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (59, 2, 1, 59, 'Netherlands', '1972-08-19');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (60, 3, 1, 60, 'Netherlands', '1971-08-27');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (61, 1, 1, 61, 'Netherlands', '1977-12-01');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (62, 2, 1, 62, 'France', '2015-03-19');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (63, 3, 1, 63, 'France', '1996-05-09');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (64, 1, 1, 64, 'France', '1991-04-14');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (65, 2, 1, 65, 'Netherlands', '1986-08-27');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (66, 3, 1, 66, 'France', '1983-01-16');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (67, 1, 1, 67, 'France', '2007-06-09');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (68, 2, 1, 68, 'Netherlands', '2006-03-27');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (69, 3, 1, 69, 'France', '2004-03-22');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (70, 1, 1, 70, 'Netherlands', '1972-04-14');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (71, 2, 1, 71, 'France', '1995-06-13');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (72, 3, 1, 72, 'France', '2003-07-24');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (73, 1, 1, 73, 'Netherlands', '1970-06-08');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (74, 2, 1, 74, 'Netherlands', '2006-11-19');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (75, 3, 1, 75, 'France', '1999-05-25');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (76, 1, 1, 76, 'France', '1977-01-21');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (77, 2, 1, 77, 'Netherlands', '2018-12-20');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (78, 3, 1, 78, 'France', '2018-03-16');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (79, 1, 1, 79, 'France', '1993-03-04');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (80, 2, 1, 80, 'Netherlands', '1985-10-03');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (81, 3, 1, 81, 'France', '1970-02-06');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (82, 1, 1, 82, 'Netherlands', '1987-11-19');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (83, 2, 1, 83, 'Netherlands', '1987-07-27');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (84, 3, 1, 84, 'France', '2012-09-24');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (85, 1, 1, 85, 'France', '1989-09-21');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (86, 2, 1, 86, 'France', '1980-11-14');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (87, 3, 1, 87, 'Netherlands', '2012-11-26');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (88, 1, 1, 88, 'France', '1970-07-15');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (89, 2, 1, 89, 'Netherlands', '1980-10-20');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (90, 3, 1, 90, 'France', '1975-04-14');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (91, 1, 1, 91, 'Netherlands', '1994-09-14');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (92, 2, 1, 92, 'France', '1995-11-13');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (93, 3, 1, 93, 'Netherlands', '2011-08-04');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (94, 1, 1, 94, 'Netherlands', '2016-06-24');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (95, 2, 1, 95, 'France', '2018-07-27');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (96, 3, 1, 96, 'Netherlands', '2008-12-27');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (97, 1, 1, 97, 'France', '2004-04-21');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (98, 2, 1, 98, 'Netherlands', '2018-08-17');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (99, 3, 1, 99, 'France', '2014-09-02');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (100, 1, 1, 100, 'Netherlands', '1983-12-12');
 
--- Reference: Building_association_1 (table: Student_Building)
-ALTER TABLE Student_Building ADD CONSTRAINT Building_association_1 FOREIGN KEY Building_association_1 (Building_id)
-    REFERENCES Building (id);
 
--- Reference: Building_association_2 (table: Building_Schedule)
-ALTER TABLE Building_Schedule ADD CONSTRAINT Building_association_2 FOREIGN KEY Building_association_2 (Building_id)
-    REFERENCES Building (id);
+#
+# TABLE STRUCTURE FOR: Client_Not_Registered
+#
 
--- Reference: Certificate_Category (table: Certificate)
-ALTER TABLE Certificate ADD CONSTRAINT Certificate_Category FOREIGN KEY Certificate_Category (Category_id)
-    REFERENCES Category (id);
+DROP TABLE IF EXISTS `Client_Not_Registered`;
 
--- Reference: Certificate_Company (table: Certificate)
-ALTER TABLE Certificate ADD CONSTRAINT Certificate_Company FOREIGN KEY Certificate_Company (Company_id)
-    REFERENCES Company (id);
+CREATE TABLE `Client_Not_Registered` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `age` int(11) NOT NULL,
+  `phone` int(11) NOT NULL,
+  `gender` enum('F','M') COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Reference: Data_Maintenance_Vehicle (table: Data_Maintenance)
-ALTER TABLE Data_Maintenance ADD CONSTRAINT Data_Maintenance_Vehicle FOREIGN KEY Data_Maintenance_Vehicle (Vehicle_id)
-    REFERENCES Vehicle (id);
+#
+# TABLE STRUCTURE FOR: Company
+#
 
--- Reference: Schedule_association_2 (table: Building_Schedule)
-ALTER TABLE Building_Schedule ADD CONSTRAINT Schedule_association_2 FOREIGN KEY Schedule_association_2 (Schedule_id)
-    REFERENCES Schedule (id);
+DROP TABLE IF EXISTS `Company`;
 
--- Reference: Student_Note_Student_Building (table: Student_Note)
-ALTER TABLE Student_Note ADD CONSTRAINT Student_Note_Student_Building FOREIGN KEY Student_Note_Student_Building (Student_Building_id)
-    REFERENCES Student_Building (id);
+CREATE TABLE `Company` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone_number` int(11) NOT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Reference: Student_association_1 (table: Student_Building)
-ALTER TABLE Student_Building ADD CONSTRAINT Student_association_1 FOREIGN KEY Student_association_1 (Student_id)
-    REFERENCES Student(id);
+INSERT INTO `Company` (`id`, `name`, `phone_number`, `address`) VALUES (1, 'Pouros-Ebert', 639865753, '669 Anderson Cape Suite 224\nEmoryfort, MD 69038');
 
--- Reference: Vehicle_Building (table: Vehicle_Building)
-ALTER TABLE Vehicle_Building ADD CONSTRAINT Vehicle_Building FOREIGN KEY Vehicle_Building (Building_id)
-    REFERENCES Building (id);
 
--- Reference: Vehicle_association_1 (table: Vehicle_Building)
-ALTER TABLE Vehicle_Building ADD CONSTRAINT Vehicle_association_1 FOREIGN KEY Vehicle_association_1 (Vehicle_plate)
-    REFERENCES Vehicle (id);
+#
+# TABLE STRUCTURE FOR: Data_Maintenance
+#
 
--- Reference: Certificate_association_1 (table: Certificate)
-ALTER TABLE Certificate ADD CONSTRAINT Certificate_association_1 FOREIGN KEY Certificate_association_1 (Student_Building_id)
-REFERENCES Student_Building(id);
+DROP TABLE IF EXISTS `Data_Maintenance`;
 
--- End of file.
+CREATE TABLE `Data_Maintenance` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `Vehicle_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Data_Maintenance_Vehicle` (`Vehicle_id`),
+  CONSTRAINT `Data_Maintenance_Vehicle` FOREIGN KEY (`Vehicle_id`) REFERENCES `Vehicle` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-insert into Building_Schedule (id, Building_id, Schedule_id)
-values  (1, 1, 1),
-        (2, 2, 2),
-        (3, 3, 3),
-        (4, 4, 4),
-        (5, 5, 5),
-        (6, 6, 6),
-        (7, 7, 7),
-        (8, 8, 8),
-        (9, 9, 9),
-        (10, 10, 10),
-        (11, 11, 11),
-        (12, 12, 12),
-        (13, 13, 13),
-        (14, 14, 14),
-        (15, 15, 15),
-        (16, 16, 16),
-        (17, 17, 17),
-        (18, 18, 18),
-        (19, 19, 19),
-        (20, 20, 20),
-        (21, 21, 21),
-        (22, 22, 22),
-        (23, 23, 23),
-        (24, 24, 24),
-        (25, 25, 25);
+#
+# TABLE STRUCTURE FOR: Note_History
+#
 
--- End
+DROP TABLE IF EXISTS `Note_History`;
 
-insert into Building (id, Subject_id, Trainer_id, Category_id)
-values  (1, 1, 1, 1),
-        (2, 2, 2, 2),
-        (3, 3, 3, 3),
-        (4, 1, 4, 4),
-        (5, 2, 5, 5),
-        (6, 3, 6, 6),
-        (7, 1, 7, 7),
-        (8, 2, 1, 8),
-        (9, 3, 2, 9),
-        (10, 1, 3, 10),
-        (11, 2, 4, 11),
-        (12, 3, 5, 12),
-        (13, 1, 6, 13),
-        (14, 2, 7, 14),
-        (15, 3, 1, 15),
-        (16, 1, 2, 16),
-        (17, 2, 3, 17),
-        (18, 3, 4, 18),
-        (19, 1, 5, 19),
-        (20, 2, 6, 20),
-        (21, 3, 7, 21),
-        (22, 1, 1, 22),
-        (23, 2, 2, 23),
-        (24, 3, 3, 24),
-        (25, 1, 4, 25);
+CREATE TABLE `Note_History` (
+  `name_student` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name_student` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `score` int(11) NOT NULL,
+  `name_subject` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type_subject` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name_trainer` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name_trainer` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- End
+#
+# TABLE STRUCTURE FOR: Schedule
+#
 
-INSERT INTO Category (id, type, capacity, type_car)
-VALUES (1, 'A', 'Low', 'Public'),
-       (2, 'A', 'Low', 'Private'),
-       (3, 'B', 'Medium', 'Public'),
-       (4, 'C', 'Full', 'Public'),
-       (5, 'P', 'Low', 'Public'),
-       (6, 'P', 'Low', 'Private'),
-       (7, 'M', 'Low', 'Private');
+DROP TABLE IF EXISTS `Schedule`;
 
-insert into Category (id, type, capacity, type_car)
-values  (1, 'P', 'Medium', 'Public'),
-        (2, 'M', 'Low', 'Public'),
-        (3, 'P', 'Full', 'Public'),
-        (4, 'P', 'Full', 'Private'),
-        (5, 'M', 'Full', 'Both'),
-        (6, 'P', 'Full', 'Both'),
-        (7, 'P', 'Medium', 'Both'),
-        (8, 'A', 'Low', 'Private'),
-        (9, 'P', 'Low', 'Public'),
-        (10, 'A', 'Medium', 'Both'),
-        (11, 'M', 'Full', 'Both'),
-        (12, 'P', 'Low', 'Private'),
-        (13, 'M', 'Full', 'Both'),
-        (14, 'A', 'Full', 'Both'),
-        (15, 'M', 'Medium', 'Both'),
-        (16, 'M', 'Low', 'Private'),
-        (17, 'A', 'Low', 'Both'),
-        (18, 'A', 'Full', 'Both'),
-        (19, 'A', 'Medium', 'Private'),
-        (20, 'P', 'Low', 'Public'),
-        (21, 'P', 'Medium', 'Both'),
-        (22, 'M', 'Full', 'Public'),
-        (23, 'M', 'Medium', 'Both'),
-        (24, 'P', 'Full', 'Public'),
-        (25, 'M', 'Low', 'Private'),
-        (26, 'A', 'Medium', 'Private'),
-        (27, 'M', 'Full', 'Both');
+CREATE TABLE `Schedule` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `time` time NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- End
+INSERT INTO `Schedule` (`id`, `time`) VALUES (1, '05:33:37');
+INSERT INTO `Schedule` (`id`, `time`) VALUES (2, '10:25:24');
+INSERT INTO `Schedule` (`id`, `time`) VALUES (3, '13:21:12');
+INSERT INTO `Schedule` (`id`, `time`) VALUES (4, '21:01:40');
+INSERT INTO `Schedule` (`id`, `time`) VALUES (5, '06:16:11');
+INSERT INTO `Schedule` (`id`, `time`) VALUES (6, '18:39:15');
+INSERT INTO `Schedule` (`id`, `time`) VALUES (7, '22:39:42');
+INSERT INTO `Schedule` (`id`, `time`) VALUES (8, '23:56:31');
+INSERT INTO `Schedule` (`id`, `time`) VALUES (9, '19:09:35');
+INSERT INTO `Schedule` (`id`, `time`) VALUES (10, '13:58:16');
 
-insert into Certificate (id, Category_id, Company_id, Student_Building_id, country, date)
-values  (1, 1, 1, 1, 'Netherlands', '2020-04-17'),
-        (2, 2, 1, 2, 'France', '2020-04-17'),
-        (3, 3, 1, 3, 'France', '2020-04-17'),
-        (4, 4, 1, 4, 'France', '2020-04-17'),
-        (5, 5, 1, 5, 'Netherlands', '2020-04-17'),
-        (6, 6, 1, 6, 'France', '2020-04-17'),
-        (7, 7, 1, 7, 'France', '2020-04-17'),
-        (8, 8, 1, 8, 'France', '2020-04-17'),
-        (9, 9, 1, 9, 'Netherlands', '2020-04-17'),
-        (10, 10, 1, 10, 'Netherlands', '2020-04-17'),
-        (11, 11, 1, 11, 'France', '2020-04-17'),
-        (12, 12, 1, 12, 'France', '2020-04-17'),
-        (13, 13, 1, 13, 'France', '2020-04-17'),
-        (14, 14, 1, 14, 'France', '2020-04-17'),
-        (15, 15, 1, 15, 'Netherlands', '2020-04-17'),
-        (16, 16, 1, 16, 'France', '2020-04-17'),
-        (17, 17, 1, 17, 'Netherlands', '2020-04-17'),
-        (18, 18, 1, 18, 'France', '2020-04-17'),
-        (19, 19, 1, 19, 'France', '2020-04-17'),
-        (20, 20, 1, 20, 'France', '2020-04-17'),
-        (21, 21, 1, 21, 'Netherlands', '2020-04-17'),
-        (22, 22, 1, 22, 'France', '2020-04-17'),
-        (23, 23, 1, 23, 'Netherlands', '2020-04-17'),
-        (24, 24, 1, 24, 'Netherlands', '2020-04-17'),
-        (25, 25, 1, 25, 'France', '2020-04-17'),
-        (26, 26, 1, 26, 'Netherlands', '2020-04-17'),
-        (27, 27, 1, 27, 'Netherlands', '2020-04-17'),
-        (28, 1, 1, 28, 'Netherlands', '2020-04-17'),
-        (29, 2, 1, 29, 'France', '2020-04-17'),
-        (30, 3, 1, 30, 'Netherlands', '2020-04-17'),
-        (31, 4, 1, 31, 'Netherlands', '2020-04-17'),
-        (32, 5, 1, 32, 'Netherlands', '2020-04-17'),
-        (33, 6, 1, 33, 'France', '2020-04-17'),
-        (34, 7, 1, 34, 'France', '2020-04-17'),
-        (35, 8, 1, 35, 'Netherlands', '2020-04-17'),
-        (36, 9, 1, 36, 'Netherlands', '2020-04-17'),
-        (37, 10, 1, 37, 'Netherlands', '2020-04-17'),
-        (38, 11, 1, 38, 'France', '2020-04-17'),
-        (39, 12, 1, 39, 'Netherlands', '2020-04-17'),
-        (40, 13, 1, 40, 'France', '2020-04-17'),
-        (41, 14, 1, 41, 'France', '2020-04-17'),
-        (42, 15, 1, 42, 'France', '2020-04-17'),
-        (43, 16, 1, 43, 'France', '2020-04-17'),
-        (44, 17, 1, 44, 'Netherlands', '2020-04-17'),
-        (45, 18, 1, 45, 'Netherlands', '2020-04-17'),
-        (46, 19, 1, 46, 'France', '2020-04-17'),
-        (47, 20, 1, 47, 'France', '2020-04-17'),
-        (48, 21, 1, 48, 'Netherlands', '2020-04-17'),
-        (49, 22, 1, 49, 'Netherlands', '2020-04-17'),
-        (50, 23, 1, 50, 'France', '2020-04-17'),
-        (51, 24, 1, 51, 'Netherlands', '2020-04-17'),
-        (52, 25, 1, 52, 'Netherlands', '2020-04-17'),
-        (53, 26, 1, 53, 'Netherlands', '2020-04-17'),
-        (54, 27, 1, 54, 'France', '2020-04-17'),
-        (55, 1, 1, 55, 'Netherlands', '2020-04-17'),
-        (56, 2, 1, 56, 'Netherlands', '2020-04-17'),
-        (57, 3, 1, 57, 'Netherlands', '2020-04-17'),
-        (58, 4, 1, 58, 'France', '2020-04-17'),
-        (59, 5, 1, 59, 'France', '2020-04-17'),
-        (60, 6, 1, 60, 'France', '2020-04-17'),
-        (61, 7, 1, 61, 'France', '2020-04-17'),
-        (62, 8, 1, 62, 'France', '2020-04-17'),
-        (63, 9, 1, 63, 'Netherlands', '2020-04-17'),
-        (64, 10, 1, 64, 'France', '2020-04-17'),
-        (65, 11, 1, 65, 'France', '2020-04-17'),
-        (66, 12, 1, 66, 'France', '2020-04-17'),
-        (67, 13, 1, 67, 'Netherlands', '2020-04-17'),
-        (68, 14, 1, 68, 'France', '2020-04-17'),
-        (69, 15, 1, 69, 'France', '2020-04-17'),
-        (70, 16, 1, 70, 'France', '2020-04-17'),
-        (71, 17, 1, 71, 'France', '2020-04-17'),
-        (72, 18, 1, 72, 'France', '2020-04-17'),
-        (73, 19, 1, 73, 'Netherlands', '2020-04-17'),
-        (74, 20, 1, 74, 'Netherlands', '2020-04-17'),
-        (75, 21, 1, 75, 'Netherlands', '2020-04-17'),
-        (76, 22, 1, 76, 'Netherlands', '2020-04-17'),
-        (77, 23, 1, 77, 'France', '2020-04-17'),
-        (78, 24, 1, 78, 'Netherlands', '2020-04-17'),
-        (79, 25, 1, 79, 'France', '2020-04-17'),
-        (80, 26, 1, 80, 'Netherlands', '2020-04-17'),
-        (81, 27, 1, 81, 'France', '2020-04-17'),
-        (82, 1, 1, 82, 'Netherlands', '2020-04-17'),
-        (83, 2, 1, 83, 'Netherlands', '2020-04-17'),
-        (84, 3, 1, 84, 'France', '2020-04-17'),
-        (85, 4, 1, 85, 'France', '2020-04-17'),
-        (86, 5, 1, 86, 'France', '2020-04-17'),
-        (87, 6, 1, 87, 'France', '2020-04-17'),
-        (88, 7, 1, 88, 'France', '2020-04-17'),
-        (89, 8, 1, 89, 'France', '2020-04-17'),
-        (90, 9, 1, 90, 'France', '2020-04-17'),
-        (91, 10, 1, 91, 'Netherlands', '2020-04-17'),
-        (92, 11, 1, 92, 'France', '2020-04-17'),
-        (93, 12, 1, 93, 'Netherlands', '2020-04-17'),
-        (94, 13, 1, 94, 'France', '2020-04-17'),
-        (95, 14, 1, 95, 'France', '2020-04-17'),
-        (96, 15, 1, 96, 'Netherlands', '2020-04-17'),
-        (97, 16, 1, 97, 'France', '2020-04-17'),
-        (98, 17, 1, 98, 'France', '2020-04-17'),
-        (99, 18, 1, 99, 'Netherlands', '2020-04-17'),
-        (100, 19, 1, 100, 'Netherlands', '2020-04-17'),
-        (101, 20, 1, 101, 'France', '2020-04-17'),
-        (102, 21, 1, 102, 'France', '2020-04-17'),
-        (103, 22, 1, 103, 'France', '2020-04-17'),
-        (104, 23, 1, 104, 'France', '2020-04-17'),
-        (105, 24, 1, 105, 'France', '2020-04-17'),
-        (106, 25, 1, 106, 'France', '2020-04-17'),
-        (107, 26, 1, 107, 'France', '2020-04-17'),
-        (108, 27, 1, 108, 'France', '2020-04-17'),
-        (109, 1, 1, 109, 'France', '2020-04-17'),
-        (110, 2, 1, 110, 'France', '2020-04-17'),
-        (111, 3, 1, 111, 'France', '2020-04-17'),
-        (112, 4, 1, 112, 'France', '2020-04-17'),
-        (113, 5, 1, 113, 'Netherlands', '2020-04-17'),
-        (114, 6, 1, 114, 'Netherlands', '2020-04-17'),
-        (115, 7, 1, 115, 'Netherlands', '2020-04-17'),
-        (116, 8, 1, 116, 'France', '2020-04-17'),
-        (117, 9, 1, 117, 'Netherlands', '2020-04-17'),
-        (118, 10, 1, 118, 'France', '2020-04-17'),
-        (119, 11, 1, 119, 'Netherlands', '2020-04-17'),
-        (120, 12, 1, 120, 'France', '2020-04-17'),
-        (121, 13, 1, 121, 'Netherlands', '2020-04-17'),
-        (122, 14, 1, 122, 'France', '2020-04-17'),
-        (123, 15, 1, 123, 'France', '2020-04-17'),
-        (124, 16, 1, 124, 'Netherlands', '2020-04-17'),
-        (125, 17, 1, 125, 'Netherlands', '2020-04-17'),
-        (126, 18, 1, 126, 'Netherlands', '2020-04-17'),
-        (127, 19, 1, 127, 'Netherlands', '2020-04-17'),
-        (128, 20, 1, 128, 'France', '2020-04-17'),
-        (129, 21, 1, 129, 'France', '2020-04-17'),
-        (130, 22, 1, 130, 'France', '2020-04-17'),
-        (131, 23, 1, 131, 'France', '2020-04-17'),
-        (132, 24, 1, 132, 'France', '2020-04-17'),
-        (133, 25, 1, 133, 'Netherlands', '2020-04-17'),
-        (134, 26, 1, 134, 'France', '2020-04-17'),
-        (135, 27, 1, 135, 'Netherlands', '2020-04-17'),
-        (136, 1, 1, 136, 'France', '2020-04-17'),
-        (137, 2, 1, 137, 'France', '2020-04-17'),
-        (138, 3, 1, 138, 'France', '2020-04-17'),
-        (139, 4, 1, 139, 'Netherlands', '2020-04-17'),
-        (140, 5, 1, 140, 'Netherlands', '2020-04-17'),
-        (141, 6, 1, 141, 'France', '2020-04-17'),
-        (142, 7, 1, 142, 'Netherlands', '2020-04-17'),
-        (143, 8, 1, 143, 'France', '2020-04-17'),
-        (144, 9, 1, 144, 'France', '2020-04-17'),
-        (145, 10, 1, 145, 'France', '2020-04-17'),
-        (146, 11, 1, 146, 'Netherlands', '2020-04-17'),
-        (147, 12, 1, 147, 'Netherlands', '2020-04-17'),
-        (148, 13, 1, 148, 'Netherlands', '2020-04-17'),
-        (149, 14, 1, 149, 'Netherlands', '2020-04-17'),
-        (150, 15, 1, 150, 'Netherlands', '2020-04-17'),
-        (151, 16, 1, 151, 'France', '2020-04-17'),
-        (152, 17, 1, 152, 'France', '2020-04-17'),
-        (153, 18, 1, 153, 'France', '2020-04-17'),
-        (154, 19, 1, 154, 'Netherlands', '2020-04-17'),
-        (155, 20, 1, 155, 'France', '2020-04-17'),
-        (156, 21, 1, 156, 'France', '2020-04-17'),
-        (157, 22, 1, 157, 'France', '2020-04-17'),
-        (158, 23, 1, 158, 'Netherlands', '2020-04-17'),
-        (159, 24, 1, 159, 'Netherlands', '2020-04-17'),
-        (160, 25, 1, 160, 'Netherlands', '2020-04-17'),
-        (161, 26, 1, 161, 'France', '2020-04-17'),
-        (162, 27, 1, 162, 'France', '2020-04-17'),
-        (163, 1, 1, 163, 'France', '2020-04-17'),
-        (164, 2, 1, 164, 'France', '2020-04-17'),
-        (165, 3, 1, 165, 'Netherlands', '2020-04-17'),
-        (166, 4, 1, 166, 'France', '2020-04-17'),
-        (167, 5, 1, 167, 'Netherlands', '2020-04-17'),
-        (168, 6, 1, 168, 'Netherlands', '2020-04-17'),
-        (169, 7, 1, 169, 'France', '2020-04-17'),
-        (170, 8, 1, 170, 'France', '2020-04-17'),
-        (171, 9, 1, 171, 'France', '2020-04-17'),
-        (172, 10, 1, 172, 'France', '2020-04-17'),
-        (173, 11, 1, 173, 'Netherlands', '2020-04-17'),
-        (174, 12, 1, 174, 'Netherlands', '2020-04-17'),
-        (175, 13, 1, 175, 'Netherlands', '2020-04-17'),
-        (176, 14, 1, 176, 'Netherlands', '2020-04-17'),
-        (177, 15, 1, 177, 'France', '2020-04-17'),
-        (178, 16, 1, 178, 'France', '2020-04-17'),
-        (179, 17, 1, 179, 'France', '2020-04-17'),
-        (180, 18, 1, 180, 'Netherlands', '2020-04-17'),
-        (181, 19, 1, 181, 'Netherlands', '2020-04-17'),
-        (182, 20, 1, 182, 'France', '2020-04-17'),
-        (183, 21, 1, 183, 'Netherlands', '2020-04-17'),
-        (184, 22, 1, 184, 'Netherlands', '2020-04-17'),
-        (185, 23, 1, 185, 'France', '2020-04-17'),
-        (186, 24, 1, 186, 'Netherlands', '2020-04-17'),
-        (187, 25, 1, 187, 'Netherlands', '2020-04-17'),
-        (188, 26, 1, 188, 'France', '2020-04-17'),
-        (189, 27, 1, 189, 'Netherlands', '2020-04-17'),
-        (190, 1, 1, 190, 'France', '2020-04-17'),
-        (191, 2, 1, 191, 'Netherlands', '2020-04-17'),
-        (192, 3, 1, 192, 'Netherlands', '2020-04-17'),
-        (193, 4, 1, 193, 'Netherlands', '2020-04-17'),
-        (194, 5, 1, 194, 'France', '2020-04-17'),
-        (195, 6, 1, 195, 'Netherlands', '2020-04-17'),
-        (196, 7, 1, 196, 'Netherlands', '2020-04-17'),
-        (197, 8, 1, 197, 'France', '2020-04-17'),
-        (198, 9, 1, 198, 'Netherlands', '2020-04-17'),
-        (199, 10, 1, 199, 'Netherlands', '2020-04-17'),
-        (200, 11, 1, 200, 'Netherlands', '2020-04-17');
--- End
 
-insert into Company (id, name, phone_number, address)
-values  (1, 'Auto_Escuela_Salesiana', 7832929, 'Av. Rafael Urquidi 424, Cochabamba');
--- End
+#
+# TABLE STRUCTURE FOR: Student
+#
 
-insert into Data_Maintenance (id, date, Vehicle_id)
-values  (1, '2003-01-01', 1),
-        (2, '2003-01-01', 2),
-        (3, '2003-01-01', 3),
-        (4, '2003-01-01', 4),
-        (5, '2003-01-01', 5),
-        (6, '2003-01-01', 6),
-        (7, '2003-01-01', 7),
-        (8, '2003-01-01', 8),
-        (9, '2003-01-01', 9),
-        (10, '2003-01-01', 10),
-        (11, '2003-01-01', 11),
-        (12, '2003-01-01', 12),
-        (13, '2003-01-01', 13),
-        (14, '2003-01-01', 14),
-        (15, '2003-01-01', 15),
-        (16, '2003-01-01', 16),
-        (17, '2003-01-01', 17),
-        (18, '2003-01-01', 18),
-        (19, '2003-01-01', 19),
-        (20, '2003-01-01', 20),
-        (21, '2003-01-01', 21),
-        (22, '2003-01-01', 22),
-        (23, '2003-01-01', 23),
-        (24, '2003-01-01', 24),
-        (25, '2003-01-01', 25),
-        (26, '2003-01-01', 26),
-        (27, '2003-01-01', 27),
-        (28, '2003-01-01', 28),
-        (29, '2003-01-01', 29),
-        (30, '2003-01-01', 30),
-        (31, '2003-01-01', 31),
-        (32, '2003-01-01', 32),
-        (33, '2003-01-01', 33),
-        (34, '2003-01-01', 34),
-        (35, '2003-01-01', 35),
-        (36, '2003-01-01', 36),
-        (37, '2003-01-01', 37),
-        (38, '2003-01-01', 38),
-        (39, '2003-01-01', 39),
-        (40, '2003-01-01', 40),
-        (41, '2003-01-01', 41),
-        (42, '2003-01-01', 42),
-        (43, '2003-01-01', 43),
-        (44, '2003-01-01', 44),
-        (45, '2003-01-01', 45),
-        (46, '2003-01-01', 46),
-        (47, '2003-01-01', 47),
-        (48, '2003-01-01', 48),
-        (49, '2003-01-01', 49),
-        (50, '2003-01-01', 50),
-        (51, '2003-01-01', 1),
-        (52, '2003-01-01', 2),
-        (53, '2003-01-01', 3),
-        (54, '2003-01-01', 4),
-        (55, '2003-01-01', 5),
-        (56, '2003-01-01', 6),
-        (57, '2003-01-01', 7),
-        (58, '2003-01-01', 8),
-        (59, '2003-01-01', 9),
-        (60, '2003-01-01', 10),
-        (61, '2003-01-01', 11),
-        (62, '2003-01-01', 12),
-        (63, '2003-01-01', 13),
-        (64, '2003-01-01', 14),
-        (65, '2003-01-01', 15),
-        (66, '2003-01-01', 16),
-        (67, '2003-01-01', 17),
-        (68, '2003-01-01', 18),
-        (69, '2003-01-01', 19),
-        (70, '2003-01-01', 20),
-        (71, '2003-01-01', 21),
-        (72, '2003-01-01', 22),
-        (73, '2003-01-01', 23),
-        (74, '2003-01-01', 24),
-        (75, '2003-01-01', 25),
-        (76, '2003-01-01', 26),
-        (77, '2003-01-01', 27),
-        (78, '2003-01-01', 28),
-        (79, '2003-01-01', 29),
-        (80, '2003-01-01', 30),
-        (81, '2003-01-01', 31),
-        (82, '2003-01-01', 32),
-        (83, '2003-01-01', 33),
-        (84, '2003-01-01', 34),
-        (85, '2003-01-01', 35),
-        (86, '2003-01-01', 36),
-        (87, '2003-01-01', 37),
-        (88, '2003-01-01', 38),
-        (89, '2003-01-01', 39),
-        (90, '2003-01-01', 40),
-        (91, '2003-01-01', 41),
-        (92, '2003-01-01', 42),
-        (93, '2003-01-01', 43),
-        (94, '2003-01-01', 44),
-        (95, '2003-01-01', 45),
-        (96, '2003-01-01', 46),
-        (97, '2003-01-01', 47),
-        (98, '2003-01-01', 48),
-        (99, '2003-01-01', 49),
-        (100, '2003-01-01', 50);
--- End
+DROP TABLE IF EXISTS `Student`;
 
-INSERT INTO Schedule (id, time)
-VALUES (1, '07:00:00'),
-       (2, '09:00:00'),
-       (3, '10:00:00'),
-       (4, '12:00:00'),
-       (5, '14:00:00'),
-       (6, '16:00:00'),
-       (7, '18:00:00'),
-       (8, '20:00:00');
+CREATE TABLE `Student` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `age` int(11) NOT NULL,
+  `phone` int(11) NOT NULL,
+  `gender` enum('F','M') COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Student` (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-insert into Schedule (id, time)
-values  (1, '03:57:33'),
-        (2, '12:52:59'),
-        (3, '11:56:17'),
-        (4, '12:17:26'),
-        (5, '03:23:36'),
-        (6, '11:51:03'),
-        (7, '19:14:59'),
-        (8, '09:39:28'),
-        (9, '02:33:46'),
-        (10, '02:04:12'),
-        (11, '03:45:55'),
-        (12, '20:16:36'),
-        (13, '16:35:16'),
-        (14, '11:25:06'),
-        (15, '19:00:24'),
-        (16, '20:12:56'),
-        (17, '05:25:32'),
-        (18, '02:35:34'),
-        (19, '10:27:57'),
-        (20, '18:11:13'),
-        (21, '23:39:46'),
-        (22, '21:45:15'),
-        (23, '12:17:24'),
-        (24, '12:18:21'),
-        (25, '02:59:57'),
-        (26, '15:06:10'),
-        (27, '15:23:37');
--- End
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (1, 'Bruce', 'Feeney', 22, 461520032, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (2, 'Helga', 'Greenholt', 48, 516619007, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (3, 'Morris', 'Beer', 47, 199185651, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (4, 'Gussie', 'Littel', 31, 824171260, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (5, 'Rylan', 'Blick', 38, 484016336, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (6, 'Gail', 'Hoeger', 41, 368049432, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (7, 'Hilbert', 'Boyer', 45, 788788309, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (8, 'Darrick', 'Jaskolski', 26, 702763217, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (9, 'Lenna', 'Torp', 23, 535715256, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (10, 'Keagan', 'Vandervort', 31, 637490699, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (11, 'Angeline', 'Kris', 22, 835517576, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (12, 'Trudie', 'Streich', 25, 362337963, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (13, 'Berry', 'Leffler', 41, 217863250, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (14, 'Nils', 'Leuschke', 18, 702879734, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (15, 'Annamarie', 'Beier', 31, 545259564, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (16, 'Shaniya', 'Murazik', 49, 969142824, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (17, 'Caden', 'Feeney', 34, 595835132, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (18, 'Ruben', 'Thompson', 18, 510194644, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (19, 'Charlene', 'Terry', 44, 905145301, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (20, 'Ericka', 'Lowe', 31, 481489740, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (21, 'Jackie', 'Ankunding', 23, 312754244, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (22, 'Willa', 'Koss', 40, 162825261, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (23, 'Eulah', 'Little', 29, 622196543, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (24, 'Amparo', 'Green', 18, 534034326, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (25, 'Mylene', 'Lueilwitz', 21, 317546782, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (26, 'Dana', 'Hagenes', 27, 239612608, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (27, 'Jacinto', 'Metz', 46, 618122384, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (28, 'Alysson', 'Langosh', 34, 348842640, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (29, 'Tamia', 'Altenwerth', 38, 346614235, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (30, 'Leann', 'Durgan', 32, 308946199, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (31, 'Freida', 'McCullough', 42, 296243671, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (32, 'Thea', 'Rempel', 43, 864964519, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (33, 'Emily', 'Fahey', 40, 589635871, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (34, 'Zoe', 'Morissette', 45, 920933264, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (35, 'Trisha', 'Kunze', 47, 305684808, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (36, 'Anna', 'Friesen', 33, 488277688, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (37, 'Octavia', 'White', 33, 500057428, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (38, 'Jerel', 'Farrell', 38, 786616156, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (39, 'Kacey', 'Balistreri', 25, 559781534, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (40, 'Reina', 'Keebler', 37, 623945343, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (41, 'Jerome', 'Stokes', 37, 581772445, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (42, 'Fiona', 'Schoen', 30, 380473194, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (43, 'Luella', 'Schulist', 19, 896339439, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (44, 'Daphnee', 'Davis', 46, 801363620, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (45, 'Abigayle', 'Prosacco', 29, 346958667, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (46, 'Genevieve', 'Nader', 26, 296097400, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (47, 'Maximilian', 'Heller', 32, 838622043, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (48, 'Rosetta', 'Konopelski', 22, 331676924, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (49, 'Coralie', 'Corkery', 37, 536709726, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (50, 'Otho', 'Kunze', 39, 887042419, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (51, 'Andrew', 'Watsica', 28, 288462339, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (52, 'Arianna', 'Goodwin', 45, 727920824, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (53, 'Aglae', 'Parisian', 35, 870055458, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (54, 'Yasmin', 'Eichmann', 31, 323246137, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (55, 'Bonita', 'Fritsch', 18, 835747950, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (56, 'Harvey', 'Ruecker', 24, 741001705, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (57, 'Israel', 'Wuckert', 45, 573692708, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (58, 'Alba', 'Goodwin', 34, 960851404, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (59, 'Verla', 'Kirlin', 19, 218398453, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (60, 'Nathen', 'Rogahn', 46, 750603422, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (61, 'Carol', 'Haley', 38, 747971911, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (62, 'Twila', 'Block', 30, 218152454, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (63, 'Nicola', 'Reichert', 27, 334982229, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (64, 'River', 'Kassulke', 30, 251298314, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (65, 'Mekhi', 'Will', 41, 868938658, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (66, 'Hallie', 'Wolff', 50, 639361981, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (67, 'Therese', 'Barrows', 41, 800079072, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (68, 'Lavinia', 'Metz', 36, 709247914, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (69, 'Webster', 'Feest', 34, 587478710, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (70, 'Breana', 'Koelpin', 45, 85171273, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (71, 'Colleen', 'Lueilwitz', 38, 878656425, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (72, 'Timmothy', 'O\'Conner', 40, 445858162, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (73, 'Dwight', 'Nienow', 38, 643982572, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (74, 'Benedict', 'Anderson', 22, 353657378, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (75, 'Melissa', 'Altenwerth', 23, 411987028, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (76, 'Jadyn', 'Cummings', 41, 420082183, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (77, 'Stephany', 'Marks', 39, 462558664, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (78, 'Eddie', 'Dickens', 21, 603765980, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (79, 'Henderson', 'Kunde', 23, 844387392, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (80, 'Janessa', 'Mills', 22, 179109039, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (81, 'Cheyanne', 'Schimmel', 29, 141307381, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (82, 'Leon', 'Hudson', 41, 464639922, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (83, 'Emmanuel', 'Lubowitz', 34, 897998845, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (84, 'Agnes', 'Spinka', 28, 726654162, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (85, 'Joesph', 'Mueller', 46, 236972457, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (86, 'Elmer', 'Dickinson', 19, 286295532, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (87, 'Rosina', 'Corwin', 24, 230992656, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (88, 'Jesus', 'Hauck', 29, 859237842, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (89, 'Niko', 'Steuber', 23, 375741322, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (90, 'Arvid', 'Rosenbaum', 35, 793841335, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (91, 'Lela', 'Lehner', 27, 534664647, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (92, 'Pascale', 'Lesch', 45, 961905089, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (93, 'Jevon', 'Cassin', 43, 275703571, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (94, 'Conrad', 'Torp', 18, 337794049, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (95, 'Josue', 'Keebler', 27, 947446645, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (96, 'Jerrod', 'Dicki', 46, 428578759, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (97, 'Nathan', 'Welch', 29, 214726373, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (98, 'Irma', 'Jones', 38, 729655371, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (99, 'Clinton', 'Haag', 31, 685196746, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (100, 'Freeda', 'Koepp', 26, 363826081, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (101, 'Misael', 'Kohler', 31, 715931724, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (102, 'Elsa', 'Jenkins', 20, 928533590, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (103, 'Gia', 'Paucek', 18, 84390959, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (104, 'Keon', 'Haag', 39, 116448815, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (105, 'Reina', 'Schoen', 26, 795117534, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (106, 'Katelynn', 'Schmeler', 45, 407216216, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (107, 'Jamar', 'Mills', 18, 762796435, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (108, 'Annamae', 'Borer', 33, 213615774, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (109, 'Rollin', 'Upton', 46, 617128094, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (110, 'Verner', 'Fadel', 36, 550814761, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (111, 'Jessika', 'Schoen', 28, 656701633, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (112, 'Wilfrid', 'Lakin', 30, 235326454, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (113, 'Sienna', 'Spinka', 34, 493650599, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (114, 'Kattie', 'Gutkowski', 29, 879793550, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (115, 'Tania', 'Lesch', 40, 157260436, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (116, 'Fermin', 'Predovic', 36, 907180083, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (117, 'Elmer', 'Mills', 32, 471066348, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (118, 'Fernando', 'West', 43, 128232985, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (119, 'Rory', 'Brakus', 34, 602029196, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (120, 'Miller', 'Hodkiewicz', 44, 868776659, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (121, 'Emmett', 'Bechtelar', 49, 185156437, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (122, 'Leonor', 'Torphy', 24, 258806797, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (123, 'Tanner', 'Rice', 31, 688770436, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (124, 'Maynard', 'Lockman', 32, 103923264, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (125, 'Dillan', 'Heller', 40, 500119004, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (126, 'Coby', 'Bashirian', 27, 851264989, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (127, 'Tracy', 'Flatley', 35, 545007258, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (128, 'Antonette', 'Fritsch', 41, 124043949, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (129, 'Eleonore', 'Bogisich', 29, 329112322, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (130, 'Johanna', 'Osinski', 24, 147920259, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (131, 'Sim', 'Harris', 40, 585539186, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (132, 'Geoffrey', 'Emard', 24, 941663677, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (133, 'Alexander', 'Ledner', 34, 461335015, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (134, 'Letitia', 'Feil', 44, 136401267, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (135, 'Cordell', 'Mann', 18, 729535874, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (136, 'Dortha', 'Wyman', 18, 835768062, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (137, 'Garrett', 'Tromp', 43, 517101118, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (138, 'Dane', 'Wiegand', 35, 166414193, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (139, 'Austen', 'Skiles', 45, 161386141, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (140, 'Elfrieda', 'Spinka', 36, 475240143, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (141, 'Maxine', 'Hirthe', 36, 950585767, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (142, 'Aubree', 'Carroll', 40, 178705855, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (143, 'Jamarcus', 'McCullough', 22, 653788122, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (144, 'Marlene', 'Little', 22, 953347367, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (145, 'Jakayla', 'McKenzie', 38, 496754410, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (146, 'Deanna', 'Veum', 28, 636122864, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (147, 'Hulda', 'Sanford', 34, 669306997, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (148, 'Kathleen', 'Pagac', 48, 765460995, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (149, 'Katheryn', 'Brown', 22, 128028819, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (150, 'Theresa', 'Ullrich', 24, 442541589, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (151, 'Jermaine', 'Cole', 29, 260012878, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (152, 'Alanna', 'Pollich', 25, 704559902, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (153, 'Myra', 'Gorczany', 30, 339349789, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (154, 'Hyman', 'Von', 34, 596161821, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (155, 'Lelah', 'Marvin', 47, 911351791, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (156, 'Myrtis', 'Hintz', 27, 580641682, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (157, 'Tomasa', 'Schulist', 41, 781977124, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (158, 'Rosario', 'Ritchie', 24, 726541644, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (159, 'Kaela', 'Klocko', 31, 803862477, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (160, 'Claire', 'Waelchi', 41, 874693558, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (161, 'Lorenza', 'Sanford', 32, 726070875, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (162, 'Gerard', 'Rolfson', 41, 800145250, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (163, 'Tania', 'Johnston', 38, 334747818, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (164, 'Gust', 'Hackett', 22, 689643274, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (165, 'Annalise', 'Beier', 23, 263897027, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (166, 'Lavon', 'Langworth', 44, 105165180, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (167, 'Elda', 'Beier', 29, 297944985, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (168, 'Trinity', 'McGlynn', 43, 553288110, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (169, 'Elouise', 'Streich', 27, 597924728, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (170, 'Oda', 'Emmerich', 22, 625312280, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (171, 'Naomi', 'Will', 45, 144221866, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (172, 'Una', 'Bailey', 42, 703143282, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (173, 'Selina', 'Aufderhar', 18, 578494429, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (174, 'Mathilde', 'Yost', 49, 709937478, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (175, 'Alisha', 'Feil', 32, 371365048, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (176, 'Kristin', 'Pagac', 28, 447585880, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (177, 'Hailey', 'Schulist', 20, 972080217, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (178, 'Zachery', 'Carroll', 48, 805199348, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (179, 'Makenna', 'Nader', 35, 103768911, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (180, 'Petra', 'Lockman', 40, 188861478, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (181, 'Dexter', 'Bashirian', 34, 853419897, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (182, 'Orville', 'Crona', 20, 129663893, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (183, 'Rozella', 'Weber', 45, 583949782, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (184, 'Beth', 'Pfannerstill', 46, 896585335, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (185, 'Raina', 'Schuster', 38, 797578972, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (186, 'Lukas', 'Rodriguez', 31, 648404028, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (187, 'Marjory', 'Kassulke', 49, 804604534, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (188, 'Daryl', 'Oberbrunner', 31, 820449616, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (189, 'Janice', 'Botsford', 39, 378486598, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (190, 'Craig', 'Cremin', 34, 738613208, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (191, 'Macie', 'Wehner', 37, 882674574, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (192, 'Alysson', 'Herzog', 22, 110790906, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (193, 'Alvah', 'Stanton', 22, 907528950, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (194, 'Lionel', 'Davis', 21, 751672321, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (195, 'Herta', 'Douglas', 22, 501027631, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (196, 'Garry', 'Gislason', 22, 910728886, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (197, 'Genevieve', 'Heaney', 34, 487193395, 'M');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (198, 'Jayce', 'Satterfield', 24, 410140721, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (199, 'Eda', 'Weimann', 50, 753164315, 'F');
+INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (200, 'Savanna', 'Toy', 41, 274892596, 'M');
 
-insert into Student_Building (id, Student_id, Building_id, inscription_date)
-values  (1, 1, 1, '2020-12-05 06:34:30'),
-        (2, 2, 2, '2022-03-08 13:42:54'),
-        (3, 3, 3, '2022-08-09 23:32:16'),
-        (4, 4, 4, '2022-08-14 10:20:40'),
-        (5, 5, 5, '2022-07-15 05:50:43'),
-        (6, 6, 6, '2021-12-09 02:04:01'),
-        (7, 7, 7, '2020-05-28 13:45:17'),
-        (8, 8, 8, '2021-08-19 06:19:42'),
-        (9, 9, 9, '2021-03-03 03:29:01'),
-        (10, 10, 10, '2021-09-20 20:51:01'),
-        (11, 11, 11, '2022-05-09 09:39:12'),
-        (12, 12, 12, '2021-06-20 02:09:54'),
-        (13, 13, 13, '2022-04-23 13:01:30'),
-        (14, 14, 14, '2020-10-18 19:47:45'),
-        (15, 15, 15, '2022-06-20 13:01:26'),
-        (16, 16, 16, '2022-02-23 13:41:21'),
-        (17, 17, 17, '2021-09-29 07:12:03'),
-        (18, 18, 18, '2022-08-08 05:04:43'),
-        (19, 19, 19, '2020-05-18 09:44:28'),
-        (20, 20, 20, '2022-01-15 21:25:33'),
-        (21, 21, 21, '2020-07-12 07:07:43'),
-        (22, 22, 22, '2020-06-27 07:15:19'),
-        (23, 23, 23, '2020-08-03 09:02:14'),
-        (24, 24, 24, '2022-04-11 19:42:03'),
-        (25, 25, 25, '2021-01-21 02:31:22'),
-        (26, 26, 1, '2022-03-06 20:21:13'),
-        (27, 27, 2, '2021-01-26 22:30:53'),
-        (28, 28, 3, '2022-02-02 13:49:44'),
-        (29, 29, 4, '2021-03-10 13:59:47'),
-        (30, 30, 5, '2020-08-09 19:49:24'),
-        (31, 31, 6, '2022-10-01 10:11:35'),
-        (32, 32, 7, '2022-04-18 16:03:02'),
-        (33, 33, 8, '2021-09-04 01:55:51'),
-        (34, 34, 9, '2022-04-20 13:50:07'),
-        (35, 35, 10, '2022-06-09 13:28:22'),
-        (36, 36, 11, '2021-09-17 21:41:46'),
-        (37, 37, 12, '2022-10-07 20:08:10'),
-        (38, 38, 13, '2022-09-17 06:39:15'),
-        (39, 39, 14, '2021-07-14 14:18:55'),
-        (40, 40, 15, '2020-10-19 00:18:18'),
-        (41, 41, 16, '2022-03-09 21:26:31'),
-        (42, 42, 17, '2020-05-16 00:41:47'),
-        (43, 43, 18, '2021-11-12 10:25:41'),
-        (44, 44, 19, '2020-06-11 17:49:18'),
-        (45, 45, 20, '2021-02-11 02:01:43'),
-        (46, 46, 21, '2021-01-13 14:30:26'),
-        (47, 47, 22, '2020-05-19 15:37:40'),
-        (48, 48, 23, '2021-03-06 09:13:47'),
-        (49, 49, 24, '2022-04-05 21:34:56'),
-        (50, 50, 25, '2021-03-08 08:43:05'),
-        (51, 51, 1, '2020-11-15 22:23:46'),
-        (52, 52, 2, '2022-11-12 06:33:59'),
-        (53, 53, 3, '2021-04-29 21:41:00'),
-        (54, 54, 4, '2021-12-30 19:34:55'),
-        (55, 55, 5, '2020-05-13 00:05:23'),
-        (56, 56, 6, '2020-06-10 16:23:33'),
-        (57, 57, 7, '2021-11-10 01:45:30'),
-        (58, 58, 8, '2022-11-16 14:43:40'),
-        (59, 59, 9, '2022-07-27 19:28:26'),
-        (60, 60, 10, '2021-08-31 21:23:44'),
-        (61, 61, 11, '2022-03-09 17:39:34'),
-        (62, 62, 12, '2020-12-09 15:54:45'),
-        (63, 63, 13, '2022-07-25 02:02:28'),
-        (64, 64, 14, '2021-10-29 00:51:06'),
-        (65, 65, 15, '2021-03-13 02:44:49'),
-        (66, 66, 16, '2021-01-13 21:42:19'),
-        (67, 67, 17, '2022-11-17 02:21:11'),
-        (68, 68, 18, '2022-01-08 16:59:41'),
-        (69, 69, 19, '2021-12-23 15:01:17'),
-        (70, 70, 20, '2020-04-17 06:55:59'),
-        (71, 71, 21, '2020-08-12 15:48:12'),
-        (72, 72, 22, '2020-04-27 05:29:37'),
-        (73, 73, 23, '2021-07-30 18:20:24'),
-        (74, 74, 24, '2021-03-24 14:46:09'),
-        (75, 75, 25, '2021-01-27 23:01:22'),
-        (76, 76, 1, '2020-09-04 16:16:30'),
-        (77, 77, 2, '2020-10-19 23:20:10'),
-        (78, 78, 3, '2022-01-30 16:16:19'),
-        (79, 79, 4, '2020-12-18 12:36:57'),
-        (80, 80, 5, '2020-07-21 08:13:04'),
-        (81, 81, 6, '2020-07-06 14:54:18'),
-        (82, 82, 7, '2020-06-11 00:09:33'),
-        (83, 83, 8, '2020-12-02 00:38:37'),
-        (84, 84, 9, '2021-05-26 09:06:36'),
-        (85, 85, 10, '2022-12-09 02:20:51'),
-        (86, 86, 11, '2022-01-28 19:44:35'),
-        (87, 87, 12, '2020-12-08 08:56:24'),
-        (88, 88, 13, '2021-06-29 16:54:19'),
-        (89, 89, 14, '2021-12-13 04:20:42'),
-        (90, 90, 15, '2022-02-14 16:54:37'),
-        (91, 91, 16, '2021-04-13 01:49:16'),
-        (92, 92, 17, '2020-12-05 09:33:06'),
-        (93, 93, 18, '2021-02-18 10:03:39'),
-        (94, 94, 19, '2021-07-13 00:15:24'),
-        (95, 95, 20, '2022-09-29 14:00:56'),
-        (96, 96, 21, '2021-11-27 06:48:53'),
-        (97, 97, 22, '2020-05-29 09:26:44'),
-        (98, 98, 23, '2022-05-20 22:59:20'),
-        (99, 99, 24, '2022-03-03 19:08:32'),
-        (100, 100, 25, '2021-01-10 20:07:35'),
-        (101, 101, 1, '2020-09-25 23:42:18'),
-        (102, 102, 2, '2021-11-12 10:32:25'),
-        (103, 103, 3, '2022-12-10 05:42:32'),
-        (104, 104, 4, '2022-10-28 10:03:43'),
-        (105, 105, 5, '2020-12-17 18:26:16'),
-        (106, 106, 6, '2022-04-16 01:27:12'),
-        (107, 107, 7, '2022-07-22 19:07:58'),
-        (108, 108, 8, '2020-08-01 06:07:16'),
-        (109, 109, 9, '2022-02-23 12:58:30'),
-        (110, 110, 10, '2022-11-25 03:17:01'),
-        (111, 111, 11, '2022-05-22 04:07:42'),
-        (112, 112, 12, '2020-12-31 16:10:12'),
-        (113, 113, 13, '2022-07-25 16:09:13'),
-        (114, 114, 14, '2022-06-28 15:01:45'),
-        (115, 115, 15, '2021-09-03 10:35:35'),
-        (116, 116, 16, '2020-10-24 14:15:39'),
-        (117, 117, 17, '2021-08-31 18:28:25'),
-        (118, 118, 18, '2022-04-14 15:39:28'),
-        (119, 119, 19, '2022-09-29 06:01:25'),
-        (120, 120, 20, '2021-01-11 02:02:30'),
-        (121, 121, 21, '2022-08-08 01:26:12'),
-        (122, 122, 22, '2022-11-16 08:27:47'),
-        (123, 123, 23, '2021-01-24 04:42:00'),
-        (124, 124, 24, '2020-12-29 17:41:22'),
-        (125, 125, 25, '2021-03-12 03:30:24'),
-        (126, 126, 1, '2022-12-07 10:46:57'),
-        (127, 127, 2, '2022-11-07 11:12:24'),
-        (128, 128, 3, '2022-10-04 17:51:58'),
-        (129, 129, 4, '2021-01-28 22:55:22'),
-        (130, 130, 5, '2020-06-21 20:24:47'),
-        (131, 131, 6, '2020-09-08 11:27:32'),
-        (132, 132, 7, '2021-04-20 05:19:17'),
-        (133, 133, 8, '2022-01-26 20:41:52'),
-        (134, 134, 9, '2021-02-20 13:22:04'),
-        (135, 135, 10, '2021-01-25 02:44:08'),
-        (136, 136, 11, '2022-08-12 17:37:22'),
-        (137, 137, 12, '2021-03-18 07:23:57'),
-        (138, 138, 13, '2020-06-15 02:36:22'),
-        (139, 139, 14, '2021-04-09 22:49:24'),
-        (140, 140, 15, '2022-04-17 22:48:36'),
-        (141, 141, 16, '2021-03-03 06:56:55'),
-        (142, 142, 17, '2022-10-20 01:28:41'),
-        (143, 143, 18, '2021-07-07 10:36:09'),
-        (144, 144, 19, '2020-08-27 21:26:34'),
-        (145, 145, 20, '2022-01-19 20:34:22'),
-        (146, 146, 21, '2021-12-27 01:38:47'),
-        (147, 147, 22, '2022-05-16 03:46:49'),
-        (148, 148, 23, '2021-11-19 03:20:51'),
-        (149, 149, 24, '2021-09-30 06:26:04'),
-        (150, 150, 25, '2021-01-22 15:01:54'),
-        (151, 151, 1, '2020-10-23 19:08:43'),
-        (152, 152, 2, '2021-08-28 02:55:24'),
-        (153, 153, 3, '2021-07-30 13:35:33'),
-        (154, 154, 4, '2021-04-03 21:08:55'),
-        (155, 155, 5, '2022-01-28 13:35:09'),
-        (156, 156, 6, '2022-05-01 14:39:24'),
-        (157, 157, 7, '2021-04-28 10:04:10'),
-        (158, 158, 8, '2022-07-08 06:53:37'),
-        (159, 159, 9, '2021-01-15 23:00:33'),
-        (160, 160, 10, '2022-08-18 10:50:58'),
-        (161, 161, 11, '2022-05-16 21:04:16'),
-        (162, 162, 12, '2021-08-13 02:16:51'),
-        (163, 163, 13, '2020-07-27 13:03:03'),
-        (164, 164, 14, '2022-09-29 05:28:31'),
-        (165, 165, 15, '2022-04-29 18:25:55'),
-        (166, 166, 16, '2022-02-16 13:32:40'),
-        (167, 167, 17, '2020-09-07 15:15:23'),
-        (168, 168, 18, '2020-12-22 15:40:44'),
-        (169, 169, 19, '2022-11-10 17:26:57'),
-        (170, 170, 20, '2022-07-15 00:47:00'),
-        (171, 171, 21, '2020-04-26 07:35:48'),
-        (172, 172, 22, '2020-08-07 03:05:11'),
-        (173, 173, 23, '2021-04-07 18:17:44'),
-        (174, 174, 24, '2022-05-28 22:16:23'),
-        (175, 175, 25, '2022-06-02 00:15:39'),
-        (176, 176, 1, '2021-10-23 06:01:01'),
-        (177, 177, 2, '2022-09-14 10:46:05'),
-        (178, 178, 3, '2020-11-23 00:33:49'),
-        (179, 179, 4, '2022-09-30 12:11:19'),
-        (180, 180, 5, '2021-11-03 20:55:07'),
-        (181, 181, 6, '2021-06-15 01:17:42'),
-        (182, 182, 7, '2022-04-09 10:25:25'),
-        (183, 183, 8, '2022-11-08 13:57:11'),
-        (184, 184, 9, '2022-04-25 07:20:41'),
-        (185, 185, 10, '2022-08-11 01:51:07'),
-        (186, 186, 11, '2022-07-09 13:26:48'),
-        (187, 187, 12, '2022-02-14 11:12:52'),
-        (188, 188, 13, '2021-03-25 01:26:30'),
-        (189, 189, 14, '2020-05-11 07:15:46'),
-        (190, 190, 15, '2020-12-10 06:38:43'),
-        (191, 191, 16, '2020-10-29 13:59:19'),
-        (192, 192, 17, '2020-07-27 15:42:29'),
-        (193, 193, 18, '2022-05-01 06:39:18'),
-        (194, 194, 19, '2022-10-30 14:25:30'),
-        (195, 195, 20, '2022-03-11 14:19:12'),
-        (196, 196, 21, '2020-07-28 03:20:47'),
-        (197, 197, 22, '2022-04-02 10:30:51'),
-        (198, 198, 23, '2021-08-05 07:49:11'),
-        (199, 199, 24, '2021-08-27 16:40:10'),
-        (200, 200, 25, '2021-05-04 10:46:32');
--- End
 
-insert into Student_Note (Student_Building_id, score)
-values  (1, 79),
-        (2, 67),
-        (3, 20),
-        (4, 58),
-        (5, 67),
-        (6, 96),
-        (7, 43),
-        (8, 5),
-        (9, 18),
-        (10, 44),
-        (11, 90),
-        (12, 83),
-        (13, 33),
-        (14, 41),
-        (15, 71),
-        (16, 10),
-        (17, 46),
-        (18, 67),
-        (19, 16),
-        (20, 71),
-        (21, 96),
-        (22, 94),
-        (23, 73),
-        (24, 73),
-        (25, 73),
-        (26, 87),
-        (27, 31),
-        (28, 76),
-        (29, 53),
-        (30, 40),
-        (31, 24),
-        (32, 7),
-        (33, 61),
-        (34, 56),
-        (35, 1),
-        (36, 100),
-        (37, 87),
-        (38, 24),
-        (39, 17),
-        (40, 53),
-        (41, 13),
-        (42, 58),
-        (43, 18),
-        (44, 85),
-        (45, 59),
-        (46, 28),
-        (47, 77),
-        (48, 66),
-        (49, 66),
-        (50, 92),
-        (51, 9),
-        (52, 17),
-        (53, 47),
-        (54, 67),
-        (55, 87),
-        (56, 41),
-        (57, 72),
-        (58, 56),
-        (59, 73),
-        (60, 1),
-        (61, 5),
-        (62, 29),
-        (63, 82),
-        (64, 64),
-        (65, 10),
-        (66, 54),
-        (67, 85),
-        (68, 75),
-        (69, 91),
-        (70, 36),
-        (71, 26),
-        (72, 60),
-        (73, 45),
-        (74, 30),
-        (75, 40),
-        (76, 88),
-        (77, 36),
-        (78, 21),
-        (79, 75),
-        (80, 8),
-        (81, 64),
-        (82, 23),
-        (83, 82),
-        (84, 52),
-        (85, 40),
-        (86, 99),
-        (87, 58),
-        (88, 98),
-        (89, 38),
-        (90, 56),
-        (91, 56),
-        (92, 100),
-        (93, 53),
-        (94, 67),
-        (95, 47),
-        (96, 52),
-        (97, 99),
-        (98, 96),
-        (99, 5),
-        (100, 8),
-        (101, 13),
-        (102, 10),
-        (103, 61),
-        (104, 33),
-        (105, 14),
-        (106, 28),
-        (107, 57),
-        (108, 14),
-        (109, 58),
-        (110, 75),
-        (111, 52),
-        (112, 44),
-        (113, 34),
-        (114, 99),
-        (115, 34),
-        (116, 63),
-        (117, 21),
-        (118, 13),
-        (119, 78),
-        (120, 78),
-        (121, 71),
-        (122, 53),
-        (123, 10),
-        (124, 87),
-        (125, 42),
-        (126, 69),
-        (127, 69),
-        (128, 60),
-        (129, 3),
-        (130, 26),
-        (131, 92),
-        (132, 24),
-        (133, 58),
-        (134, 68),
-        (135, 41),
-        (136, 37),
-        (137, 75),
-        (138, 88),
-        (139, 35),
-        (140, 4),
-        (141, 40),
-        (142, 36),
-        (143, 34),
-        (144, 20),
-        (145, 73),
-        (146, 46),
-        (147, 46),
-        (148, 39),
-        (149, 2),
-        (150, 66),
-        (151, 33),
-        (152, 36),
-        (153, 57),
-        (154, 15),
-        (155, 70),
-        (156, 60),
-        (157, 31),
-        (158, 34),
-        (159, 57),
-        (160, 35),
-        (161, 55),
-        (162, 59),
-        (163, 57),
-        (164, 22),
-        (165, 1),
-        (166, 13),
-        (167, 45),
-        (168, 63),
-        (169, 30),
-        (170, 70),
-        (171, 86),
-        (172, 94),
-        (173, 10),
-        (174, 67),
-        (175, 94),
-        (176, 16),
-        (177, 7),
-        (178, 97),
-        (179, 21),
-        (180, 28),
-        (181, 46),
-        (182, 69),
-        (183, 61),
-        (184, 17),
-        (185, 39),
-        (186, 39),
-        (187, 49),
-        (188, 13),
-        (189, 61),
-        (190, 22),
-        (191, 85),
-        (192, 20),
-        (193, 18),
-        (194, 15),
-        (195, 99),
-        (196, 44),
-        (197, 77),
-        (198, 80),
-        (199, 56),
-        (200, 59),
-        (1, 76),
-        (2, 56),
-        (3, 28),
-        (4, 61),
-        (5, 70),
-        (6, 35),
-        (7, 75),
-        (8, 1),
-        (9, 19),
-        (10, 45),
-        (11, 77),
-        (12, 48),
-        (13, 53),
-        (14, 61),
-        (15, 98),
-        (16, 31),
-        (17, 4),
-        (18, 33),
-        (19, 49),
-        (20, 83),
-        (21, 6),
-        (22, 16),
-        (23, 81),
-        (24, 19),
-        (25, 81),
-        (26, 86),
-        (27, 37),
-        (28, 80),
-        (29, 37),
-        (30, 52),
-        (31, 3),
-        (32, 63),
-        (33, 53),
-        (34, 29),
-        (35, 1),
-        (36, 90),
-        (37, 53),
-        (38, 83),
-        (39, 87),
-        (40, 62),
-        (41, 37),
-        (42, 77),
-        (43, 24),
-        (44, 9),
-        (45, 73),
-        (46, 45),
-        (47, 20),
-        (48, 25),
-        (49, 56),
-        (50, 9),
-        (51, 58),
-        (52, 12),
-        (53, 15),
-        (54, 23),
-        (55, 52),
-        (56, 80),
-        (57, 100),
-        (58, 27),
-        (59, 75),
-        (60, 27),
-        (61, 98),
-        (62, 91),
-        (63, 54),
-        (64, 100),
-        (65, 72),
-        (66, 13),
-        (67, 46),
-        (68, 97),
-        (69, 31),
-        (70, 59),
-        (71, 59),
-        (72, 52),
-        (73, 98),
-        (74, 63),
-        (75, 65),
-        (76, 65),
-        (77, 90),
-        (78, 50),
-        (79, 31),
-        (80, 36),
-        (81, 5),
-        (82, 82),
-        (83, 96),
-        (84, 61),
-        (85, 25),
-        (86, 40),
-        (87, 100),
-        (88, 68),
-        (89, 75),
-        (90, 40),
-        (91, 13),
-        (92, 87),
-        (93, 34),
-        (94, 89),
-        (95, 53),
-        (96, 98),
-        (97, 57),
-        (98, 98),
-        (99, 40),
-        (100, 90),
-        (101, 33),
-        (102, 10),
-        (103, 75),
-        (104, 23),
-        (105, 52),
-        (106, 78),
-        (107, 99),
-        (108, 13),
-        (109, 39),
-        (110, 68),
-        (111, 92),
-        (112, 27),
-        (113, 13),
-        (114, 2),
-        (115, 60),
-        (116, 18),
-        (117, 99),
-        (118, 16),
-        (119, 29),
-        (120, 24),
-        (121, 7),
-        (122, 86),
-        (123, 84),
-        (124, 12),
-        (125, 35),
-        (126, 17),
-        (127, 26),
-        (128, 73),
-        (129, 69),
-        (130, 82),
-        (131, 3),
-        (132, 84),
-        (133, 57),
-        (134, 95),
-        (135, 80),
-        (136, 78),
-        (137, 52),
-        (138, 53),
-        (139, 64),
-        (140, 11),
-        (141, 53),
-        (142, 93),
-        (143, 46),
-        (144, 34),
-        (145, 57),
-        (146, 12),
-        (147, 0),
-        (148, 48),
-        (149, 59),
-        (150, 89),
-        (151, 6),
-        (152, 82),
-        (153, 11),
-        (154, 19),
-        (155, 79),
-        (156, 99),
-        (157, 44),
-        (158, 25),
-        (159, 82),
-        (160, 67),
-        (161, 75),
-        (162, 36),
-        (163, 0),
-        (164, 12),
-        (165, 39),
-        (166, 0),
-        (167, 4),
-        (168, 34),
-        (169, 100),
-        (170, 13),
-        (171, 55),
-        (172, 94),
-        (173, 54),
-        (174, 83),
-        (175, 10),
-        (176, 9),
-        (177, 76),
-        (178, 87),
-        (179, 52),
-        (180, 95),
-        (181, 21),
-        (182, 82),
-        (183, 35),
-        (184, 86),
-        (185, 11),
-        (186, 18),
-        (187, 71),
-        (188, 90),
-        (189, 87),
-        (190, 83),
-        (191, 90),
-        (192, 9),
-        (193, 8),
-        (194, 66),
-        (195, 71),
-        (196, 13),
-        (197, 90),
-        (198, 61),
-        (199, 74),
-        (200, 67);
--- End
+#
+# TABLE STRUCTURE FOR: Student_Building
+#
 
-insert into Student (id, first_name, last_name, age, phone, gender)
-values  (1, 'Henriette', 'Price', 15, 7635345, 'F'),
-        (2, 'Tiffany', 'Rau', 18, 3453453, 'M'),
-        (3, 'Willis', 'Sporer', 16, 313243, 'M'),
-        (4, 'Maye', 'Mosciski', 15, 375474, 'F'),
-        (5, 'Kadin', 'Olson', 17, 58568, 'M'),
-        (6, 'Jaqueline', 'Green', 17, 607875, 'M'),
-        (7, 'Jillian', 'Lindgren', 15, 568568, 'F'),
-        (8, 'Anabel', 'Lakin', 17, 457569, 'M'),
-        (9, 'Claudia', 'Cruickshank', 18, 5789, 'M'),
-        (10, 'Erich', 'Barrows', 17, 789789, 'F'),
-        (11, 'Stanford', 'Raynor', 16, 7897897, 'M'),
-        (12, 'Terrell', 'Ortiz', 15, 4682584, 'M'),
-        (13, 'Alba', 'Connelly', 18, 469679, 'F'),
-        (14, 'Salvatore', 'Skiles', 17, 67967, 'M'),
-        (15, 'Declan', 'Swift', 16, 679675, 'M'),
-        (16, 'Bradley', 'Hudson', 18, 363758, 'M'),
-        (17, 'Kenyatta', 'Cummerata', 16, 6068706, 'F'),
-        (18, 'Abbigail', 'Hoeger', 16, 987978, 'M'),
-        (19, 'Reanna', 'Gutmann', 16, 789789, 'F'),
-        (20, 'Marietta', 'Cummerata', 18, 789478, 'M'),
-        (21, 'Elaina', 'Homenick', 18, 1065644, 'F'),
-        (22, 'Jules', 'Hermiston', 15, 967545, 'M'),
-        (23, 'Phoebe', 'Heller', 15, 45869, 'M'),
-        (24, 'Lysanne', 'Tromp', 17, 7067565, 'M'),
-        (25, 'Walker', 'Beer', 17, 69675, 'F'),
-        (26, 'Mylene', 'Lowe', 18, 785684, 'M'),
-        (27, 'Stacy', 'Boyer', 18, 627974, 'M'),
-        (28, 'Jefferey', 'Medhurst', 15, 950371, 'M'),
-        (29, 'Frankie', 'Lakin', 18, 569579, 'F'),
-        (30, 'Claire', 'Flatley', 18, 695695, 'F'),
-        (31, 'Kailey', 'Stroman', 17, 56856, 'F'),
-        (32, 'Ayla', 'Littel', 18, 568569, 'M'),
-        (33, 'Mylene', 'Schulist', 18, 569569, 'M'),
-        (34, 'Pauline', 'Lehner', 16, 84569565, 'F'),
-        (35, 'Molly', 'Walker', 16, 569569, 'F'),
-        (36, 'Sallie', 'Koss', 15, 14856, 'M'),
-        (37, 'Rosie', 'Wiegand', 15, 345654, 'F'),
-        (38, 'Clare', 'Howe', 18, 3474574, 'F'),
-        (39, 'Burnice', 'Herman', 18, 8676784, 'M'),
-        (40, 'Ellie', 'Runolfsdottir', 15, 3453450, 'M'),
-        (41, 'Vern', 'Schmidt', 15, 434634, 'M'),
-        (42, 'Jaleel', 'Durgan', 17, 634631, 'F'),
-        (43, 'Sarah', 'Dietrich', 16, 3463460, 'M'),
-        (44, 'Lois', 'Runolfsson', 18, 6856850, 'M'),
-        (45, 'Annabell', 'Abernathy', 18, 745732, 'M'),
-        (46, 'Alva', 'Mohr', 17, 108593, 'M'),
-        (47, 'Terrence', 'Runte', 15, 689988, 'F'),
-        (48, 'Keshawn', 'Volkman', 18, 358566, 'M'),
-        (49, 'Ova', 'Hoeger', 17, 37357451, 'F'),
-        (50, 'Rhiannon', 'Mitchell', 17, 457450, 'F'),
-        (51, 'Earl', 'Gottlieb', 16, 5874849, 'F'),
-        (52, 'Jeramie', 'Wolf', 15, 145847, 'M'),
-        (53, 'Brandon', 'Bruen', 15, 457451, 'M'),
-        (54, 'Geovany', 'Pouros', 16, 456456451, 'F'),
-        (55, 'Allan', 'Pollich', 15, 4456450, 'F'),
-        (56, 'Chad', 'Labadie', 18, 145745, 'M'),
-        (57, 'Curt', 'Grimes', 16, 4574571, 'M'),
-        (58, 'Elwin', 'Feest', 18, 44457459, 'F'),
-        (59, 'Aubree', 'Zboncak', 18, 45745169, 'M'),
-        (60, 'Vince', 'Hamill', 15, 457450, 'M'),
-        (61, 'Watson', 'Heaney', 18, 0756756, 'M'),
-        (62, 'Della', 'Feeney', 18, 1866426, 'F'),
-        (63, 'Kayden', 'West', 15, 4564554, 'M'),
-        (64, 'Franco', 'Simonis', 16, 319409, 'F'),
-        (65, 'Lulu', 'Moen', 15, 4564528, 'M'),
-        (66, 'Warren', 'Marquardt', 15, 214748647, 'M'),
-        (67, 'Brent', 'Renner', 18, 585681, 'M'),
-        (68, 'Bradford', 'Hayes', 17, 65281, 'F'),
-        (69, 'Elizabeth', 'King', 15, 171767, 'M'),
-        (70, 'Jaunita', 'D''Amore', 18, 8568561, 'F'),
-        (71, 'Leonardo', 'Kutch', 18, 2147483647, 'F'),
-        (72, 'Verda', 'Gutmann', 16, 0856865, 'F'),
-        (73, 'Juliana', 'Luettgen', 15, 5675671, 'F'),
-        (74, 'Deangelo', 'Kessler', 18, 303463, 'F'),
-        (75, 'Evans', 'Effertz', 17, 34645760, 'M'),
-        (76, 'Albin', 'Pacocha', 17, 7457450, 'M'),
-        (77, 'Dustin', 'Kshlerin', 17, 834250, 'F'),
-        (78, 'Mazie', 'Lind', 16, 383746, 'M'),
-        (79, 'Alena', 'Larson', 18, 2147483647, 'F'),
-        (80, 'Vern', 'Feil', 17, 1457451, 'M'),
-        (81, 'Cydney', 'Collins', 18, 2147483647, 'F'),
-        (82, 'Marjolaine', 'Sawayn', 17, 457451, 'M'),
-        (83, 'Raphaelle', 'Roob', 15, 457457450, 'M'),
-        (84, 'Adolf', 'Stracke', 15, 6346341, 'F'),
-        (85, 'Dusty', 'Friesen', 15, 3434616, 'M'),
-        (86, 'Sabryna', 'Ryan', 15, 27456426, 'M'),
-        (87, 'Orie', 'Johns', 18, 54645045, 'M'),
-        (88, 'Jessika', 'Kohler', 15, 56456145, 'F'),
-        (89, 'Cathryn', 'Mitchell', 17, 404564, 'M'),
-        (90, 'Jewell', 'Walker', 17, 44134211, 'F'),
-        (91, 'Teresa', 'Erdman', 18, 232420, 'F'),
-        (92, 'Kaylin', 'Smitham', 18, 23423611, 'F'),
-        (93, 'Kevon', 'Schmidt', 16, 2342341, 'F'),
-        (94, 'Maud', 'Douglas', 16, 925, 'M'),
-        (95, 'Eino', 'Stamm', 15, 2342341, 'F'),
-        (96, 'Napoleon', 'Toy', 15, 542342, 'M'),
-        (97, 'Leanne', 'Sporer', 17, 77480, 'F'),
-        (98, 'Gage', 'Franecki', 17, 234234, 'F'),
-        (99, 'Savanna', 'Shanahan', 16, 2342392, 'F'),
-        (100, 'Mariela', 'Gleason', 17, 3234274, 'F'),
-        (101, 'Jesse', 'McCullough', 17, 2342341, 'M'),
-        (102, 'Kaden', 'Braun', 18, 36430, 'M'),
-        (103, 'Sydni', 'Nitzsche', 18, 823429, 'F'),
-        (104, 'Andreane', 'Pfannerstill', 27, 03434533, 'F'),
-        (105, 'Kathlyn', 'Schaden', 15, 034534, 'M'),
-        (106, 'Cordell', 'Gaylord', 18, 3453451, 'F'),
-        (107, 'Kody', 'O''Reilly', 18, 3453451, 'M'),
-        (108, 'Delia', 'Nolan', 16, 5345343, 'F'),
-        (109, 'Sigurd', 'Gottlieb', 15, 345340, 'F'),
-        (110, 'Jordi', 'Stokes', 15, 563412, 'M'),
-        (111, 'Henri', 'Aufderhar', 17, 2147483647, 'F'),
-        (112, 'Rhett', 'Carroll', 18, 9345325, 'F'),
-        (113, 'Maribel', 'Wisoky', 18, 7353457, 'F'),
-        (114, 'Rasheed', 'Reinger', 18, 134534, 'F'),
-        (115, 'Leatha', 'Oberbrunner', 15, 34534531, 'M'),
-        (116, 'Junior', 'Lind', 18, 7345315, 'M'),
-        (117, 'Maud', 'Gleichner', 18, 034534, 'F'),
-        (118, 'Gloria', 'Mann', 17, 571243, 'M'),
-        (119, 'Buford', 'Shanahan', 17, 7634539, 'M'),
-        (120, 'Lamont', 'Jacobi', 18, 96714, 'F'),
-        (121, 'Sam', 'Daugherty', 15, 034534, 'M'),
-        (122, 'Kenton', 'Herman', 17, 916465, 'F'),
-        (123, 'Guadalupe', 'Lockman', 18, 9734534, 'F'),
-        (124, 'Gene', 'Braun', 16, 19360, 'M'),
-        (125, 'Gunnar', 'Medhurst', 17, 03453, 'M'),
-        (126, 'Stevie', 'Metz', 18, 345341, 'F'),
-        (127, 'Hassie', 'Wyman', 18, 834535, 'M'),
-        (128, 'Eleanore', 'Hane', 16, 47427345, 'F'),
-        (129, 'Lowell', 'Wuckert', 18, 227990345, 'F'),
-        (130, 'Cortez', 'Hudson', 16, 683512, 'M'),
-        (131, 'Selmer', 'Tremblay', 15, 144345, 'F'),
-        (132, 'Alysa', 'Goodwin', 18, 2147483647, 'F'),
-        (133, 'Madelyn', 'Luettgen', 16, 134534, 'M'),
-        (134, 'Ada', 'Kiehn', 17, 2147483647, 'M'),
-        (135, 'Emelie', 'Borer', 18, 3334538, 'F'),
-        (136, 'Penelope', 'Little', 15, 878426, 'M'),
-        (137, 'Tyreek', 'Stiedemann', 17, 837345, 'F'),
-        (138, 'Harrison', 'Heller', 17, 33458, 'F'),
-        (139, 'Faustino', 'Daugherty', 18, 213452, 'M'),
-        (140, 'Izabella', 'Nader', 16, 345341, 'F'),
-        (141, 'Rahul', 'Kerluke', 15, 134534, 'F'),
-        (142, 'Jannie', 'Prosacco', 17, 696434, 'M'),
-        (143, 'Tito', 'Heidenreich', 15, 034534, 'M'),
-        (144, 'Katherine', 'Mitchell', 15, 161974, 'M'),
-        (145, 'Luna', 'Sawayn', 17, 1345345, 'M'),
-        (146, 'Flossie', 'Schoen', 16, 1345345, 'F'),
-        (147, 'Clyde', 'Lind', 16, 34534536, 'F'),
-        (148, 'Vincenza', 'O''Kon', 18, 3453451, 'F'),
-        (149, 'Avis', 'Blanda', 18, 1345, 'M'),
-        (150, 'Judson', 'Bashirian', 18, 53453436, 'M'),
-        (151, 'Fanny', 'Raynor', 16, 3345342, 'M'),
-        (152, 'Trystan', 'Quigley', 18, 3453450, 'F'),
-        (153, 'Marta', 'Keebler', 18, 22342348, 'M'),
-        (154, 'Mazie', 'Lemke', 16, 50235230, 'M'),
-        (155, 'Silas', 'Zemlak', 17, 235463475, 'M'),
-        (156, 'Mckenzie', 'Koss', 15, 346360, 'M'),
-        (157, 'Lula', 'Legros', 15, 714234, 'F'),
-        (158, 'Crystal', 'Mitchell', 17, 328858, 'M'),
-        (159, 'Brenna', 'Hand', 16, 12342, 'F'),
-        (160, 'Katherine', 'Wilderman', 15, 234230, 'F'),
-        (161, 'Emmet', 'Weimann', 17, 234230, 'M'),
-        (162, 'Ezekiel', 'Padberg', 16, 234231, 'F'),
-        (163, 'Lydia', 'Kohler', 16, 604465, 'M'),
-        (164, 'Chyna', 'Schmidt', 17, 234230, 'F'),
-        (165, 'Alfredo', 'Bernier', 15, 7234237, 'F'),
-        (166, 'Reggie', 'Hackett', 15, 605374, 'M'),
-        (167, 'Kacey', 'Towne', 18, 342340, 'M'),
-        (168, 'Jermain', 'Okuneva', 16, 3263423, 'M'),
-        (169, 'Verda', 'Ledner', 18, 2342340, 'M'),
-        (170, 'Aidan', 'Dickens', 17, 24323423, 'M'),
-        (171, 'Mayra', 'Mitchell', 15, 4932356, 'F'),
-        (172, 'Zakary', 'Dickens', 16, 235230, 'F'),
-        (173, 'Paolo', 'Frami', 17, 2352302, 'F'),
-        (174, 'Wilfredo', 'Ankunding', 16, 2147483647, 'M'),
-        (175, 'Idell', 'Little', 18, 15235, 'F'),
-        (176, 'Marcelino', 'Douglas', 18, 293463, 'M'),
-        (177, 'Otto', 'Corwin', 15, 2147483647, 'M'),
-        (178, 'Laurie', 'Skiles', 16, 235231, 'M'),
-        (179, 'Eliza', 'Bartoletti', 15, 51623523, 'M'),
-        (180, 'Kristin', 'Kuhn', 15, 2147483647, 'F'),
-        (181, 'Emery', 'Nolan', 15, 9423521, 'M'),
-        (182, 'Candelario', 'Dickens', 15, 341308, 'M'),
-        (183, 'Jailyn', 'McLaughlin', 18, 23523, 'M'),
-        (184, 'Nathanael', 'Daniel', 15, 2147483647, 'F'),
-        (185, 'Annabell', 'Ziemann', 17, 12352, 'M'),
-        (186, 'Michelle', 'Grady', 15, 623526, 'M'),
-        (187, 'Ariane', 'Boehm', 15, 123530, 'M'),
-        (188, 'Anahi', 'Predovic', 15, 595568, 'M'),
-        (189, 'Eusebio', 'Walter', 17, 92235, 'M'),
-        (190, 'Jacquelyn', 'Ledner', 15, 023523, 'M'),
-        (191, 'Madison', 'Heller', 18, 0235235, 'F'),
-        (192, 'Orin', 'Ankunding', 17, 1432352, 'F'),
-        (193, 'Cyril', 'Erdman', 18, 0235235, 'F'),
-        (194, 'Miles', 'Feil', 15, 61323523, 'F'),
-        (195, 'Sasha', 'Doyle', 17, 023523, 'M'),
-        (196, 'Gabriel', 'McGlynn', 17, 2352351, 'F'),
-        (197, 'Marley', 'Grimes', 16, 2147483647, 'F'),
-        (198, 'Pasquale', 'Stamm', 17, 223522, 'M'),
-        (199, 'Marshall', 'Schoen', 17, 323560, 'F'),
-        (200, 'Carrie', 'Wolf', 15, 827125, 'M');
--- End
+DROP TABLE IF EXISTS `Student_Building`;
 
-insert into Subject (id, name, price, category)
-values  (1, 'traffic regulations', 564, 'Theory'),
-        (2, 'driving', 590, 'Practice'),
-        (3, 'automotive theory', 549, 'Theory');
--- End
+CREATE TABLE `Student_Building` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Student_id` int(11) NOT NULL,
+  `Building_id` int(11) NOT NULL,
+  `inscription_date` date NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Building_association_1` (`Building_id`),
+  KEY `Student_association_1` (`Student_id`),
+  CONSTRAINT `Building_association_1` FOREIGN KEY (`Building_id`) REFERENCES `Building` (`id`),
+  CONSTRAINT `Student_association_1` FOREIGN KEY (`Student_id`) REFERENCES `Student` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-insert into Trainer (id, first_name, last_name, age, phone, gender, salary)
-values  (1, 'Lonie', 'Beatty', 248, 98, 'M', 1298),
-        (2, 'Anya', 'Corwin', 256, 1, 'M', 555),
-        (3, 'Dana', 'Mueller', 438, 681, 'M', 1133),
-        (4, 'Rickie', 'Langworth', 498, 1, 'M', 1672),
-        (5, 'Rebeka', 'Johns', 304, 500801, 'M', 1069),
-        (6, 'Osvaldo', 'Casper', 273, 0, 'F', 2199),
-        (7, 'Burley', 'Friesen', 399, 2147483647, 'M', 1020);
--- End
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (1, 1, 1, '2008-11-09');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (2, 2, 2, '2021-08-04');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (3, 3, 3, '2008-08-10');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (4, 4, 4, '2004-06-17');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (5, 5, 5, '1984-12-26');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (6, 6, 6, '2004-05-16');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (7, 7, 7, '1985-10-29');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (8, 8, 8, '2012-07-26');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (9, 9, 9, '2004-03-24');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (10, 10, 10, '1970-09-11');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (11, 11, 11, '2016-06-19');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (12, 12, 12, '1971-06-20');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (13, 13, 13, '2018-09-28');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (14, 14, 14, '2016-06-07');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (15, 15, 15, '2018-02-16');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (16, 16, 16, '1976-08-23');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (17, 17, 17, '2020-08-25');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (18, 18, 18, '2017-12-16');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (19, 19, 19, '1986-11-27');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (20, 20, 20, '1997-12-13');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (21, 21, 21, '2008-10-11');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (22, 22, 22, '1987-08-06');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (23, 23, 23, '1987-04-21');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (24, 24, 24, '1974-07-08');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (25, 25, 25, '2017-08-20');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (26, 26, 1, '2005-09-29');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (27, 27, 2, '1974-09-01');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (28, 28, 3, '2000-03-04');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (29, 29, 4, '2016-06-19');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (30, 30, 5, '2017-07-27');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (31, 31, 6, '1985-09-03');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (32, 32, 7, '2015-12-22');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (33, 33, 8, '1993-09-02');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (34, 34, 9, '1993-04-16');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (35, 35, 10, '2021-09-15');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (36, 36, 11, '1997-11-17');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (37, 37, 12, '1995-02-23');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (38, 38, 13, '2001-09-29');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (39, 39, 14, '2009-01-10');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (40, 40, 15, '1993-10-31');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (41, 41, 16, '1974-06-10');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (42, 42, 17, '1977-03-09');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (43, 43, 18, '2005-06-02');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (44, 44, 19, '1985-01-21');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (45, 45, 20, '1970-11-08');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (46, 46, 21, '2002-06-19');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (47, 47, 22, '2001-06-02');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (48, 48, 23, '2009-11-19');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (49, 49, 24, '2000-03-20');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (50, 50, 25, '2018-04-18');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (51, 51, 1, '1997-01-20');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (52, 52, 2, '1970-09-25');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (53, 53, 3, '1985-09-13');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (54, 54, 4, '1989-12-29');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (55, 55, 5, '1979-06-01');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (56, 56, 6, '2015-05-25');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (57, 57, 7, '1981-09-11');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (58, 58, 8, '2002-11-10');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (59, 59, 9, '2008-05-26');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (60, 60, 10, '2003-12-28');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (61, 61, 11, '2012-12-15');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (62, 62, 12, '1978-08-17');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (63, 63, 13, '2022-03-17');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (64, 64, 14, '1986-10-17');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (65, 65, 15, '1990-09-21');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (66, 66, 16, '2021-01-10');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (67, 67, 17, '2011-03-20');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (68, 68, 18, '2019-05-12');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (69, 69, 19, '1993-10-27');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (70, 70, 20, '2004-09-22');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (71, 71, 21, '2002-01-15');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (72, 72, 22, '2014-05-10');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (73, 73, 23, '1975-02-14');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (74, 74, 24, '2008-08-12');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (75, 75, 25, '2008-02-15');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (76, 76, 1, '1990-01-11');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (77, 77, 2, '2018-02-16');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (78, 78, 3, '1983-08-17');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (79, 79, 4, '2005-01-16');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (80, 80, 5, '1983-09-26');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (81, 81, 6, '2010-05-31');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (82, 82, 7, '1973-05-22');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (83, 83, 8, '2014-12-14');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (84, 84, 9, '1983-03-19');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (85, 85, 10, '1975-11-23');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (86, 86, 11, '2000-06-07');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (87, 87, 12, '2001-09-11');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (88, 88, 13, '1975-03-29');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (89, 89, 14, '2022-05-27');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (90, 90, 15, '1982-11-20');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (91, 91, 16, '1987-05-02');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (92, 92, 17, '1996-01-08');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (93, 93, 18, '1972-10-15');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (94, 94, 19, '1978-11-10');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (95, 95, 20, '1995-05-16');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (96, 96, 21, '1994-10-01');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (97, 97, 22, '1988-06-02');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (98, 98, 23, '1995-06-15');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (99, 99, 24, '1977-11-02');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (100, 100, 25, '2009-09-28');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (101, 101, 1, '1974-08-11');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (102, 102, 2, '1980-09-01');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (103, 103, 3, '1990-01-18');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (104, 104, 4, '1988-07-13');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (105, 105, 5, '1995-12-19');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (106, 106, 6, '1983-02-07');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (107, 107, 7, '2019-10-21');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (108, 108, 8, '1991-02-17');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (109, 109, 9, '2016-03-27');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (110, 110, 10, '1976-04-01');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (111, 111, 11, '1984-10-21');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (112, 112, 12, '2021-06-06');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (113, 113, 13, '2018-04-13');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (114, 114, 14, '1979-10-19');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (115, 115, 15, '1981-09-24');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (116, 116, 16, '1993-10-14');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (117, 117, 17, '1984-10-20');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (118, 118, 18, '1975-01-23');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (119, 119, 19, '2019-01-25');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (120, 120, 20, '1970-02-04');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (121, 121, 21, '1972-05-14');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (122, 122, 22, '1991-02-21');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (123, 123, 23, '1993-02-26');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (124, 124, 24, '2001-12-20');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (125, 125, 25, '2015-09-26');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (126, 126, 1, '1988-05-18');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (127, 127, 2, '2019-06-10');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (128, 128, 3, '2010-06-26');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (129, 129, 4, '1987-05-16');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (130, 130, 5, '2002-12-18');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (131, 131, 6, '2020-03-07');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (132, 132, 7, '2022-07-31');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (133, 133, 8, '1981-03-08');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (134, 134, 9, '2015-09-11');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (135, 135, 10, '2004-07-19');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (136, 136, 11, '2016-10-05');
 
-insert into Vehicle_Building (id, Vehicle_plate, Building_id)
-values  (1, 1, 1),
-        (2, 2, 2),
-        (3, 3, 3),
-        (4, 4, 4),
-        (5, 5, 5),
-        (6, 6, 6),
-        (7, 7, 7),
-        (8, 8, 8),
-        (9, 9, 9),
-        (10, 10, 10),
-        (11, 11, 11),
-        (12, 12, 12),
-        (13, 13, 13),
-        (14, 14, 14),
-        (15, 15, 15),
-        (16, 16, 16),
-        (17, 17, 17),
-        (18, 18, 18),
-        (19, 19, 19),
-        (20, 20, 20),
-        (21, 21, 21),
-        (22, 22, 22),
-        (23, 23, 23),
-        (24, 24, 24),
-        (25, 25, 25);
--- End
 
-insert into Vehicle (id, model, type, available)
-values  (1, 'aut', 'Moen-Goldner', 0),
-        (2, 'non', 'Sawayn Ltd', 1),
-        (3, 'laboriosam', 'Jacobs-Kohler', 1),
-        (4, 'in', 'Will-Lang', 0),
-        (5, 'esse', 'Howell, O''Keefe and Schaefer', 1),
-        (6, 'atque', 'Predovic, Littel and Gislason', 1),
-        (7, 'est', 'Crooks Ltd', 0),
-        (8, 'sit', 'Hayes, Tillman and Kertzmann', 0),
-        (9, 'error', 'Wunsch-Prosacco', 1),
-        (10, 'eaque', 'Senger-Cormier', 1),
-        (11, 'voluptates', 'Collins Ltd', 1),
-        (12, 'voluptates', 'Metz-Kozey', 0),
-        (13, 'officiis', 'Senger, Dach and Shields', 1),
-        (14, 'eveniet', 'Breitenberg-Mraz', 1),
-        (15, 'ut', 'Boyer Ltd', 1),
-        (16, 'exercitationem', 'Morissette Group', 1),
-        (17, 'corporis', 'Spencer, Jenkins and Brakus', 1),
-        (18, 'sit', 'Lemke-Dicki', 0),
-        (19, 'totam', 'Keeling and Sons', 0),
-        (20, 'ullam', 'McCullough, Skiles and Osinski', 0),
-        (21, 'qui', 'Herman Ltd', 0),
-        (22, 'nihil', 'Volkman, Osinski and Altenwerth', 0),
-        (23, 'vel', 'Reinger-Waelchi', 0),
-        (24, 'dicta', 'McCullough, Fritsch and Keebler', 1),
-        (25, 'qui', 'Leannon Group', 1),
-        (26, 'necessitatibus', 'Abshire, Veum and Barrows', 1),
-        (27, 'dolorem', 'Hartmann, Reinger and Gottlieb', 1),
-        (28, 'minus', 'Connelly, Schimmel and Harris', 1),
-        (29, 'rerum', 'Thiel, Kihn and Schuppe', 0),
-        (30, 'et', 'Predovic-Prosacco', 1),
-        (31, 'impedit', 'Kerluke, Bahringer and Nicolas', 1),
-        (32, 'hic', 'Hessel-Bode', 0),
-        (33, 'amet', 'Rohan-Gleichner', 0),
-        (34, 'adipisci', 'Simonis PLC', 1),
-        (35, 'explicabo', 'Satterfield, Flatley and Corkery', 0),
-        (36, 'aut', 'Crist, Langworth and Rogahn', 0),
-        (37, 'architecto', 'Mueller-Wisoky', 1),
-        (38, 'cupiditate', 'Wintheiser-Hessel', 1),
-        (39, 'est', 'Klocko-Swift', 1),
-        (40, 'modi', 'Smitham-Fay', 1),
-        (41, 'nihil', 'Kreiger LLC', 1),
-        (42, 'aut', 'DuBuque-Huels', 1),
-        (43, 'deleniti', 'Abbott, Prohaska and Kilback', 0),
-        (44, 'delectus', 'Runte, Hills and Dare', 1),
-        (45, 'architecto', 'Hodkiewicz Inc', 0),
-        (46, 'illum', 'Becker, Donnelly and Runte', 1),
-        (47, 'vitae', 'Mills Ltd', 0),
-        (48, 'sed', 'Bogan, McGlynn and Luettgen', 0),
-        (49, 'nostrum', 'Bergnaum and Sons', 1),
-        (50, 'porro', 'Daniel, Rempel and Borer', 1);
+#
+# TABLE STRUCTURE FOR: Student_Note
+#
+
+DROP TABLE IF EXISTS `Student_Note`;
+
+CREATE TABLE `Student_Note` (
+  `Student_Building_id` int(11) NOT NULL,
+  `score` int(11) NOT NULL,
+  KEY `Student_Note_Student_Building` (`Student_Building_id`),
+  CONSTRAINT `Student_Note_Student_Building` FOREIGN KEY (`Student_Building_id`) REFERENCES `Student_Building` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (1, 25);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (2, 53);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (3, 76);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (4, 77);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (5, 35);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (6, 26);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (7, 65);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (8, 96);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (9, 55);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (10, 25);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (11, 36);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (12, 49);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (13, 99);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (14, 28);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (15, 51);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (16, 27);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (17, 88);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (18, 83);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (19, 56);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (20, 83);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (21, 97);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (22, 88);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (23, 38);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (24, 47);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (25, 100);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (26, 85);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (27, 83);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (28, 70);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (29, 86);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (30, 38);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (31, 39);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (32, 40);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (33, 74);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (34, 99);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (35, 81);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (36, 90);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (37, 90);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (38, 56);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (39, 81);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (40, 78);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (41, 95);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (42, 48);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (43, 78);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (44, 86);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (45, 37);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (46, 60);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (47, 56);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (48, 28);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (49, 57);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (50, 86);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (51, 31);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (52, 60);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (53, 31);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (54, 100);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (55, 40);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (56, 46);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (57, 89);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (58, 48);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (59, 27);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (60, 58);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (61, 50);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (62, 27);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (63, 90);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (64, 46);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (65, 70);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (66, 50);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (67, 76);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (68, 45);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (69, 98);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (70, 47);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (71, 60);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (72, 52);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (73, 98);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (74, 97);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (75, 76);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (76, 69);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (77, 63);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (78, 47);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (79, 77);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (80, 33);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (81, 34);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (82, 67);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (83, 62);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (84, 91);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (85, 48);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (86, 34);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (87, 32);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (88, 61);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (89, 61);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (90, 44);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (91, 82);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (92, 41);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (93, 57);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (94, 27);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (95, 35);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (96, 43);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (97, 69);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (98, 56);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (99, 57);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (100, 35);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (101, 72);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (102, 66);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (103, 60);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (104, 38);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (105, 56);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (106, 37);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (107, 84);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (108, 38);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (109, 74);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (110, 91);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (111, 99);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (112, 50);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (113, 64);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (114, 76);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (115, 100);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (116, 49);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (117, 25);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (118, 78);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (119, 76);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (120, 49);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (121, 67);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (122, 97);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (123, 54);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (124, 31);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (125, 96);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (126, 36);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (127, 42);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (128, 65);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (129, 51);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (130, 84);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (131, 41);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (132, 90);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (133, 29);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (134, 59);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (135, 89);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (136, 35);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (1, 77);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (2, 83);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (3, 89);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (4, 92);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (5, 98);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (6, 63);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (7, 37);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (8, 74);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (9, 50);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (10, 53);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (11, 86);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (12, 77);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (13, 46);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (14, 99);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (15, 85);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (16, 38);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (17, 30);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (18, 62);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (19, 70);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (20, 67);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (21, 96);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (22, 51);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (23, 25);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (24, 99);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (25, 42);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (26, 51);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (27, 91);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (28, 66);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (29, 71);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (30, 67);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (31, 62);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (32, 30);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (33, 78);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (34, 54);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (35, 83);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (36, 65);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (37, 94);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (38, 56);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (39, 29);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (40, 41);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (41, 36);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (42, 45);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (43, 53);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (44, 84);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (45, 89);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (46, 54);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (47, 40);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (48, 40);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (49, 77);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (50, 59);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (51, 50);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (52, 61);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (53, 46);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (54, 34);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (55, 54);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (56, 35);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (57, 35);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (58, 90);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (59, 59);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (60, 38);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (61, 56);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (62, 40);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (63, 79);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (64, 39);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (65, 37);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (66, 34);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (67, 32);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (68, 71);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (69, 47);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (70, 27);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (71, 89);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (72, 81);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (73, 47);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (74, 88);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (75, 62);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (76, 80);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (77, 86);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (78, 56);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (79, 40);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (80, 36);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (81, 44);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (82, 53);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (83, 79);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (84, 63);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (85, 40);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (86, 97);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (87, 47);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (88, 69);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (89, 51);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (90, 100);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (91, 85);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (92, 59);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (93, 48);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (94, 45);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (95, 87);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (96, 38);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (97, 88);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (98, 55);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (99, 51);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (100, 42);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (101, 91);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (102, 80);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (103, 34);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (104, 78);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (105, 77);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (106, 65);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (107, 95);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (108, 92);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (109, 29);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (110, 72);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (111, 48);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (112, 76);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (113, 56);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (114, 65);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (115, 72);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (116, 63);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (117, 92);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (118, 74);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (119, 54);
+INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (120, 35);
+
+
+#
+# TABLE STRUCTURE FOR: Subject
+#
+
+DROP TABLE IF EXISTS `Subject`;
+
+CREATE TABLE `Subject` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` int(11) NOT NULL,
+  `category` enum('Practice','Theory') COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `Subject` (`id`, `name`, `price`, `category`) VALUES (1, 'driving', 107, 'Practice');
+INSERT INTO `Subject` (`id`, `name`, `price`, `category`) VALUES (2, 'traffic regulations', 4234, 'Practice');
+INSERT INTO `Subject` (`id`, `name`, `price`, `category`) VALUES (3, 'automotive theory', 511, 'Theory');
+
+
+#
+# TABLE STRUCTURE FOR: Trainer
+#
+
+DROP TABLE IF EXISTS `Trainer`;
+
+CREATE TABLE `Trainer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `age` int(11) NOT NULL,
+  `phone` int(11) NOT NULL,
+  `gender` enum('F','M') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `salary` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Trainer_idx_1` (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (1, 'Cara', 'Medhurst', 27, 710, 'M', 1792);
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (2, 'Kenya', 'Kiehn', 29, 13, 'M', 1238);
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (3, 'Myles', 'Ernser', 43, 38, 'M', 1776);
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (4, 'Jordy', 'Ziemann', 40, 349, 'M', 1922);
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (5, 'Sandrine', 'Weissnat', 44, 0, 'F', 1061);
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (6, 'Estel', 'Rau', 38, 496636, 'M', 1544);
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (7, 'Frederik', 'Balistreri', 47, 0, 'F', 1023);
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (8, 'Roberto', 'Watsica', 25, 978, 'F', 1629);
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (9, 'Lorenz', 'Beer', 29, 2147483647, 'F', 1432);
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (10, 'Jordyn', 'Ankunding', 28, 1, 'F', 1184);
+
+
+#
+# TABLE STRUCTURE FOR: Vehicle
+#
+
+DROP TABLE IF EXISTS `Vehicle`;
+
+CREATE TABLE `Vehicle` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `model` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `available` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+#
+# TABLE STRUCTURE FOR: Vehicle_Building
+#
+
+DROP TABLE IF EXISTS `Vehicle_Building`;
+
+CREATE TABLE `Vehicle_Building` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Vehicle_plate` int(11) NOT NULL,
+  `Building_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Vehicle_Building` (`Building_id`),
+  KEY `Vehicle_association_1` (`Vehicle_plate`),
+  CONSTRAINT `Vehicle_Building` FOREIGN KEY (`Building_id`) REFERENCES `Building` (`id`),
+  CONSTRAINT `Vehicle_association_1` FOREIGN KEY (`Vehicle_plate`) REFERENCES `Vehicle` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
