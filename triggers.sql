@@ -23,3 +23,13 @@ END //
 DELIMITER ;
 
 SELECT * FROM Note_History;
+
+
+DELIMITER //
+CREATE TRIGGER register_only_for_adults AFTER INSERT ON Student FOR EACH ROW
+    BEGIN
+        IF NEW.age < 18 THEN
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The Student is minor';
+        END IF;
+    end //
+DELIMITER ;
