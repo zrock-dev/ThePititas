@@ -1,22 +1,126 @@
 #
 # TABLE STRUCTURE FOR: Building
 #
+DROP SCHEMA DriverCollege;
+Create SCHEMA DriverCollege;
+Use DriverCollege;
+#
+# TABLE STRUCTURE FOR: Company
+#
+
+DROP TABLE IF EXISTS `Company`;
+
+CREATE TABLE `Company` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone_number` int(11) NOT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+INSERT INTO `Company` (`id`, `name`, `phone_number`, `address`) VALUES (1, 'Pouros-Ebert', 639865753, '669 Anderson Cape Suite 224 Emoryfort, MD 69038');
+
+#
+# TABLE STRUCTURE FOR: Schedule
+#
+
+DROP TABLE IF EXISTS `Schedule`;
+
+CREATE TABLE `Schedule` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `time` time NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+INSERT INTO `Schedule` (`id`, `time`) VALUES (1, '05:33:37');
+INSERT INTO `Schedule` (`id`, `time`) VALUES (2, '10:25:24');
+INSERT INTO `Schedule` (`id`, `time`) VALUES (3, '13:21:12');
+INSERT INTO `Schedule` (`id`, `time`) VALUES (4, '21:01:40');
+INSERT INTO `Schedule` (`id`, `time`) VALUES (5, '06:16:11');
+INSERT INTO `Schedule` (`id`, `time`) VALUES (6, '18:39:15');
+INSERT INTO `Schedule` (`id`, `time`) VALUES (7, '22:39:42');
+INSERT INTO `Schedule` (`id`, `time`) VALUES (8, '23:56:31');
+INSERT INTO `Schedule` (`id`, `time`) VALUES (9, '19:09:35');
+INSERT INTO `Schedule` (`id`, `time`) VALUES (10, '13:58:16');
+
+DROP TABLE IF EXISTS `Trainer`;
+
+CREATE TABLE `Trainer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `age` int(11) NOT NULL,
+  `phone` int(11) NOT NULL,
+  `gender` enum('F','M') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `salary` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Trainer_idx_1` (`id`) USING BTREE
+);
+
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (1, 'Cara', 'Medhurst', 27, 710, 'M', 1792);
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (2, 'Kenya', 'Kiehn', 29, 13, 'M', 1238);
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (3, 'Myles', 'Ernser', 43, 38, 'M', 1776);
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (4, 'Jordy', 'Ziemann', 40, 349, 'M', 1922);
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (5, 'Sandrine', 'Weissnat', 44, 0, 'F', 1061);
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (6, 'Estel', 'Rau', 38, 496636, 'M', 1544);
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (7, 'Frederik', 'Balistreri', 47, 0, 'F', 1023);
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (8, 'Roberto', 'Watsica', 25, 978, 'F', 1629);
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (9, 'Lorenz', 'Beer', 29, 2147483647, 'F', 1432);
+INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (10, 'Jordyn', 'Ankunding', 28, 1, 'F', 1184);
+
+#
+# TABLE STRUCTURE FOR: Subject
+#
+
+DROP TABLE IF EXISTS `Subject`;
+
+CREATE TABLE `Subject` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` int(11) NOT NULL,
+  `category` enum('Practice','Theory') COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+INSERT INTO `Subject` (`id`, `name`, `price`, `category`) VALUES (1, 'driving', 107, 'Practice');
+INSERT INTO `Subject` (`id`, `name`, `price`, `category`) VALUES (2, 'traffic regulations', 4234, 'Practice');
+INSERT INTO `Subject` (`id`, `name`, `price`, `category`) VALUES (3, 'automotive theory', 511, 'Theory');
+
+#
+# TABLE STRUCTURE FOR: Category
+#
+
+DROP TABLE IF EXISTS `Category`;
+
+CREATE TABLE `Category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` enum('A','P','M') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `capacity` enum('Low','Medium','Full') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type_car` enum('Private','Public','Both') COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+);
+INSERT INTO `Category` (`id`, `type`, `capacity`, `type_car`) VALUES (1, 'M', 'Medium', 'Private');
+INSERT INTO `Category` (`id`, `type`, `capacity`, `type_car`) VALUES (2, 'A', 'Low', 'Both');
+INSERT INTO `Category` (`id`, `type`, `capacity`, `type_car`) VALUES (3, 'P', 'Full', 'Private');
+
+
 
 DROP TABLE IF EXISTS `Building`;
 
-CREATE TABLE `Building` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `Subject_id` int(11) NOT NULL,
-  `Trainer_id` int(11) NOT NULL,
-  `Category_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `Building_Category` (`Category_id`),
-  KEY `Building_Subject` (`Subject_id`),
-  KEY `Building_Trainer` (`Trainer_id`),
-  CONSTRAINT `Building_Category` FOREIGN KEY (`Category_id`) REFERENCES `Category` (`id`),
-  CONSTRAINT `Building_Subject` FOREIGN KEY (`Subject_id`) REFERENCES `Subject` (`id`),
-  CONSTRAINT `Building_Trainer` FOREIGN KEY (`Trainer_id`) REFERENCES `Trainer` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `Building`
+(
+    `id`          int(11) NOT NULL AUTO_INCREMENT,
+    `Subject_id`  int(11) NOT NULL,
+    `Trainer_id`  int(11) NOT NULL,
+    `Category_id` int(11) NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `Building_Category` (`Category_id`),
+    KEY `Building_Subject` (`Subject_id`),
+    KEY `Building_Trainer` (`Trainer_id`),
+    CONSTRAINT `Building_Category` FOREIGN KEY (`Category_id`) REFERENCES `Category` (`id`),
+    CONSTRAINT `Building_Subject` FOREIGN KEY (`Subject_id`) REFERENCES `Subject` (`id`),
+    CONSTRAINT `Building_Trainer` FOREIGN KEY (`Trainer_id`) REFERENCES `Trainer` (`id`)
+);
 
 INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (1, 1, 1, 1);
 INSERT INTO `Building` (`id`, `Subject_id`, `Trainer_id`, `Category_id`) VALUES (2, 2, 2, 2);
@@ -60,8 +164,7 @@ CREATE TABLE `Building_Schedule` (
   KEY `Schedule_association_2` (`Schedule_id`),
   CONSTRAINT `Building_association_2` FOREIGN KEY (`Building_id`) REFERENCES `Building` (`id`),
   CONSTRAINT `Schedule_association_2` FOREIGN KEY (`Schedule_id`) REFERENCES `Schedule` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
+);
 INSERT INTO `Building_Schedule` (`id`, `Building_id`, `Schedule_id`) VALUES (1, 1, 1);
 INSERT INTO `Building_Schedule` (`id`, `Building_id`, `Schedule_id`) VALUES (2, 2, 2);
 INSERT INTO `Building_Schedule` (`id`, `Building_id`, `Schedule_id`) VALUES (3, 3, 3);
@@ -74,148 +177,6 @@ INSERT INTO `Building_Schedule` (`id`, `Building_id`, `Schedule_id`) VALUES (9, 
 INSERT INTO `Building_Schedule` (`id`, `Building_id`, `Schedule_id`) VALUES (10, 10, 10);
 
 
-#
-# TABLE STRUCTURE FOR: Category
-#
-
-DROP TABLE IF EXISTS `Category`;
-
-CREATE TABLE `Category` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` enum('A','P','M') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `capacity` enum('Low','Medium','Full') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type_car` enum('Private','Public','Both') COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-INSERT INTO `Category` (`id`, `type`, `capacity`, `type_car`) VALUES (1, 'M', 'Medium', 'Private');
-INSERT INTO `Category` (`id`, `type`, `capacity`, `type_car`) VALUES (2, 'A', 'Low', 'Both');
-INSERT INTO `Category` (`id`, `type`, `capacity`, `type_car`) VALUES (3, 'P', 'Full', 'Private');
-
-
-#
-# TABLE STRUCTURE FOR: Certificate
-#
-
-DROP TABLE IF EXISTS `Certificate`;
-
-CREATE TABLE `Certificate` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `Category_id` int(11) NOT NULL,
-  `Company_id` int(11) NOT NULL,
-  `Student_Building_id` int(11) NOT NULL,
-  `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date` date NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `Certificate_idx_1` (`id`) USING BTREE,
-  KEY `Certificate_Category` (`Category_id`),
-  KEY `Certificate_Company` (`Company_id`),
-  KEY `Certificate_association_1` (`Student_Building_id`),
-  CONSTRAINT `Certificate_Category` FOREIGN KEY (`Category_id`) REFERENCES `Category` (`id`),
-  CONSTRAINT `Certificate_Company` FOREIGN KEY (`Company_id`) REFERENCES `Company` (`id`),
-  CONSTRAINT `Certificate_association_1` FOREIGN KEY (`Student_Building_id`) REFERENCES `Student_Building` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (1, 1, 1, 1, 'Netherlands', '1988-11-24');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (2, 2, 1, 2, 'Netherlands', '1991-05-05');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (3, 3, 1, 3, 'France', '1991-03-16');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (4, 1, 1, 4, 'Netherlands', '1975-07-11');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (5, 2, 1, 5, 'France', '2000-11-28');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (6, 3, 1, 6, 'France', '2003-06-11');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (7, 1, 1, 7, 'France', '2019-02-22');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (8, 2, 1, 8, 'France', '2017-12-23');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (9, 3, 1, 9, 'France', '1996-10-28');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (10, 1, 1, 10, 'France', '1991-03-03');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (11, 2, 1, 11, 'France', '1970-10-13');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (12, 3, 1, 12, 'France', '1991-05-08');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (13, 1, 1, 13, 'Netherlands', '1972-05-25');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (14, 2, 1, 14, 'Netherlands', '2015-10-24');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (15, 3, 1, 15, 'France', '1998-11-10');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (16, 1, 1, 16, 'France', '1995-03-31');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (17, 2, 1, 17, 'France', '1993-12-15');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (18, 3, 1, 18, 'Netherlands', '1970-09-30');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (19, 1, 1, 19, 'France', '2006-08-22');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (20, 2, 1, 20, 'Netherlands', '2000-10-24');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (21, 3, 1, 21, 'France', '2017-05-20');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (22, 1, 1, 22, 'Netherlands', '2003-02-20');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (23, 2, 1, 23, 'France', '1978-08-17');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (24, 3, 1, 24, 'Netherlands', '1986-09-27');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (25, 1, 1, 25, 'France', '2013-10-02');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (26, 2, 1, 26, 'France', '2012-06-02');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (27, 3, 1, 27, 'Netherlands', '2017-08-23');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (28, 1, 1, 28, 'France', '1989-05-19');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (29, 2, 1, 29, 'Netherlands', '1970-05-28');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (30, 3, 1, 30, 'France', '2004-12-07');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (31, 1, 1, 31, 'France', '2021-09-17');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (32, 2, 1, 32, 'France', '1996-12-06');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (33, 3, 1, 33, 'France', '2003-10-31');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (34, 1, 1, 34, 'France', '2013-10-31');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (35, 2, 1, 35, 'France', '2002-07-15');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (36, 3, 1, 36, 'Netherlands', '1977-07-23');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (37, 1, 1, 37, 'Netherlands', '1974-04-16');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (38, 2, 1, 38, 'France', '1988-03-20');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (39, 3, 1, 39, 'France', '2021-08-24');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (40, 1, 1, 40, 'France', '2017-05-07');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (41, 2, 1, 41, 'France', '2019-06-18');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (42, 3, 1, 42, 'Netherlands', '2015-01-28');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (43, 1, 1, 43, 'France', '1992-12-13');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (44, 2, 1, 44, 'France', '2000-05-30');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (45, 3, 1, 45, 'Netherlands', '2001-04-08');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (46, 1, 1, 46, 'France', '2002-01-10');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (47, 2, 1, 47, 'Netherlands', '1972-05-06');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (48, 3, 1, 48, 'Netherlands', '2010-03-27');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (49, 1, 1, 49, 'Netherlands', '1997-02-02');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (50, 2, 1, 50, 'France', '1985-12-04');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (51, 3, 1, 51, 'Netherlands', '2022-01-01');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (52, 1, 1, 52, 'France', '1999-12-25');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (53, 2, 1, 53, 'Netherlands', '1981-04-19');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (54, 3, 1, 54, 'Netherlands', '2019-07-30');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (55, 1, 1, 55, 'Netherlands', '2008-10-05');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (56, 2, 1, 56, 'Netherlands', '2004-04-26');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (57, 3, 1, 57, 'Netherlands', '1985-06-22');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (58, 1, 1, 58, 'Netherlands', '1998-06-13');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (59, 2, 1, 59, 'Netherlands', '1972-08-19');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (60, 3, 1, 60, 'Netherlands', '1971-08-27');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (61, 1, 1, 61, 'Netherlands', '1977-12-01');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (62, 2, 1, 62, 'France', '2015-03-19');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (63, 3, 1, 63, 'France', '1996-05-09');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (64, 1, 1, 64, 'France', '1991-04-14');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (65, 2, 1, 65, 'Netherlands', '1986-08-27');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (66, 3, 1, 66, 'France', '1983-01-16');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (67, 1, 1, 67, 'France', '2007-06-09');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (68, 2, 1, 68, 'Netherlands', '2006-03-27');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (69, 3, 1, 69, 'France', '2004-03-22');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (70, 1, 1, 70, 'Netherlands', '1972-04-14');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (71, 2, 1, 71, 'France', '1995-06-13');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (72, 3, 1, 72, 'France', '2003-07-24');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (73, 1, 1, 73, 'Netherlands', '1970-06-08');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (74, 2, 1, 74, 'Netherlands', '2006-11-19');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (75, 3, 1, 75, 'France', '1999-05-25');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (76, 1, 1, 76, 'France', '1977-01-21');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (77, 2, 1, 77, 'Netherlands', '2018-12-20');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (78, 3, 1, 78, 'France', '2018-03-16');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (79, 1, 1, 79, 'France', '1993-03-04');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (80, 2, 1, 80, 'Netherlands', '1985-10-03');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (81, 3, 1, 81, 'France', '1970-02-06');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (82, 1, 1, 82, 'Netherlands', '1987-11-19');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (83, 2, 1, 83, 'Netherlands', '1987-07-27');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (84, 3, 1, 84, 'France', '2012-09-24');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (85, 1, 1, 85, 'France', '1989-09-21');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (86, 2, 1, 86, 'France', '1980-11-14');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (87, 3, 1, 87, 'Netherlands', '2012-11-26');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (88, 1, 1, 88, 'France', '1970-07-15');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (89, 2, 1, 89, 'Netherlands', '1980-10-20');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (90, 3, 1, 90, 'France', '1975-04-14');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (91, 1, 1, 91, 'Netherlands', '1994-09-14');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (92, 2, 1, 92, 'France', '1995-11-13');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (93, 3, 1, 93, 'Netherlands', '2011-08-04');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (94, 1, 1, 94, 'Netherlands', '2016-06-24');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (95, 2, 1, 95, 'France', '2018-07-27');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (96, 3, 1, 96, 'Netherlands', '2008-12-27');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (97, 1, 1, 97, 'France', '2004-04-21');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (98, 2, 1, 98, 'Netherlands', '2018-08-17');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (99, 3, 1, 99, 'France', '2014-09-02');
-INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (100, 1, 1, 100, 'Netherlands', '1983-12-12');
 
 
 #
@@ -232,39 +193,16 @@ CREATE TABLE `Client_Not_Registered` (
   `phone` int(11) NOT NULL,
   `gender` enum('F','M') COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+);
 
-#
-# TABLE STRUCTURE FOR: Company
-#
 
-DROP TABLE IF EXISTS `Company`;
-
-CREATE TABLE `Company` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone_number` int(11) NOT NULL,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-INSERT INTO `Company` (`id`, `name`, `phone_number`, `address`) VALUES (1, 'Pouros-Ebert', 639865753, '669 Anderson Cape Suite 224\nEmoryfort, MD 69038');
 
 
 #
 # TABLE STRUCTURE FOR: Data_Maintenance
 #
 
-DROP TABLE IF EXISTS `Data_Maintenance`;
 
-CREATE TABLE `Data_Maintenance` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `date` date NOT NULL,
-  `Vehicle_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `Data_Maintenance_Vehicle` (`Vehicle_id`),
-  CONSTRAINT `Data_Maintenance_Vehicle` FOREIGN KEY (`Vehicle_id`) REFERENCES `Vehicle` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 #
 # TABLE STRUCTURE FOR: Note_History
@@ -281,30 +219,9 @@ CREATE TABLE `Note_History` (
   `name_trainer` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_name_trainer` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+);
 
-#
-# TABLE STRUCTURE FOR: Schedule
-#
 
-DROP TABLE IF EXISTS `Schedule`;
-
-CREATE TABLE `Schedule` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `time` time NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-INSERT INTO `Schedule` (`id`, `time`) VALUES (1, '05:33:37');
-INSERT INTO `Schedule` (`id`, `time`) VALUES (2, '10:25:24');
-INSERT INTO `Schedule` (`id`, `time`) VALUES (3, '13:21:12');
-INSERT INTO `Schedule` (`id`, `time`) VALUES (4, '21:01:40');
-INSERT INTO `Schedule` (`id`, `time`) VALUES (5, '06:16:11');
-INSERT INTO `Schedule` (`id`, `time`) VALUES (6, '18:39:15');
-INSERT INTO `Schedule` (`id`, `time`) VALUES (7, '22:39:42');
-INSERT INTO `Schedule` (`id`, `time`) VALUES (8, '23:56:31');
-INSERT INTO `Schedule` (`id`, `time`) VALUES (9, '19:09:35');
-INSERT INTO `Schedule` (`id`, `time`) VALUES (10, '13:58:16');
 
 
 #
@@ -322,7 +239,7 @@ CREATE TABLE `Student` (
   `gender` enum('F','M') COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `Student` (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+);
 
 INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (1, 'Bruce', 'Feeney', 22, 461520032, 'F');
 INSERT INTO `Student` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`) VALUES (2, 'Helga', 'Greenholt', 48, 516619007, 'F');
@@ -542,145 +459,144 @@ CREATE TABLE `Student_Building` (
   KEY `Student_association_1` (`Student_id`),
   CONSTRAINT `Building_association_1` FOREIGN KEY (`Building_id`) REFERENCES `Building` (`id`),
   CONSTRAINT `Student_association_1` FOREIGN KEY (`Student_id`) REFERENCES `Student` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+);
 
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (1, 1, 1, '2008-11-09');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (2, 2, 2, '2021-08-04');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (3, 3, 3, '2008-08-10');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (4, 4, 4, '2004-06-17');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (5, 5, 5, '1984-12-26');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (6, 6, 6, '2004-05-16');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (7, 7, 7, '1985-10-29');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (8, 8, 8, '2012-07-26');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (9, 9, 9, '2004-03-24');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (10, 10, 10, '1970-09-11');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (11, 11, 11, '2016-06-19');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (12, 12, 12, '1971-06-20');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (13, 13, 13, '2018-09-28');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (14, 14, 14, '2016-06-07');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (15, 15, 15, '2018-02-16');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (16, 16, 16, '1976-08-23');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (17, 17, 17, '2020-08-25');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (18, 18, 18, '2017-12-16');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (19, 19, 19, '1986-11-27');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (20, 20, 20, '1997-12-13');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (21, 21, 21, '2008-10-11');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (22, 22, 22, '1987-08-06');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (23, 23, 23, '1987-04-21');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (24, 24, 24, '1974-07-08');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (25, 25, 25, '2017-08-20');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (26, 26, 1, '2005-09-29');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (27, 27, 2, '1974-09-01');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (28, 28, 3, '2000-03-04');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (29, 29, 4, '2016-06-19');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (30, 30, 5, '2017-07-27');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (31, 31, 6, '1985-09-03');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (32, 32, 7, '2015-12-22');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (33, 33, 8, '1993-09-02');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (34, 34, 9, '1993-04-16');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (35, 35, 10, '2021-09-15');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (36, 36, 11, '1997-11-17');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (37, 37, 12, '1995-02-23');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (38, 38, 13, '2001-09-29');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (39, 39, 14, '2009-01-10');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (40, 40, 15, '1993-10-31');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (41, 41, 16, '1974-06-10');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (42, 42, 17, '1977-03-09');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (43, 43, 18, '2005-06-02');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (44, 44, 19, '1985-01-21');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (45, 45, 20, '1970-11-08');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (46, 46, 21, '2002-06-19');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (47, 47, 22, '2001-06-02');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (48, 48, 23, '2009-11-19');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (49, 49, 24, '2000-03-20');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (50, 50, 25, '2018-04-18');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (51, 51, 1, '1997-01-20');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (52, 52, 2, '1970-09-25');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (53, 53, 3, '1985-09-13');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (54, 54, 4, '1989-12-29');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (55, 55, 5, '1979-06-01');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (56, 56, 6, '2015-05-25');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (57, 57, 7, '1981-09-11');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (58, 58, 8, '2002-11-10');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (59, 59, 9, '2008-05-26');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (60, 60, 10, '2003-12-28');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (61, 61, 11, '2012-12-15');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (62, 62, 12, '1978-08-17');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (63, 63, 13, '2022-03-17');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (64, 64, 14, '1986-10-17');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (65, 65, 15, '1990-09-21');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (66, 66, 16, '2021-01-10');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (67, 67, 17, '2011-03-20');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (68, 68, 18, '2019-05-12');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (69, 69, 19, '1993-10-27');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (70, 70, 20, '2004-09-22');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (71, 71, 21, '2002-01-15');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (72, 72, 22, '2014-05-10');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (73, 73, 23, '1975-02-14');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (74, 74, 24, '2008-08-12');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (75, 75, 25, '2008-02-15');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (76, 76, 1, '1990-01-11');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (77, 77, 2, '2018-02-16');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (78, 78, 3, '1983-08-17');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (79, 79, 4, '2005-01-16');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (80, 80, 5, '1983-09-26');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (81, 81, 6, '2010-05-31');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (82, 82, 7, '1973-05-22');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (83, 83, 8, '2014-12-14');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (84, 84, 9, '1983-03-19');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (85, 85, 10, '1975-11-23');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (86, 86, 11, '2000-06-07');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (87, 87, 12, '2001-09-11');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (88, 88, 13, '1975-03-29');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (89, 89, 14, '2022-05-27');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (90, 90, 15, '1982-11-20');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (91, 91, 16, '1987-05-02');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (92, 92, 17, '1996-01-08');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (93, 93, 18, '1972-10-15');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (94, 94, 19, '1978-11-10');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (95, 95, 20, '1995-05-16');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (96, 96, 21, '1994-10-01');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (97, 97, 22, '1988-06-02');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (98, 98, 23, '1995-06-15');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (99, 99, 24, '1977-11-02');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (100, 100, 25, '2009-09-28');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (101, 101, 1, '1974-08-11');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (102, 102, 2, '1980-09-01');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (103, 103, 3, '1990-01-18');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (104, 104, 4, '1988-07-13');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (105, 105, 5, '1995-12-19');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (106, 106, 6, '1983-02-07');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (107, 107, 7, '2019-10-21');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (108, 108, 8, '1991-02-17');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (109, 109, 9, '2016-03-27');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (110, 110, 10, '1976-04-01');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (111, 111, 11, '1984-10-21');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (112, 112, 12, '2021-06-06');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (113, 113, 13, '2018-04-13');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (114, 114, 14, '1979-10-19');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (115, 115, 15, '1981-09-24');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (116, 116, 16, '1993-10-14');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (117, 117, 17, '1984-10-20');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (118, 118, 18, '1975-01-23');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (119, 119, 19, '2019-01-25');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (120, 120, 20, '1970-02-04');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (121, 121, 21, '1972-05-14');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (122, 122, 22, '1991-02-21');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (123, 123, 23, '1993-02-26');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (124, 124, 24, '2001-12-20');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (125, 125, 25, '2015-09-26');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (126, 126, 1, '1988-05-18');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (127, 127, 2, '2019-06-10');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (128, 128, 3, '2010-06-26');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (129, 129, 4, '1987-05-16');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (130, 130, 5, '2002-12-18');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (131, 131, 6, '2020-03-07');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (132, 132, 7, '2022-07-31');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (133, 133, 8, '1981-03-08');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (134, 134, 9, '2015-09-11');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (135, 135, 10, '2004-07-19');
-INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (136, 136, 11, '2016-10-05');
-
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (1, 1, 1, '2022-05-08');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (2, 2, 2, '2021-11-02');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (3, 3, 3, '2022-05-05');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (4, 4, 4, '2022-03-23');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (5, 5, 5, '2022-03-03');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (6, 6, 6, '2021-08-17');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (7, 7, 7, '2021-05-31');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (8, 8, 8, '2022-02-22');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (9, 9, 9, '2021-06-21');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (10, 10, 10, '2021-09-22');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (11, 11, 11, '2022-06-12');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (12, 12, 12, '2021-01-06');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (13, 13, 13, '2021-06-19');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (14, 14, 14, '2022-06-09');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (15, 15, 15, '2021-07-09');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (16, 16, 16, '2021-07-23');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (17, 17, 17, '2021-05-29');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (18, 18, 18, '2022-02-01');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (19, 19, 19, '2021-10-08');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (20, 20, 20, '2021-10-12');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (21, 21, 21, '2022-05-01');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (22, 22, 22, '2022-11-09');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (23, 23, 23, '2021-06-19');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (24, 24, 24, '2021-01-21');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (25, 25, 25, '2022-11-29');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (26, 26, 1, '2022-08-11');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (27, 27, 2, '2021-08-07');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (28, 28, 3, '2022-05-01');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (29, 29, 4, '2022-07-10');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (30, 30, 5, '2022-04-16');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (31, 31, 6, '2022-10-19');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (32, 32, 7, '2022-12-09');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (33, 33, 8, '2022-03-24');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (34, 34, 9, '2021-05-06');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (35, 35, 10, '2021-11-23');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (36, 36, 11, '2022-06-25');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (37, 37, 12, '2022-07-01');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (38, 38, 13, '2021-02-02');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (39, 39, 14, '2022-07-09');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (40, 40, 15, '2021-06-06');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (41, 41, 16, '2022-04-15');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (42, 42, 17, '2022-09-03');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (43, 43, 18, '2021-04-14');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (44, 44, 19, '2021-05-16');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (45, 45, 20, '2021-07-27');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (46, 46, 21, '2022-10-07');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (47, 47, 22, '2021-07-29');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (48, 48, 23, '2021-10-03');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (49, 49, 24, '2022-07-15');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (50, 50, 25, '2021-03-23');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (51, 51, 1, '2022-01-30');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (52, 52, 2, '2021-06-09');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (53, 53, 3, '2022-07-20');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (54, 54, 4, '2021-04-22');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (55, 55, 5, '2021-11-10');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (56, 56, 6, '2022-07-25');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (57, 57, 7, '2022-03-19');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (58, 58, 8, '2021-03-05');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (59, 59, 9, '2021-02-05');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (60, 60, 10, '2022-05-05');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (61, 61, 11, '2021-07-17');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (62, 62, 12, '2022-01-07');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (63, 63, 13, '2021-03-14');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (64, 64, 14, '2022-02-20');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (65, 65, 15, '2021-09-17');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (66, 66, 16, '2021-01-25');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (67, 67, 17, '2021-03-18');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (68, 68, 18, '2021-07-23');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (69, 69, 19, '2021-09-23');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (70, 70, 20, '2022-01-27');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (71, 71, 21, '2021-10-10');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (72, 72, 22, '2020-12-24');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (73, 73, 23, '2021-10-21');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (74, 74, 24, '2021-11-27');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (75, 75, 25, '2021-01-13');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (76, 76, 1, '2021-06-18');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (77, 77, 2, '2021-04-21');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (78, 78, 3, '2022-07-13');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (79, 79, 4, '2021-08-21');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (80, 80, 5, '2021-01-22');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (81, 81, 6, '2020-12-31');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (82, 82, 7, '2022-11-06');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (83, 83, 8, '2022-06-30');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (84, 84, 9, '2022-06-19');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (85, 85, 10, '2021-06-26');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (86, 86, 11, '2022-09-18');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (87, 87, 12, '2022-02-02');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (88, 88, 13, '2022-09-26');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (89, 89, 14, '2021-09-05');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (90, 90, 15, '2021-08-30');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (91, 91, 16, '2022-01-20');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (92, 92, 17, '2022-03-20');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (93, 93, 18, '2022-02-20');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (94, 94, 19, '2022-07-18');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (95, 95, 20, '2021-09-24');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (96, 96, 21, '2021-02-09');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (97, 97, 22, '2022-05-25');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (98, 98, 23, '2021-04-16');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (99, 99, 24, '2021-05-19');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (100, 100, 25, '2022-03-21');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (101, 101, 1, '2021-06-10');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (102, 102, 2, '2021-11-14');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (103, 103, 3, '2021-12-18');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (104, 104, 4, '2022-12-01');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (105, 105, 5, '2021-10-20');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (106, 106, 6, '2021-09-07');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (107, 107, 7, '2021-08-05');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (108, 108, 8, '2022-09-11');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (109, 109, 9, '2021-04-27');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (110, 110, 10, '2021-04-01');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (111, 111, 11, '2021-10-25');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (112, 112, 12, '2022-01-06');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (113, 113, 13, '2022-10-27');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (114, 114, 14, '2022-12-02');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (115, 115, 15, '2022-11-22');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (116, 116, 16, '2021-06-20');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (117, 117, 17, '2022-07-08');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (118, 118, 18, '2022-01-16');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (119, 119, 19, '2021-04-18');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (120, 120, 20, '2022-04-06');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (121, 121, 21, '2021-03-05');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (122, 122, 22, '2022-08-30');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (123, 123, 23, '2022-10-10');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (124, 124, 24, '2022-06-17');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (125, 125, 25, '2022-08-16');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (126, 126, 1, '2022-06-06');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (127, 127, 2, '2022-04-14');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (128, 128, 3, '2021-11-03');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (129, 129, 4, '2022-02-18');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (130, 130, 5, '2021-02-04');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (131, 131, 6, '2020-12-15');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (132, 132, 7, '2021-08-08');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (133, 133, 8, '2022-07-26');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (134, 134, 9, '2021-03-31');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (135, 135, 10, '2022-02-06');
+INSERT INTO `Student_Building` (`id`, `Student_id`, `Building_id`, `inscription_date`) VALUES (136, 136, 11, '2021-08-28');
 
 #
 # TABLE STRUCTURE FOR: Student_Note
@@ -693,7 +609,7 @@ CREATE TABLE `Student_Note` (
   `score` int(11) NOT NULL,
   KEY `Student_Note_Student_Building` (`Student_Building_id`),
   CONSTRAINT `Student_Note_Student_Building` FOREIGN KEY (`Student_Building_id`) REFERENCES `Student_Building` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+);
 
 INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (1, 25);
 INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (2, 53);
@@ -953,53 +869,137 @@ INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (119, 54);
 INSERT INTO `Student_Note` (`Student_Building_id`, `score`) VALUES (120, 35);
 
 
+
 #
-# TABLE STRUCTURE FOR: Subject
+# TABLE STRUCTURE FOR: Certificate
 #
 
-DROP TABLE IF EXISTS `Subject`;
+DROP TABLE IF EXISTS `Certificate`;
 
-CREATE TABLE `Subject` (
+CREATE TABLE `Certificate` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price` int(11) NOT NULL,
-  `category` enum('Practice','Theory') COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `Category_id` int(11) NOT NULL,
+  `Company_id` int(11) NOT NULL,
+  `Student_Building_id` int(11) NOT NULL,
+  `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date` date NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Certificate_idx_1` (`id`) USING BTREE,
+  KEY `Certificate_Category` (`Category_id`),
+  KEY `Certificate_Company` (`Company_id`),
+  KEY `Certificate_association_1` (`Student_Building_id`),
+  CONSTRAINT `Certificate_Category` FOREIGN KEY (`Category_id`) REFERENCES `Category` (`id`),
+  CONSTRAINT `Certificate_Company` FOREIGN KEY (`Company_id`) REFERENCES `Company` (`id`),
+  CONSTRAINT `Certificate_association_1` FOREIGN KEY (`Student_Building_id`) REFERENCES `Student_Building` (`id`)
+);
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (1, 1, 1, 1, 'Netherlands', '1988-11-24');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (2, 2, 1, 2, 'Netherlands', '1991-05-05');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (3, 3, 1, 3, 'France', '1991-03-16');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (4, 1, 1, 4, 'Netherlands', '1975-07-11');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (5, 2, 1, 5, 'France', '2000-11-28');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (6, 3, 1, 6, 'France', '2003-06-11');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (7, 1, 1, 7, 'France', '2019-02-22');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (8, 2, 1, 8, 'France', '2017-12-23');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (9, 3, 1, 9, 'France', '1996-10-28');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (10, 1, 1, 10, 'France', '1991-03-03');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (11, 2, 1, 11, 'France', '1970-10-13');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (12, 3, 1, 12, 'France', '1991-05-08');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (13, 1, 1, 13, 'Netherlands', '1972-05-25');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (14, 2, 1, 14, 'Netherlands', '2015-10-24');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (15, 3, 1, 15, 'France', '1998-11-10');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (16, 1, 1, 16, 'France', '1995-03-31');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (17, 2, 1, 17, 'France', '1993-12-15');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (18, 3, 1, 18, 'Netherlands', '1970-09-30');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (19, 1, 1, 19, 'France', '2006-08-22');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (20, 2, 1, 20, 'Netherlands', '2000-10-24');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (21, 3, 1, 21, 'France', '2017-05-20');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (22, 1, 1, 22, 'Netherlands', '2003-02-20');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (23, 2, 1, 23, 'France', '1978-08-17');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (24, 3, 1, 24, 'Netherlands', '1986-09-27');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (25, 1, 1, 25, 'France', '2013-10-02');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (26, 2, 1, 26, 'France', '2012-06-02');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (27, 3, 1, 27, 'Netherlands', '2017-08-23');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (28, 1, 1, 28, 'France', '1989-05-19');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (29, 2, 1, 29, 'Netherlands', '1970-05-28');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (30, 3, 1, 30, 'France', '2004-12-07');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (31, 1, 1, 31, 'France', '2021-09-17');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (32, 2, 1, 32, 'France', '1996-12-06');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (33, 3, 1, 33, 'France', '2003-10-31');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (34, 1, 1, 34, 'France', '2013-10-31');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (35, 2, 1, 35, 'France', '2002-07-15');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (36, 3, 1, 36, 'Netherlands', '1977-07-23');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (37, 1, 1, 37, 'Netherlands', '1974-04-16');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (38, 2, 1, 38, 'France', '1988-03-20');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (39, 3, 1, 39, 'France', '2021-08-24');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (40, 1, 1, 40, 'France', '2017-05-07');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (41, 2, 1, 41, 'France', '2019-06-18');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (42, 3, 1, 42, 'Netherlands', '2015-01-28');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (43, 1, 1, 43, 'France', '1992-12-13');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (44, 2, 1, 44, 'France', '2000-05-30');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (45, 3, 1, 45, 'Netherlands', '2001-04-08');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (46, 1, 1, 46, 'France', '2002-01-10');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (47, 2, 1, 47, 'Netherlands', '1972-05-06');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (48, 3, 1, 48, 'Netherlands', '2010-03-27');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (49, 1, 1, 49, 'Netherlands', '1997-02-02');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (50, 2, 1, 50, 'France', '1985-12-04');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (51, 3, 1, 51, 'Netherlands', '2022-01-01');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (52, 1, 1, 52, 'France', '1999-12-25');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (53, 2, 1, 53, 'Netherlands', '1981-04-19');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (54, 3, 1, 54, 'Netherlands', '2019-07-30');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (55, 1, 1, 55, 'Netherlands', '2008-10-05');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (56, 2, 1, 56, 'Netherlands', '2004-04-26');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (57, 3, 1, 57, 'Netherlands', '1985-06-22');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (58, 1, 1, 58, 'Netherlands', '1998-06-13');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (59, 2, 1, 59, 'Netherlands', '1972-08-19');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (60, 3, 1, 60, 'Netherlands', '1971-08-27');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (61, 1, 1, 61, 'Netherlands', '1977-12-01');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (62, 2, 1, 62, 'France', '2015-03-19');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (63, 3, 1, 63, 'France', '1996-05-09');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (64, 1, 1, 64, 'France', '1991-04-14');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (65, 2, 1, 65, 'Netherlands', '1986-08-27');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (66, 3, 1, 66, 'France', '1983-01-16');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (67, 1, 1, 67, 'France', '2007-06-09');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (68, 2, 1, 68, 'Netherlands', '2006-03-27');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (69, 3, 1, 69, 'France', '2004-03-22');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (70, 1, 1, 70, 'Netherlands', '1972-04-14');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (71, 2, 1, 71, 'France', '1995-06-13');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (72, 3, 1, 72, 'France', '2003-07-24');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (73, 1, 1, 73, 'Netherlands', '1970-06-08');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (74, 2, 1, 74, 'Netherlands', '2006-11-19');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (75, 3, 1, 75, 'France', '1999-05-25');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (76, 1, 1, 76, 'France', '1977-01-21');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (77, 2, 1, 77, 'Netherlands', '2018-12-20');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (78, 3, 1, 78, 'France', '2018-03-16');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (79, 1, 1, 79, 'France', '1993-03-04');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (80, 2, 1, 80, 'Netherlands', '1985-10-03');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (81, 3, 1, 81, 'France', '1970-02-06');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (82, 1, 1, 82, 'Netherlands', '1987-11-19');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (83, 2, 1, 83, 'Netherlands', '1987-07-27');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (84, 3, 1, 84, 'France', '2012-09-24');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (85, 1, 1, 85, 'France', '1989-09-21');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (86, 2, 1, 86, 'France', '1980-11-14');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (87, 3, 1, 87, 'Netherlands', '2012-11-26');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (88, 1, 1, 88, 'France', '1970-07-15');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (89, 2, 1, 89, 'Netherlands', '1980-10-20');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (90, 3, 1, 90, 'France', '1975-04-14');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (91, 1, 1, 91, 'Netherlands', '1994-09-14');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (92, 2, 1, 92, 'France', '1995-11-13');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (93, 3, 1, 93, 'Netherlands', '2011-08-04');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (94, 1, 1, 94, 'Netherlands', '2016-06-24');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (95, 2, 1, 95, 'France', '2018-07-27');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (96, 3, 1, 96, 'Netherlands', '2008-12-27');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (97, 1, 1, 97, 'France', '2004-04-21');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (98, 2, 1, 98, 'Netherlands', '2018-08-17');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (99, 3, 1, 99, 'France', '2014-09-02');
+INSERT INTO `Certificate` (`id`, `Category_id`, `Company_id`, `Student_Building_id`, `country`, `date`) VALUES (100, 1, 1, 100, 'Netherlands', '1983-12-12');
 
-INSERT INTO `Subject` (`id`, `name`, `price`, `category`) VALUES (1, 'driving', 107, 'Practice');
-INSERT INTO `Subject` (`id`, `name`, `price`, `category`) VALUES (2, 'traffic regulations', 4234, 'Practice');
-INSERT INTO `Subject` (`id`, `name`, `price`, `category`) VALUES (3, 'automotive theory', 511, 'Theory');
 
 
 #
 # TABLE STRUCTURE FOR: Trainer
 #
 
-DROP TABLE IF EXISTS `Trainer`;
 
-CREATE TABLE `Trainer` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `age` int(11) NOT NULL,
-  `phone` int(11) NOT NULL,
-  `gender` enum('F','M') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `salary` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `Trainer_idx_1` (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (1, 'Cara', 'Medhurst', 27, 710, 'M', 1792);
-INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (2, 'Kenya', 'Kiehn', 29, 13, 'M', 1238);
-INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (3, 'Myles', 'Ernser', 43, 38, 'M', 1776);
-INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (4, 'Jordy', 'Ziemann', 40, 349, 'M', 1922);
-INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (5, 'Sandrine', 'Weissnat', 44, 0, 'F', 1061);
-INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (6, 'Estel', 'Rau', 38, 496636, 'M', 1544);
-INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (7, 'Frederik', 'Balistreri', 47, 0, 'F', 1023);
-INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (8, 'Roberto', 'Watsica', 25, 978, 'F', 1629);
-INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (9, 'Lorenz', 'Beer', 29, 2147483647, 'F', 1432);
-INSERT INTO `Trainer` (`id`, `first_name`, `last_name`, `age`, `phone`, `gender`, `salary`) VALUES (10, 'Jordyn', 'Ankunding', 28, 1, 'F', 1184);
 
 
 #
@@ -1014,7 +1014,7 @@ CREATE TABLE `Vehicle` (
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `available` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+);
 
 #
 # TABLE STRUCTURE FOR: Vehicle_Building
@@ -1031,5 +1031,16 @@ CREATE TABLE `Vehicle_Building` (
   KEY `Vehicle_association_1` (`Vehicle_plate`),
   CONSTRAINT `Vehicle_Building` FOREIGN KEY (`Building_id`) REFERENCES `Building` (`id`),
   CONSTRAINT `Vehicle_association_1` FOREIGN KEY (`Vehicle_plate`) REFERENCES `Vehicle` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+);
+
+DROP TABLE IF EXISTS `Data_Maintenance`;
+
+CREATE TABLE `Data_Maintenance` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `Vehicle_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Data_Maintenance_Vehicle` (`Vehicle_id`),
+  CONSTRAINT `Data_Maintenance_Vehicle` FOREIGN KEY (`Vehicle_id`) REFERENCES `Vehicle` (`id`)
+);
 

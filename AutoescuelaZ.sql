@@ -1,9 +1,6 @@
 -- Created by Vertabelo (http://vertabelo.com)
 -- Last modification date: 2022-12-11 15:38:44.679
 -- tables
-DROP SCHEMA DriverCollege;
-CREATE SCHEMA DriverCollege;
-USE DriverCollege;
 -- Table: Building
 CREATE TABLE Building (
     id int NOT NULL AUTO_INCREMENT,
@@ -84,7 +81,7 @@ CREATE TABLE Student_Building (
     id int NOT NULL AUTO_INCREMENT,
     Student_id int NOT NULL,
     Building_id int NOT NULL,
-    inscription_date timestamp NOT NULL,
+    inscription_date date NOT NULL,
     CONSTRAINT Student_Building_pk PRIMARY KEY (id)
 );
 
