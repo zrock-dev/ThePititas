@@ -1,4 +1,4 @@
-INSERT INTO Schedule (id, time)
+/*INSERT INTO Schedule (id, time)
 VALUES (1, '07:00:00'),
        (2, '09:00:00'),
        (3, '10:00:00'),
@@ -6,7 +6,7 @@ VALUES (1, '07:00:00'),
        (5, '14:00:00'),
        (6, '16:00:00'),
        (7, '18:00:00'),
-       (8, '20:00:00');
+       (8, '20:00:00');*/
 
 insert into Schedule (id, time)
 values  (1, '03:57:33'),

@@ -1,1 +1,1 @@
-;
+SELECT * FROM Note_History;
