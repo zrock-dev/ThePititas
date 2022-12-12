@@ -1,3 +1,14 @@
+USE DriverCollege;
+
+INSERT INTO Category (id, type, capacity, type_car)
+VALUES (1, 'A', 'Low', 'Public'),
+       (2, 'A', 'Low', 'Private'),
+       (3, 'B', 'Medium', 'Public'),
+       (4, 'C', 'Full', 'Public'),
+       (5, 'P', 'Low', 'Public'),
+       (6, 'P', 'Low', 'Private'),
+       (7, 'M', 'Low', 'Private');
+
 insert into Category (id, type, capacity, type_car)
 values  (1, 'P', 'Medium', 'Public'),
         (2, 'M', 'Low', 'Public'),
