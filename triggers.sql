@@ -33,3 +33,5 @@ CREATE TRIGGER register_only_for_adults AFTER INSERT ON Student FOR EACH ROW
         END IF;
     end //
 DELIMITER ;
+
+INSERT INTO Student (first_name, last_name,age,phone,gender) VALUES ('Daniel', 'Espinoza', 12,79360535, 'M');
