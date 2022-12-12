@@ -56,9 +56,9 @@ WHERE s.id = (SELECT b.Subject_id
               FROM Building as b
               WHERE b.Trainer_id = (SELECT t.id
                                     FROM Trainer as t
-                                    WHERE t.gender = 'M' AND T.age BETWEEN 20 AND 30));
+                                    WHERE t.gender = 'M' AND t.age BETWEEN 20 AND 30));
 
 -- Realizar una consulta calculando el promedio de edad inscritos en la categoría M
 SELECT AVG(s.age) FROM  Student as s
-                  WHERE s.id = (SELECT sb.Student_id FROM Student_Building as sb
-                                                     WHERE sb.Building_id = (SELECT b.id FROM Building as b WHERE b.Category_id = (SELECT c.id FROM Category as c WHERE c.type = 'M')))
+                  WHERE s.id in (SELECT sb.Student_id FROM Student_Building as sb
+                                                     WHERE sb.Building_id in (SELECT b.id FROM Building as b WHERE b.Category_id in (SELECT c.id FROM Category as c WHERE c.type = 'M')))
